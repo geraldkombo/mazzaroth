@@ -79,10 +79,15 @@ tr:last-child td{border-bottom:none}
   <a onclick="showTab('houses')">13 Houses</a>
 </div>
 
-<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;padding:6px 8px;background:var(--card);border:1px solid var(--border);border-radius:6px;font-size:10px;color:var(--dim)">
-  <span><span class="badge peak">PEAK</span> = Highest intensity. Major transits. Decisive moments.</span>
-  <span><span class="badge vhigh">VERY HIGH</span> = Strong energy. Important developments.</span>
-  <span><span class="badge high">HIGH</span> = Notable activity. Pay attention.</span>
+<div style="margin-bottom:12px;padding:8px 10px;background:var(--card);border:1px solid var(--border);border-radius:6px;font-size:10px;color:var(--dim);line-height:1.7">
+  <b style="color:var(--text)">How scores work:</b> Mazzaroth scores each day 0-10,000 based on which planets are active, how
+  tight the aspects are, and what life area (house) they hit.
+  <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:4px">
+    <span><span class="badge peak">PEAK</span> 3700-6500+ &mdash; Rare, intense. Decisions here compound for years.</span>
+    <span><span class="badge vhigh">V.HIGH</span> 3400-3700 &mdash; Strong. Important developments likely.</span>
+    <span><span class="badge high">HIGH</span> 3100-3400 &mdash; Notable. Above-baseline energy.</span>
+    <span><span class="badge normal">NORMAL</span> 0-3100 &mdash; Baseline. Regular operational day.</span>
+  </div>
 </div>
 <div id="tab-today" class="tab"></div>
 <div id="tab-hourly" class="tab" style="display:none"></div>
@@ -150,10 +155,25 @@ function renderToday() {
   const p = latest.top_transit.match(/^(\w+)\s+(\w+)\s+(\w+)/);
   const todayAdvice = getAdvice(latest.top_transit, latest.house||1, latest.level);
 
+  const maxScore = 10000;
+  const pct = Math.min(latest.score / maxScore * 100, 100);
+  const levelColor = latest.level === 'PEAK' ? 'var(--peak)' : latest.level === 'VERY HIGH' ? 'var(--vhigh)' : latest.level === 'HIGH' ? 'var(--high)' : 'var(--dim)';
+  const scoreDesc = latest.score >= 5000 ? 'Extremely rare. Multiple major planets in tight orb. Life-defining energy.' :
+                    latest.score >= 3700 ? 'PEAK intensity. Major transit active. What you decide now will compound for years.' :
+                    latest.score >= 3400 ? 'Strong energy. Important developments are in motion.' :
+                    latest.score >= 3100 ? 'Above-baseline activity. Pay attention to the house being triggered.' :
+                    'Baseline energy. A regular operational day.';
+
   let html = `
-  <div class="card" style="text-align:center;padding:24px 16px">
-    <div style="font-size:40px;font-weight:700;letter-spacing:-1px;color:#fff">${latest.score.toFixed(0)}</div>
-    <div class="dim" style="font-size:12px;margin-top:4px">${h.date} &middot; ${badge(latest.level)}</div>
+  <div class="card" style="text-align:center;padding:24px 16px 20px">
+    <div class="dim" style="font-size:9px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">${h.date}</div>
+    <div style="font-size:40px;font-weight:700;letter-spacing:-1px;color:${levelColor}">${latest.score.toFixed(0)}</div>
+    <div style="margin-top:4px">${badge(latest.level)}</div>
+    <div style="margin:8px auto 0;max-width:300px;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
+      <div style="height:100%;width:${pct}%;background:${levelColor};border-radius:2px;transition:width 0.3s"></div>
+    </div>
+    <div style="font-size:10px;color:var(--dim);margin-top:4px">0 &mdash; 10,000</div>
+    <div style="font-size:11px;color:var(--text);margin-top:8px;line-height:1.5">${scoreDesc}</div>
     <div style="font-size:13px;color:var(--accent);font-weight:500;margin-top:8px">${latest.top_transit}</div>
   </div>
   <div class="card">
