@@ -1,158 +1,391 @@
 <!DOCTYPE html>
 <html lang="en">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Mazzaroth Dashboard</title>
+<title>Mazzaroth — Daily Oracle</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
-body{background:#0a0a0f;color:#e0e0e0;padding:20px;max-width:800px;margin:auto}
-h1{font-size:1.5em;margin-bottom:4px;color:#fff}
-.sub{color:#888;font-size:.85em;margin-bottom:20px}
-.card{background:#12121a;border:1px solid #222;border-radius:12px;padding:16px;margin-bottom:16px}
-.card h2{font-size:.85em;text-transform:uppercase;letter-spacing:1px;color:#666;margin-bottom:12px}
-.score-big{font-size:3em;font-weight:700}
-.score-big.peak{color:#ff4444}.score-big.vhigh{color:#ff8800}.score-big.high{color:#44cc44}.score-big.normal{color:#666}
-.meta{color:#888;font-size:.85em;margin-top:8px}
-.event{border-left:3px solid #444;padding:8px 12px;margin:6px 0;background:#0e0e18;border-radius:0 6px 6px 0}
-.event.peak{border-left-color:#ff4444}.event.vhigh{border-left-color:#ff8800}.event.high{border-left-color:#44cc44}
-.event .dt{color:#888;font-size:.8em}
-.event .desc{color:#ccc;margin:2px 0}
-.event .sc{color:#666;font-size:.8em}
+:root{--bg:#06060c;--card:#0c0c18;--border:#1a1a2e;--text:#c8c8d4;--dim:#666680;--accent:#7c5cfc;--peak:#ff4444;--vhigh:#ff8800;--high:#44cc44;--gold:#ffd700}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;line-height:1.6;padding:0;min-height:100vh}
+.container{max-width:880px;margin:0 auto;padding:32px 20px}
+/* Header */
+.header{margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.header h1{font-size:28px;font-weight:700;color:#fff;letter-spacing:-0.5px}
+.header .sub{color:var(--dim);font-size:13px;margin-top:4px}
+.header .badge-row{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.badge{padding:3px 10px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.3px;text-transform:uppercase}
+.badge.peak{background:#ff444418;color:var(--peak);border:1px solid #ff444430}
+.badge.vhigh{background:#ff880018;color:var(--vhigh);border:1px solid #ff880030}
+.badge.high{background:#44cc4418;color:var(--high);border:1px solid #44cc4430}
+.badge.normal{background:#66668018;color:var(--dim);border:1px solid #66668030}
+.badge.gold{background:#ffd70018;color:var(--gold);border:1px solid #ffd70030}
+.badge.accent{background:#7c5cfc18;color:var(--accent);border:1px solid #7c5cfc30}
+/* Cards */
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px}
+.card h2{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:var(--dim);margin-bottom:16px}
+.card h3{font-size:13px;font-weight:600;color:#fff;margin:16px 0 8px}
+.card h3:first-child{margin-top:0}
+/* Score */
+.score-hero{text-align:center;padding:32px 20px}
+.score-hero .number{font-size:56px;font-weight:700;letter-spacing:-2px;line-height:1}
+.score-hero .number.peak{color:var(--peak)}
+.score-hero .number.vhigh{color:var(--vhigh)}
+.score-hero .number.high{color:var(--high)}
+.score-hero .number.normal{color:var(--dim)}
+.score-hero .label{font-size:13px;color:var(--dim);margin-top:8px}
+.score-hero .strategy{font-size:16px;color:#fff;font-weight:500;margin-top:16px}
+.score-hero .actions{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.score-hero .actions span{background:var(--border);padding:4px 12px;border-radius:20px;font-size:12px;color:var(--text)}
+/* Tables */
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:8px 10px;color:var(--dim);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid var(--border)}
+td{padding:7px 10px;border-bottom:1px solid #1a1a2e80}
+tr:last-child td{border-bottom:none}
+td.score{font-weight:600;font-family:'JetBrains Mono',monospace;font-size:13px;text-align:right}
+td.peak{color:var(--peak)}
+td.vhigh{color:var(--vhigh)}
+td.high{color:var(--high)}
+.mono{font-family:'JetBrains Mono',monospace;font-size:12px}
+/* Grid */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.stat-box{text-align:center;padding:16px;background:#08081a;border-radius:8px;border:1px solid var(--border)}
+.stat-box .num{font-size:24px;font-weight:700;font-family:'JetBrains Mono',monospace;color:#fff}
+.stat-box .lbl{font-size:11px;color:var(--dim);margin-top:4px;text-transform:uppercase;letter-spacing:0.5px}
+/* House list */
+.house-item{padding:10px 14px;margin-bottom:6px;background:#08081a;border-radius:8px;border-left:3px solid var(--border);transition:0.15s}
+.house-item:hover{border-left-color:var(--accent);background:#0c0c1e}
+.house-item .top{display:flex;justify-content:space-between;align-items:center}
+.house-item .hnum{font-weight:600;color:#fff;font-size:13px}
+.house-item .hname{color:var(--dim);font-size:12px}
+.house-item .hscore{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600}
+.house-item .haspects{margin-top:4px;font-size:11px;color:#555}
+/* Collapsible */
+details{background:#08081a;border-radius:8px;border:1px solid var(--border);margin-bottom:8px}
+details summary{padding:12px 14px;cursor:pointer;font-weight:500;color:#fff;font-size:13px;list-style:none;display:flex;justify-content:space-between;align-items:center}
+details summary::-webkit-details-marker{display:none}
+details summary:after{content:'+';color:var(--dim);font-size:16px;font-weight:300}
+details[open] summary:after{content:'\u2212'}
+details .content{padding:0 14px 14px;font-size:12px}
+details .content table{margin:0}
+details .content td{padding:4px 8px;font-size:12px}
+/* Footer */
+.footer{text-align:center;padding:32px 0;color:var(--dim);font-size:11px;letter-spacing:0.5px;border-top:1px solid var(--border);margin-top:32px}
+.footer a{color:var(--accent);text-decoration:none}
+.highlight{color:var(--gold);font-weight:600}
+.quote{border-left:2px solid var(--accent);padding:8px 14px;margin:12px 0;background:#08081a;border-radius:0 6px 6px 0;font-size:13px;color:#b8b8d0}
+@media(max-width:640px){.grid-2,.grid-3{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<h1>Mazzaroth</h1>
-<div class="sub" id="sub">Loading...</div>
+<div class="container">
 
-<div class="card" id="score-card">
-  <h2>Current Score</h2>
-  <div class="score-big normal" id="score">--</div>
-  <div class="meta" id="meta">--</div>
-</div>
-
-<div class="card">
-  <h2>Upcoming PEAK Days</h2>
-  <div id="peak-list">Loading...</div>
-</div>
-
-<div class="card">
-  <h2>10-Year Database</h2>
-  <div id="stats">Loading...</div>
-</div>
-
-<div class="card">
-  <h2>Quick Links</h2>
-  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">
-    <a href="https://raw.githubusercontent.com/geraldkombo/mazzaroth/main/mazzaroth_exact.ics" style="background:#1a1a24;color:#ccc;padding:8px 16px;border-radius:8px;text-decoration:none;font-size:.9em">Download ICS Calendar</a>
-    <a href="https://raw.githubusercontent.com/geraldkombo/mazzaroth/main/Mazzaroth_Engine_Data/mazzaroth_master_log.csv" style="background:#1a1a24;color:#ccc;padding:8px 16px;border-radius:8px;text-decoration:none;font-size:.9em">Master Log CSV</a>
-    <a href="https://raw.githubusercontent.com/geraldkombo/mazzaroth/main/Mazzaroth_Engine_Data/high_leverage_windows.csv" style="background:#1a1a24;color:#ccc;padding:8px 16px;border-radius:8px;text-decoration:none;font-size:.9em">Top Windows CSV</a>
+<!-- HEADER -->
+<div class="header">
+  <h1>MAZZAROTH</h1>
+  <div class="sub">The Daily Oracle &middot; Gerald Kombo &middot; 1989-09-13 03:50 UTC Nairobi &middot; Profection H11</div>
+  <div class="badge-row">
+    <span class="badge peak">PEAK</span>
+    <span class="badge gold">Wealth 599</span>
+    <span class="badge accent">7/8 Patterns</span>
+    <span class="badge normal">H11 Year</span>
+    <span class="badge normal">986 Events</span>
   </div>
 </div>
 
-<script>
-function parseCSV(text) {
-  // Strip UTF-8 BOM
-  if (text.charCodeAt(0) === 0xFEFF) text = text.slice(1);
-  const rows = [];
-  let inQuote = false, field = '', line = [];
-  for (let i = 0; i < text.length; i++) {
-    const ch = text[i];
-    if (ch === '"') { inQuote = !inQuote; continue; }
-    if (ch === ',' && !inQuote) { line.push(field.trim()); field = ''; continue; }
-    if ((ch === '\n' || ch === '\r') && !inQuote) {
-      if (field.trim() || line.length) { line.push(field.trim()); rows.push(line); }
-      field = ''; line = [];
-      if (ch === '\r' && text[i + 1] === '\n') i++;
-      continue;
-    }
-    field += ch;
-  }
-  if (field.trim() || line.length) { line.push(field.trim()); rows.push(line); }
-  if (!rows.length) return [];
-  const headers = rows[0];
-  return rows.slice(1).map(r => {
-    const o = {};
-    headers.forEach((h, i) => o[h] = (r[i] || '').trim());
-    return o;
-  }).filter(r => r[headers[0]]);
-}
+<!-- SCORE HERO -->
+<div class="card score-hero">
+  <div class="number peak">5,909</div>
+  <div class="label">PEAK &middot; 2026-06-14 20:54 UTC</div>
+  <div class="strategy">Bold decisions now.</div>
+  <div class="actions">
+    <span>Make the major move</span>
+    <span>Act on what you delayed</span>
+    <span>Build something that lasts</span>
+  </div>
+</div>
 
-async function loadCSV(path) {
-  const r = await fetch(path);
-  if (!r.ok) throw new Error('HTTP ' + r.status);
-  const text = await r.text();
-  return parseCSV(text);
-}
+<!-- TOP TRANSITS -->
+<div class="card">
+  <h2>Active Aspects</h2>
+  <table>
+    <tr><th>Transit</th><th style="text-align:right">Score</th></tr>
+    <tr><td>Moon Sq natal Sun (0.477deg)</td><td class="score peak">210.0</td></tr>
+    <tr><td>Neptune Sq natal Neptune (5.860deg)</td><td class="score">171.5</td></tr>
+    <tr><td>Pluto // natal Neptune decl (0.938deg)</td><td class="score">168.0</td></tr>
+    <tr><td>Sun Tri natal N.Node (0.969deg)</td><td class="score">162.0</td></tr>
+    <tr><td>Sun Sq natal Sun (2.965deg)</td><td class="score">157.5</td></tr>
+    <tr><td>Venus Sq natal Venus (0.403deg)</td><td class="score">151.2</td></tr>
+    <tr><td>Neptune // natal N.Node decl (0.312deg)</td><td class="score">151.2</td></tr>
+    <tr><td>Neptune Sq natal Uranus (2.425deg)</td><td class="score">147.0</td></tr>
+  </table>
+</div>
 
-async function main() {
-  let db;
-  try {
-    db = await loadCSV('https://raw.githubusercontent.com/geraldkombo/mazzaroth/main/Mazzaroth_Engine_Data/mazzaroth_master_log.csv');
-  } catch(e) {
-    document.getElementById('sub').textContent = 'Failed to load data: ' + e.message;
-    return;
-  }
-  if (!db.length) { document.getElementById('sub').textContent = 'No data loaded'; return; }
+<!-- DATABASE SNAPSHOT -->
+<div class="card">
+  <h2>10-Year Database</h2>
+  <div class="grid-3">
+    <div class="stat-box"><div class="num" style="color:var(--peak)">198</div><div class="lbl">PEAK</div></div>
+    <div class="stat-box"><div class="num" style="color:var(--vhigh)">197</div><div class="lbl">VERY HIGH</div></div>
+    <div class="stat-box"><div class="num" style="color:var(--high)">591</div><div class="lbl">HIGH</div></div>
+  </div>
+  <div class="grid-2" style="margin-top:8px">
+    <div class="stat-box"><div class="num">986</div><div class="lbl">Total Events</div></div>
+    <div class="stat-box"><div class="num" style="color:var(--gold)">20.1%</div><div class="lbl">PEAK Rate</div></div>
+  </div>
+</div>
 
-  // Stats
-  const all = db;
-  const peak = all.filter(e => e.Level === 'PEAK');
-  const vh = all.filter(e => e.Level === 'VERY HIGH');
-  const h = all.filter(e => e.Level === 'HIGH');
-  document.getElementById('stats').innerHTML =
-    `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center">
-      <div><div class="score-big" style="font-size:2em;color:#ff4444">${peak.length}</div><div class="meta">PEAK</div></div>
-      <div><div class="score-big" style="font-size:2em;color:#ff8800">${vh.length}</div><div class="meta">VERY HIGH</div></div>
-      <div><div class="score-big" style="font-size:2em;color:#44cc44">${h.length}</div><div class="meta">HIGH</div></div>
-      <div><div class="score-big" style="font-size:2em;color:#888">${all.length}</div><div class="meta">Total Events</div></div>
-      <div><div class="score-big" style="font-size:2em;color:#888">${Math.round(peak.length/all.length*100)}%</div><div class="meta">PEAK Rate</div></div>
-      <div><div class="score-big" style="font-size:2em;color:#888">${all.sort((a,b) => a.Date.localeCompare(b.Date)).pop()?.Date || '--'}</div><div class="meta">Last Entry</div></div>
-    </div>`;
+<!-- WEALTH -->
+<div class="card">
+  <h2>Wealth Intelligence</h2>
+  <div class="grid-3">
+    <div class="stat-box"><div class="num">599</div><div class="lbl">Wealth Score</div></div>
+    <div class="stat-box"><div class="num" style="color:var(--gold)">7/8</div><div class="lbl">Billionaire Patterns</div></div>
+    <div class="stat-box"><div class="num" style="color:var(--high)">FAVORABLE</div><div class="lbl">Investment Verdict</div></div>
+  </div>
+  <h3>Natal Blueprint</h3>
+  <table>
+    <tr><th>Planet</th><th>House</th><th>Role</th></tr>
+    <tr><td>Mercury</td><td>H2 Finances</td><td>Mercury-H3 Deal Maker — negotiation, information arbitrage</td></tr>
+    <tr><td>Venus</td><td>H2 Finances</td><td>Venus-Jupiter Amplifier — money through relationships</td></tr>
+    <tr><td>Mars</td><td>H2 Finances</td><td>Mars-H2 Money Warrior — aggressive wealth building</td></tr>
+  </table>
+  <h3>Active Patterns</h3>
+  <table>
+    <tr><th>Pattern</th><th>Trigger</th></tr>
+    <tr><td>Jupiter-Saturn Bridge</td><td class="mono">N.Node Tri natal Jupiter</td></tr>
+    <tr><td>Pluto Wealth Transformer</td><td class="mono">Mars Opp natal Pluto</td></tr>
+    <tr><td>Venus-Jupiter Amplifier</td><td class="mono">N.Node Tri natal Venus</td></tr>
+    <tr><td>Uranus H11 Network Disruptor</td><td class="mono">N.Node Sxt natal Uranus</td></tr>
+    <tr><td>Mars-H2 Money Warrior</td><td class="mono">Jupiter Sxt natal Mars</td></tr>
+    <tr><td>Neptune Brand Visionary</td><td class="mono">Mercury Sxt natal Sun</td></tr>
+    <tr><td>Mercury-H3 Deal Maker</td><td class="mono">Pluto Tri natal Mercury</td></tr>
+  </table>
+  <div class="quote">Investment window open. Jupiter sextile Mars H2 — opportunity, act.</div>
+</div>
 
-  // Upcoming PEAK days (next 10)
-  const today = new Date().toISOString().slice(0,10);
-  const upcoming = peak.filter(e => e.Date >= today).sort((a,b) => a.Date.localeCompare(b.Date)).slice(0,10);
-  if (upcoming.length) {
-    document.getElementById('peak-list').innerHTML = upcoming.map(e =>
-      `<div class="event peak">
-        <div class="dt">${e.Date}</div>
-        <div class="desc">${e.Transit} H${e.House}</div>
-        <div class="sc">Score: ${e.Score} &middot; ${e.Meaning ? e.Meaning.slice(0,80) : ''}</div>
-      </div>`
-    ).join('');
-  } else {
-    document.getElementById('peak-list').innerHTML = '<div class="meta">No upcoming PEAK days found</div>';
-  }
+<!-- LIFE AREAS -->
+<div class="card">
+  <h2>Life Areas — Sorted by Intensity</h2>
+  <div class="house-item">
+    <div class="top">
+      <div><span class="hnum">H2</span> <span class="hname">Finances, Values, Self-Worth</span></div>
+      <div class="hscore" style="color:#fff">1,340</div>
+    </div>
+    <div class="haspects">Sun Sq Mars &middot; Moon Sq Mars &middot; Venus Sq Venus &middot; Mars Tri Mars &middot; Jupiter Sq Venus</div>
+  </div>
+  <div class="house-item">
+    <div class="top">
+      <div><span class="hnum">H7</span> <span class="hname">Partnerships, Marriage, Contracts</span></div>
+      <div class="hscore" style="color:#fff">1,232</div>
+    </div>
+    <div class="haspects">Sun Tri Moon &middot; Sun Tri N.Node &middot; Moon Tri Moon &middot; Moon Tri N.Node &middot; Mercury Qnx Moon</div>
+  </div>
+  <div class="house-item">
+    <div class="top">
+      <div><span class="hnum">H6</span> <span class="hname">Health, Daily Work, Routines, Service</span></div>
+      <div class="hscore" style="color:#fff">1,173</div>
+    </div>
+    <div class="haspects">Venus Qnx Uranus &middot; Saturn Sq Saturn &middot; Saturn Sq Neptune &middot; Uranus BQnt Saturn &middot; Uranus Qnx Uranus</div>
+  </div>
+  <div class="house-item">
+    <div class="top">
+      <div><span class="hnum">H1</span> <span class="hname">Identity, Self-Image, Personal Brand</span></div>
+      <div class="hscore">718</div>
+    </div>
+    <div class="haspects">Sun Sq Sun &middot; Moon Sq Sun &middot; Mercury Sxt Sun &middot; Mars Tri Sun &middot; Pluto SqSq Sun</div>
+  </div>
+  <div class="house-item">
+    <div class="top">
+      <div><span class="hnum">H3</span> <span class="hname">Communication, Siblings, Writing</span></div>
+      <div class="hscore">553</div>
+    </div>
+    <div class="haspects">Moon BQnt Pluto &middot; Mercury Tri Pluto &middot; Mars Opp Pluto &middot; Saturn Qnx Pluto &middot; Sun SqSq H3 cusp</div>
+  </div>
+  <div class="house-item">
+    <div class="top">
+      <div><span class="hnum">H4</span> <span class="hname">Home, Family, Roots, Emotional Foundation</span></div>
+      <div class="hscore">503</div>
+    </div>
+    <div class="haspects">Mercury SqSq H4 cusp &middot; Venus Tri H4 cusp &middot; Jupiter Tri H4 cusp &middot; Uranus Opp H4 cusp &middot; Neptune Tri H4 cusp</div>
+  </div>
+  <div class="house-item">
+    <div class="top">
+      <div><span class="hnum">H12</span> <span class="hname">Solitude, Spirituality, Retreat, Subconscious</span></div>
+      <div class="hscore">420</div>
+    </div>
+    <div class="haspects">Saturn Sq Jupiter &middot; Neptune Sq Jupiter &middot; Pluto Qnx Jupiter &middot; N.Node Tri Jupiter &middot; Chiron Sq Jupiter</div>
+  </div>
+  <div class="house-item">
+    <div class="top">
+      <div><span class="hnum">H11</span> <span class="hname">Friends, Networks, Community, Hopes</span></div>
+      <div class="hscore">412</div>
+    </div>
+    <div class="haspects">Venus Sxt Chiron &middot; Mars Conj Chiron &middot; Jupiter Sxt Chiron &middot; Saturn SSq Chiron &middot; Uranus Conj Chiron</div>
+  </div>
+  <div class="house-item">
+    <div class="top">
+      <div><span class="hnum">H5</span> <span class="hname">Creativity, Romance, Children, Risk</span></div>
+      <div class="hscore">314</div>
+    </div>
+    <div class="haspects">Venus Tri H5 cusp &middot; Saturn Tri H5 cusp &middot; Uranus Opp H5 cusp &middot; Neptune Tri H5 cusp &middot; Pluto Sxt H5 cusp</div>
+  </div>
+  <div class="house-item">
+    <div class="top">
+      <div><span class="hnum">H9</span> <span class="hname">Philosophy, Travel, Higher Education, Publishing</span></div>
+      <div class="hscore">254</div>
+    </div>
+    <div class="haspects">Sun Sq H9 cusp &middot; Venus Tri H9 cusp &middot; Jupiter Tri H9 cusp &middot; Uranus Sxt H9 cusp &middot; Neptune Conj H9 cusp</div>
+  </div>
+  <div class="house-item">
+    <div class="top">
+      <div><span class="hnum">H13</span> <span class="hname">Ophiuchus — Healing, Higher Service, Synthesis</span></div>
+      <div class="hscore">243</div>
+    </div>
+    <div class="haspects">Venus Conj H13 cusp &middot; Jupiter Conj H13 cusp &middot; Uranus Sxt H13 cusp &middot; Neptune Tri H13 cusp &middot; Pluto Opp H13 cusp</div>
+  </div>
+  <div class="house-item">
+    <div class="top">
+      <div><span class="hnum">H8</span> <span class="hname">Sex, Intimacy, Shared Resources, Transformation</span></div>
+      <div class="hscore">206</div>
+    </div>
+    <div class="haspects">Sun Tri H8 cusp &middot; Jupiter Qnx H8 cusp &middot; Saturn SSq H8 cusp &middot; Uranus Sq H8 cusp &middot; N.Node Conj H8 cusp</div>
+  </div>
+  <div class="house-item">
+    <div class="top">
+      <div><span class="hnum">H10</span> <span class="hname">Career, Reputation, Public Life, Legacy</span></div>
+      <div class="hscore">200</div>
+    </div>
+    <div class="haspects">Sun Sxt H10 cusp &middot; Venus Sq H10 cusp &middot; Jupiter Sq H10 cusp</div>
+  </div>
+</div>
 
-  function cssLevel(lvl) {
-    const m = { 'PEAK':'peak', 'VERY HIGH':'vhigh', 'HIGH':'high', 'NORMAL':'normal' };
-    return m[lvl] || 'normal';
-  }
+<!-- UPCOMING -->
+<div class="card">
+  <h2>Upcoming Windows</h2>
+  <table>
+    <tr><th>Date</th><th>Event</th><th style="text-align:right">Score</th></tr>
+    <tr><td>2026-07-06</td><td>Neptune Sq Neptune H6</td><td class="score peak">4,877</td></tr>
+  </table>
+</div>
 
-  // Current score (latest day in DB)
-  const latest = all.filter(e => e.Date === today).sort((a,b) => parseFloat(b.Score) - parseFloat(a.Score));
-  if (latest.length) {
-    const top = latest[0];
-    const lvl = top.Level || 'NORMAL';
-    const el = document.getElementById('score');
-    el.textContent = parseFloat(top.Score).toFixed(0);
-    el.className = 'score-big ' + cssLevel(lvl);
-    document.getElementById('meta').textContent = `${top.Transit} H${top.House} | ${lvl}`;
-  } else {
-    const allSorted = [...all].sort((a,b) => parseFloat(b.Score) - parseFloat(a.Score));
-    if (allSorted.length) {
-      const top = allSorted[0];
-      const lvl = top.Level || 'NORMAL';
-      const el = document.getElementById('score');
-      el.textContent = parseFloat(top.Score).toFixed(0);
-      el.className = 'score-big ' + cssLevel(lvl);
-      document.getElementById('meta').textContent = `All-time high: ${top.Transit} H${top.House} on ${top.Date}`;
-    }
-  }
+<!-- 13-HOUSE SYSTEM -->
+<div class="card">
+  <h2>The 13-House System — Architecture</h2>
+  <details>
+    <summary>House Cusps &amp; Domains</summary>
+    <div class="content">
+      <table>
+        <tr><th>House</th><th>Constellation</th><th>Cusp</th><th>Domain</th></tr>
+        <tr><td>H1</td><td>Leo</td><td class="mono">138.2deg</td><td>Identity, Self-Image, Personal Brand</td></tr>
+        <tr><td>H2</td><td>Virgo</td><td class="mono">174.0deg</td><td>Finances, Values, Self-Worth</td></tr>
+        <tr><td>H3</td><td>Libra</td><td class="mono">218.0deg</td><td>Communication, Siblings, Writing</td></tr>
+        <tr><td>H4</td><td>Scorpius</td><td class="mono">241.0deg</td><td>Home, Family, Roots</td></tr>
+        <tr><td>H5</td><td>Ophiuchus</td><td class="mono">248.0deg</td><td>Creativity, Romance, Pleasure</td></tr>
+        <tr><td>H6</td><td>Sagittarius</td><td class="mono">266.5deg</td><td>Health, Daily Work, Service</td></tr>
+        <tr><td>H7</td><td>Capricornus</td><td class="mono">300.0deg</td><td>Partnerships, Marriage, Contracts</td></tr>
+        <tr><td>H8</td><td>Aquarius</td><td class="mono">327.5deg</td><td>Sex, Intimacy, Shared Resources</td></tr>
+        <tr><td>H9</td><td>Pisces</td><td class="mono">0.0deg</td><td>Philosophy, Travel, Publishing</td></tr>
+        <tr><td>H10</td><td>Aries</td><td class="mono">27.0deg</td><td>Career, Reputation, Legacy</td></tr>
+        <tr><td>H11</td><td>Taurus</td><td class="mono">53.5deg</td><td>Friends, Networks, Hopes</td></tr>
+        <tr><td>H12</td><td>Gemini</td><td class="mono">90.4deg</td><td>Solitude, Spirituality, Subconscious</td></tr>
+        <tr><td>H13</td><td>Cancer</td><td class="mono">118.1deg</td><td>Ophiuchus — Healing, Higher Service</td></tr>
+      </table>
+    </div>
+  </details>
+  <details>
+    <summary>Scoring System</summary>
+    <div class="content">
+      <p style="margin-bottom:8px"><strong>Formula:</strong> House Score = SUM of (Base_Score &times; Orb_Precision &times; Planet_Weight &times; House_Weight) + Cusp_Activation</p>
+      <table>
+        <tr><th>Class</th><th>Houses</th><th>Weight</th></tr>
+        <tr><td>Angular</td><td>H1, H4, H7, H10</td><td><strong>2.0x</strong></td></tr>
+        <tr><td>Succedent</td><td>H2, H5, H8, H11</td><td><strong>1.5x</strong></td></tr>
+        <tr><td>Cadent</td><td>H3, H6, H9, H12</td><td><strong>1.0x</strong></td></tr>
+        <tr><td>Ophiuchus</td><td>H13</td><td><strong>1.0x</strong></td></tr>
+      </table>
+    </div>
+  </details>
+  <details>
+    <summary>Planetary Weights</summary>
+    <div class="content">
+      <table>
+        <tr><th>Planet</th><th>Weight</th><th></th><th>Planet</th><th>Weight</th></tr>
+        <tr><td>Pluto</td><td><strong>4.0</strong></td><td></td><td>Mars</td><td><strong>1.5</strong></td></tr>
+        <tr><td>Neptune</td><td><strong>3.5</strong></td><td></td><td>Sun</td><td><strong>1.5</strong></td></tr>
+        <tr><td>Uranus</td><td><strong>3.0</strong></td><td></td><td>Mercury</td><td><strong>1.2</strong></td></tr>
+        <tr><td>Saturn</td><td><strong>2.5</strong></td><td></td><td>Venus</td><td><strong>1.2</strong></td></tr>
+        <tr><td>Jupiter</td><td><strong>2.0</strong></td><td></td><td>Moon</td><td><strong>1.0</strong></td></tr>
+        <tr><td>N.Node</td><td><strong>1.8</strong></td><td></td><td>Chiron</td><td><strong>1.5</strong></td></tr>
+      </table>
+    </div>
+  </details>
+  <details>
+    <summary>Aspect Types &amp; Orbs</summary>
+    <div class="content">
+      <table>
+        <tr><th>Aspect</th><th>Angle</th><th>Max Orb</th><th>Base Score</th></tr>
+        <tr><td>Conjunction</td><td class="mono">0deg</td><td>8.0</td><td>10</td></tr>
+        <tr><td>Opposition</td><td class="mono">180deg</td><td>8.0</td><td>8</td></tr>
+        <tr><td>Square</td><td class="mono">90deg</td><td>7.0</td><td>7</td></tr>
+        <tr><td>Trine</td><td class="mono">120deg</td><td>7.0</td><td>6</td></tr>
+        <tr><td>Sextile</td><td class="mono">60deg</td><td>5.0</td><td>4</td></tr>
+        <tr><td>Quincunx</td><td class="mono">150deg</td><td>3.0</td><td>3</td></tr>
+        <tr><td>Semi-Square</td><td class="mono">45deg</td><td>2.0</td><td>2</td></tr>
+        <tr><td>Sesquiquadrate</td><td class="mono">135deg</td><td>2.0</td><td>2</td></tr>
+        <tr><td>Quintile</td><td class="mono">72deg</td><td>2.0</td><td>2</td></tr>
+        <tr><td>Bi-Quintile</td><td class="mono">144deg</td><td>2.0</td><td>2</td></tr>
+      </table>
+    </div>
+  </details>
+</div>
 
-  document.getElementById('sub').textContent =
-    `Private Dashboard &middot; ${all.length} events &middot; ${new Date().toISOString().slice(0,10)}`;
-}
-main();
-</script>
+<!-- NATAL CHART -->
+<div class="card">
+  <h2>Natal Chart — Gerald Kombo</h2>
+  <table>
+    <tr><th>Body</th><th>Longitude</th><th>Declination</th><th>Constellation</th></tr>
+    <tr><td>Sun</td><td class="mono">170.5deg</td><td class="mono">+3.77deg</td><td>Leo</td></tr>
+    <tr><td>Moon</td><td class="mono">318.6deg</td><td class="mono">-15.89deg</td><td>Capricornus</td></tr>
+    <tr><td>Mercury</td><td class="mono">190.6deg</td><td class="mono">-7.94deg</td><td>Virgo</td></tr>
+    <tr><td>Venus</td><td class="mono">210.9deg</td><td class="mono">-12.44deg</td><td>Libra</td></tr>
+    <tr><td>Mars</td><td class="mono">176.0deg</td><td class="mono">+2.41deg</td><td>Virgo</td></tr>
+    <tr><td>Jupiter</td><td class="mono">97.8deg</td><td class="mono">+22.92deg</td><td>Gemini</td></tr>
+    <tr><td>Saturn</td><td class="mono">277.4deg</td><td class="mono">-22.75deg</td><td>Capricornus</td></tr>
+    <tr><td>Uranus</td><td class="mono">271.5deg</td><td class="mono">-23.70deg</td><td>Capricornus</td></tr>
+    <tr><td>Neptune</td><td class="mono">279.8deg</td><td class="mono">-22.18deg</td><td>Capricornus</td></tr>
+    <tr><td>Pluto</td><td class="mono">223.3deg</td><td class="mono">-1.13deg</td><td>Scorpius</td></tr>
+    <tr><td>N.Node</td><td class="mono">324.4deg</td><td class="mono">0.00deg</td><td>Aquarius</td></tr>
+    <tr><td>Chiron</td><td class="mono">57.3deg</td><td class="mono">0.00deg</td><td>Taurus</td></tr>
+  </table>
+</div>
+
+<!-- DAILY LOG -->
+<div class="card">
+  <h2>Daily Entry Log</h2>
+  <table>
+    <tr><th>Date</th><th>Level</th><th>Score</th><th>Top Transit</th><th>Rating</th></tr>
+    <tr><td>2026-06-12</td><td class="peak">PEAK</td><td>6,158</td><td>Neptune Sq Neptune H6</td><td>4/5</td></tr>
+    <tr><td>2026-06-14</td><td class="peak">PEAK</td><td>5,909</td><td>Moon Sq Sun H7</td><td>--</td></tr>
+  </table>
+</div>
+
+<!-- ENGINE CONFIG -->
+<div class="card">
+  <h2>Engine Configuration</h2>
+  <div class="grid-2">
+    <div class="stat-box"><div class="num" style="font-size:14px">DE421</div><div class="lbl">Ephemeris</div></div>
+    <div class="stat-box"><div class="num" style="font-size:14px">13</div><div class="lbl">Houses</div></div>
+    <div class="stat-box"><div class="num" style="font-size:14px">12</div><div class="lbl">Bodies</div></div>
+    <div class="stat-box"><div class="num" style="font-size:14px">10</div><div class="lbl">Aspects</div></div>
+  </div>
+</div>
+
+<div class="footer">
+  Mazzaroth v3 &middot; Production Grade &middot; Self-Tuning System<br>
+  <a href="https://github.com/geraldkombo/mazzaroth">github.com/geraldkombo/mazzaroth</a>
+</div>
+
+</div>
 </body>
 </html>
