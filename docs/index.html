@@ -6,6 +6,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#06060c;--card:#0c0c18;--border:#1a1a2e;--text:#c8c8d4;--dim:#666680;--accent:#7c5cfc;--peak:#ff4444;--vhigh:#ff8800;--high:#44cc44;--gold:#ffd700}
+.action{display:flex;gap:8px;align-items:flex-start;margin:4px 0;padding:6px 8px;border-radius:4px;font-size:12px;line-height:1.5}
+.action.do{background:#44cc4408;border-left:2px solid var(--high)}
+.action.dont{background:#ff444408;border-left:2px solid var(--peak)}
+.action.watch{background:#7c5cfc08;border-left:2px solid var(--accent)}
+.action .label{font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:0.8px;white-space:nowrap;min-width:44px}
+.action.do .label{color:var(--high)}
+.action.dont .label{color:var(--peak)}
+.action.watch .label{color:var(--accent)}
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;line-height:1.6;min-height:100vh}
 .container{max-width:960px;margin:0 auto;padding:24px 16px}
@@ -132,15 +140,19 @@ function renderToday() {
   const peakCount = h.hourly.filter(x => x.level==='PEAK').length;
   const vhCount = h.hourly.filter(x => x.level==='VERY HIGH').length;
   const hiCount = h.hourly.filter(x => x.level==='HIGH').length;
+  const best = h.hourly.filter(x => x.level==='PEAK'||x.level==='VERY HIGH').slice(0,3);
+  const worst = h.hourly.filter(x => x.score>0).sort((a,b)=>a.score-b.score).slice(0,3);
+  const p = latest.top_transit.match(/^(\w+)\s+(\w+)\s+(\w+)/);
+  const todayAdvice = getAdvice(latest.top_transit, latest.house||1, latest.level);
 
   let html = `
-  <div class="card" style="text-align:center;padding:28px 16px">
-    <div style="font-size:48px;font-weight:700;letter-spacing:-1px;color:var(--peak)">${latest.score.toLocaleString()}</div>
+  <div class="card" style="text-align:center;padding:24px 16px">
+    <div style="font-size:40px;font-weight:700;letter-spacing:-1px;color:#fff">${latest.score.toFixed(0)}</div>
     <div class="dim" style="font-size:12px;margin-top:4px">${h.date} &middot; ${badge(latest.level)}</div>
-    <div style="font-size:15px;color:#fff;font-weight:500;margin-top:10px">${latest.top_transit}</div>
+    <div style="font-size:13px;color:var(--accent);font-weight:500;margin-top:8px">${latest.top_transit}</div>
   </div>
   <div class="card">
-    <h2>Today's Score by Hour</h2>
+    <h2>Today's Hourly Energy</h2>
     <div id="hourly-bar">`;
   h.hourly.forEach(x => {
     const cls = LV[x.level] || '';
@@ -149,9 +161,22 @@ function renderToday() {
       <div class="s">${x.score.toFixed(0)}</div>
     </div>`;
   });
-  html += `</div></div>
+  html += `</div>
+    <div class="g2 grid" style="margin-top:8px">
+      <div><div class="dim" style="font-size:9px;text-transform:uppercase;letter-spacing:0.5px">BEST Hours</div>
+        ${best.map(x=>`<span class="mono" style="color:var(--high);font-size:11px">${x.time}</span>`).join(', ')}
+      </div>
+      <div><div class="dim" style="font-size:9px;text-transform:uppercase;letter-spacing:0.5px">LOWEST Hours</div>
+        ${worst.map(x=>`<span class="mono" style="color:var(--dim);font-size:11px">${x.time}</span>`).join(', ')}
+      </div>
+    </div>
+  </div>
   <div class="card">
-    <h2>Today Summary</h2>
+    <h2>Today's Guide</h2>
+    <div>${todayAdvice}</div>
+  </div>
+  <div class="card">
+    <h2>Summary</h2>
     <div class="g3 grid" style="margin-top:6px">
       <div class="stat"><div class="n" style="color:var(--peak)">${peakCount}</div><div class="l">PEAK Hours</div></div>
       <div class="stat"><div class="n" style="color:var(--vhigh)">${vhCount}</div><div class="l">VH Hours</div></div>
@@ -159,15 +184,14 @@ function renderToday() {
     </div>
   </div>`;
 
-  // Next PEAK day
   const db = D.database;
   const today = h.date;
   const upcoming = db.filter(d => d.date > today && d.max_level === 'PEAK').slice(0,5);
   if (upcoming.length) {
-    html += `<div class="card"><h2>Next PEAK Days</h2><table><tr><th>Date</th><th>Event</th><th class="r">Score</th></tr>`;
+    html += `<div class="card"><h2>Prepare For These PEAK Days</h2><table><tr><th>Date</th><th>Key Event</th><th class="r">Score</th></tr>`;
     upcoming.forEach(d => {
       const e = d.events[0];
-      html += `<tr><td>${d.date}</td><td>${e ? e.transit : '--'}</td><td class="r" style="color:var(--peak)">${d.max_score.toLocaleString()}</td></tr>`;
+      html += `<tr><td>${d.date}</td><td>${e ? e.transit : '--'}</td><td class="r" style="color:var(--peak)">${d.max_score.toFixed(0)}</td></tr>`;
     });
     html += `</table></div>`;
   }
@@ -177,7 +201,22 @@ function renderToday() {
 
 function renderHourly() {
   const h = D.today_hourly;
-  let html = `<div class="card"><h2>Hourly Breakdown — ${h.date}</h2><table><tr><th>Time</th><th>Score</th><th>Level</th><th>Top Transit</th></tr>`;
+  const best = h.hourly.filter(x => x.level==='PEAK'||x.level==='VERY HIGH');
+  const worst = h.hourly.filter(x => x.score>0).sort((a,b)=>a.score-b.score).slice(0,3);
+  let html = `<div class="card">
+    <h2>When to Act &amp; When to Rest — ${h.date}</h2>
+    ${best.length ? `<div style="margin-bottom:10px">
+      <div class="dim" style="font-size:9px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">BEST TIMES FOR ACTION</div>
+      ${best.map(x => `<span class="badge vhigh" style="margin:2px">${x.time}</span>`).join(' ')}
+    </div>` : ''}
+    <div style="margin-bottom:8px">
+      <div class="dim" style="font-size:9px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">LOWEST ENERGY — REST OR PLAN</div>
+      ${worst.map(x => `<span class="badge" style="margin:2px;color:var(--dim);border-color:var(--border)">${x.time}</span>`).join(' ')}
+    </div>
+  </div>
+  <div class="card">
+    <h2>Hourly Table</h2>
+    <table><tr><th>Time</th><th>Score</th><th>Level</th><th>Top Transit</th></tr>`;
   h.hourly.forEach(x => {
     html += `<tr><td class="mono">${x.time}</td>
       <td class="r">${x.score.toFixed(0)}</td>
@@ -273,56 +312,142 @@ function showDay(date) {
 
 function getAdvice(transit, house, level) {
   const p = transit.match(/^(\w+)\s+(\w+)\s+(\w+)/);
-  if (!p) return `This transit activates H${house} — ${HOUSE_NAMES[house]}. Act with awareness.`;
+  if (!p) return getHouseGuide(house, level);
   const [, p1, asp, p2] = p;
-  const aspMap = {
-    'Conj':'Conjunction — a merging, a beginning, a seed planted.',
-    'Sq':'Square — tension, friction, forced growth. The obstacle is the way.',
-    'Tri':'Trine — ease, flow, talent activation. Grace arrives without effort.',
-    'Sex':'Sextile — opportunity knocking. A door opens, step through.',
-    'Opp':'Opposition — reflection, balance, the other. What you resist teaches you.',
-    'SS':'Semi-Sextile — subtle nudge. Small shifts prepare the ground.',
-    'QS':'Quincunx — adjustment required. Something must realign.'
+
+  const doMap = {
+    'Conj':`Initiate. Start something new in this area. The energy is clean — use it.`,
+    'Sq':`Push through resistance. The obstacle is growing you. Take the hard action.`,
+    'Tri':`Move with the flow. Things align easily. Act now while it's effortless.`,
+    'Sex':`Say yes to the opportunity. A door just opened — step through.`,
+    'Opp':`Seek balance. Have the conversation you've been avoiding. Listen.`,
+    'SS':`Make the small adjustment. Tiny shifts now prevent big problems later.`,
+    'QS':`Realign something that's off. An honest course correction is needed.`
   };
-  const aspectDesc = aspMap[asp] || `Aspect — pay attention to this configuration.`;
-
-  const arch = {
-    Sun:'Sun — your core identity, your will, your light. This is about who you are.',
-    Moon:'Moon — your emotions, intuition, habits. How you feel shapes your reality.',
-    Merc:'Mercury — your mind, communication, decisions. Words carry weight now.',
-    Ven:'Venus — your values, relationships, what you attract. Love and worth intertwine.',
-    Mars:'Mars — your drive, action, ambition. Energy demands an outlet.',
-    Jup:'Jupiter — expansion, luck, wisdom. Growth finds you. Do not shrink.',
-    Sat:'Saturn — structure, discipline, karma. What you build now must last.',
-    Ura:'Uranus — disruption, liberation, innovation. The old breaks so the new fits.',
-    Nep:'Neptune — dreams, illusion, transcendence. Reality dissolves. Seek truth.',
-    Plu:'Pluto — transformation, power, depth. You are being remade.'
+  const dontMap = {
+    'Conj':`Don't start if you aren't committed. This seed will grow.`,
+    'Sq':`Don't force a square peg into a round hole. Push, but don't break.`,
+    'Tri':`Don't waste the ease on trivial things. Use the flow for what matters.`,
+    'Sex':`Don't overthink it. Opportunity doesn't knock twice.`,
+    'Opp':`Don't pick a side. Both sides have truth — find the middle.`,
+    'SS':`Don't ignore the subtle signs. Small things matter now.`,
+    'QS':`Don't keep pretending nothing's wrong. Adjust and move on.`
   };
-  const p1d = arch[p1] || `${p1} — this planetary force acts.`;
-  const p2d = arch[p2] || `${p2} — this planetary force responds.`;
-
-  const houseAdvice = {
-    1:'This touches your identity. Ask: who am I becoming?',
-    2:'Your resources and self-worth are activated. Money and value are mirrors.',
-    3:'Communication, ideas, siblings, writing. Your voice is the instrument.',
-    4:'Home, family, roots. What is beneath you, what holds you.',
-    5:'Creativity, romance, joy, risk. Play is not trivial — it is essential.',
-    6:'Health, daily work, routines, service. Small disciplines compound.',
-    7:'Partnerships, contracts, marriage. The other is your teacher.',
-    8:'Sex, intimacy, shared resources, transformation. Depth demands courage.',
-    9:'Philosophy, travel, publishing, meaning. Expand your horizon.',
-    10:'Career, reputation, legacy. The world watches your next move.',
-    11:'Friends, networks, community, hopes. Your people are your power.',
-    12:'Solitude, spirituality, retreat, subconscious. Silence reveals.',
-    13:'Ophiuchus — healing, higher service, synthesis. You are the bridge.'
+  const watchMap = {
+    'Conj':`Watch for new beginnings. What starts now will have staying power.`,
+    'Sq':`Watch for frustration. Pause before you react. The tension is the teacher.`,
+    'Tri':`Watch for easy wins. Not everything that flows is deserved — stay grounded.`,
+    'Sex':`Watch for unexpected offers. The universe sends help in strange packages.`,
+    'Opp':`Watch for projections. What irritates you in others is your own mirror.`,
+    'SS':`Watch for timing. Not yet, but soon. Prepare.`,
+    'QS':`Watch for small breakdowns. They're telling you what needs fixing.`
   };
-  const ha = houseAdvice[house] || `H${house} is activated. Respond accordingly.`;
+  const p1do = {
+    Sun:'Lead with clarity. Show up fully. Your presence sets the tone.',
+    Moon:'Trust your gut. Feel first, decide second. Your intuition is sharp.',
+    Merc:'Speak up. Write it down. Communicate clearly before assumptions harden.',
+    Ven:'Connect. Appreciate. Invest in the people and things you value.',
+    Mars:'Act with purpose. Energy is high — channel it into something real.',
+    Jup:'Expand. Take the risk. Say yes to growth. Luck favors the bold.',
+    Sat:'Build structure. Do the disciplined work. What you build now will last.',
+    Ura:'Break the pattern. Try something radically different. Freedom awaits.',
+    Nep:'Dream big. Visualize. But verify before you trust completely.',
+    Plu:'Go deep. Transform. What needs to die so something new can be born?'
+  };
+  const p2do = {
+    Sun:'Let your authentic self be seen. Don't hide your light.',
+    Moon:'Honor your feelings. They're valid, even if inconvenient.',
+    Merc:'Think before you speak. Words have extra weight now.',
+    Ven:'Open your heart. Let yourself receive love and value.',
+    Mars:'Channel anger into action. Move your body. Release the pressure.',
+    Jup:'Trust the expansion. Good things are coming. Don't block them.',
+    Sat:'Respect the process. Discipline now = freedom later.',
+    Ura:'Embrace the change. The disruption is making room for better.',
+    Nep:'Trust your vision. Not everything needs to be explained.',
+    Plu:'Let go of control. The transformation is bigger than you.'
+  };
+  const p1dont = {
+    Sun:`Don't let ego drive. Lead, don't dominate.`,
+    Moon:`Don't let emotions decide long-term strategy. Feel, then think.`,
+    Merc:`Don't over-explain. Say what you mean, mean what you say.`,
+    Ven:`Don't compromise your worth for approval. You are enough.`,
+    Mars:`Don't be reckless. Energy without direction is destruction.`,
+    Jup:`Don't over-extend. Growth is good, overgrowth is chaos.`,
+    Sat:`Don't be rigid. Discipline without flexibility becomes prison.`,
+    Ura:`Don't burn bridges. Disrupt the pattern, not the relationships.`,
+    Nep:`Don't get lost in fantasy. Dream with your feet on the ground.`,
+    Plu:`Don't cling to what's fading. Let it go. Make room.`
+  };
+  const houseDo = {
+    1:'Show up as your best self. Your identity is being shaped right now.',
+    2:'Make a financial move. Review your numbers. Invest in yourself.',
+    3:'Have the conversation. Send the message. Write the draft.',
+    4:'Take care of home. Call family. Create safety in your space.',
+    5:'Create something. Play. Take a creative risk. Joy is productive.',
+    6:'Focus on health. Do one disciplined thing for your body or routine.',
+    7:'Reach out to your key person. Partnership is highlighted.',
+    8:'Go deeper. Share what you usually hide. Intimacy requires courage.',
+    9:'Learn. Read. Travel in mind or body. Expand your perspective.',
+    10:'Advance your career. Take one visible step toward your goal.',
+    11:'Connect with your network. One conversation changes everything.',
+    12:'Rest. Be still. The answers come when you stop searching.',
+    13:'Heal something. Help someone. You are needed as a bridge.'
+  };
+  const houseDont = {
+    1:`Don't pretend to be someone you're not. Authenticity is the edge.`,
+    2:`Don't spend emotionally. Don't undervalue your worth.`,
+    3:`Don't assume understanding. Clarify everything.`,
+    4:`Don't neglect your foundation. Home is where you return to.`,
+    5:`Don't play it safe. Risk is required for the reward.`,
+    6:`Don't skip the basics. Sleep, water, movement -- non-negotiable.`,
+    7:`Don't avoid the hard talk. Silence costs more than honesty.`,
+    8:`Don't stay superficial. The treasure is in the depth.`,
+    9:`Don't stay in your bubble. The answer is outside your current view.`,
+    10:`Don't shrink. Your ambition is legitimate. Claim it.`,
+    11:`Don't isolate. Reach out even when you don't want to.`,
+    12:`Don't fill the silence. Boredom is where creativity is born.`,
+    13:`Don't ignore the call to serve. Your purpose includes others.`
+  };
 
-  const levelPrefix = level === 'PEAK' ? 'This is a PEAK transit — the energy is at maximum intensity. ' :
-                      level === 'VERY HIGH' ? 'This transit is very strong. The effect will be pronounced. ' :
-                      level === 'HIGH' ? 'This transit is active and noticeable. ' : '';
+  const d = (doMap[asp]||'Act with intention.').replace('this area',HOUSE_NAMES[house].toLowerCase());
+  const dnt = (dontMap[asp]||'Avoid unnecessary conflict.').replace('this area',HOUSE_NAMES[house].toLowerCase());
+  const w = (watchMap[asp]||'Stay aware.').replace('this area',HOUSE_NAMES[house].toLowerCase());
+  const p1Action = p1do[p1]||'Act with intention.';
+  const p2Action = p2do[p2]||'Receive with awareness.';
+  const p1Avoid = p1dont[p1]||'Avoid overcompensating.';
+  const hd = houseDo[house]||'Act in alignment with your values.';
+  const hdnt = houseDont[house]||'Avoid neglecting this area.';
 
-  return `${levelPrefix}${p1d} ${p2d} ${aspectDesc} ${ha}`;
+  let html = `<div class="action do"><span class="label">DO</span><span>${p1Action} ${p2Action} ${d} ${hd}</span></div>
+<div class="action dont"><span class="label">DON'T</span><span>${p1Avoid} ${dnt} ${hdnt}</span></div>
+<div class="action watch"><span class="label">WATCH</span><span>${w}</span></div>`;
+  if (level === 'PEAK') {
+    html = `<div style="margin-bottom:8px;padding:6px 10px;background:var(--peak);color:#fff;border-radius:4px;font-size:11px;font-weight:600;text-align:center;letter-spacing:0.4px">HIGH ALERT — PEAK INTENSITY</div>` + html;
+  }
+  return html;
+}
+
+function getHouseGuide(house, level) {
+  const hd = {
+    1:'Your identity is center stage. Show up boldly and authentically.',
+    2:'Money and self-worth are linked. Make a bold financial move today.',
+    3:'Communication is potent. Have the hard conversation, send the message.',
+    4:'Home and family need attention. Nurture your foundation.',
+    5:'Creativity and joy are calling. Take a risk that excites you.',
+    6:'Health and routines matter. Do one disciplined thing for your body.',
+    7:'Relationships are highlighted. Reach out, connect, commit.',
+    8:'Depth is available. Go beneath the surface — the gold is there.',
+    9:'Expand your mind. Read, learn, travel in thought or body.',
+    10:'Career focus. Take one step that your future self will thank you for.',
+    11:'Your network is your net worth. Make the connection.',
+    12:'Rest and retreat. The answers come in silence, not noise.',
+    13:'Healing and service. Help someone. You are the bridge.'
+  };
+  let html = `<div class="action do"><span class="label">DO</span><span>${hd[house]||'Act in alignment with your purpose.'}</span></div>`;
+  if (level === 'PEAK') {
+    html = `<div style="margin-bottom:8px;padding:6px 10px;background:var(--peak);color:#fff;border-radius:4px;font-size:11px;font-weight:600;text-align:center;letter-spacing:0.4px">HIGH ALERT — PEAK INTENSITY</div>` + html;
+  }
+  return html;
 }
 
 function jumpToDate() {
@@ -336,6 +461,9 @@ function renderDatabase() {
   const vhs = db.filter(d => d.max_level === 'VERY HIGH');
   const his = db.filter(d => d.max_level === 'HIGH');
   const total = db.length;
+  const today = D.today_hourly.date;
+  const nextPeaks = peaks.filter(d => d.date > today).slice(0,5);
+
   let html = `
   <div class="card">
     <h2>10-Year Database (${total} days with events)</h2>
@@ -345,8 +473,15 @@ function renderDatabase() {
       <div class="stat"><div class="n" style="color:var(--high)">${his.length}</div><div class="l">HIGH Days</div></div>
     </div>
   </div>
+  ${nextPeaks.length ? `<div class="card">
+    <h2>Prepare — Next PEAK Days</h2>
+    ${nextPeaks.map(d => {
+      const e = d.events[0];
+      return `<div class="action do"><span class="label">PREP</span><span><b>${d.date}</b> — ${e ? e.transit : 'PEAK transit'} (Score ${d.max_score.toFixed(0)}). Align your schedule. These days are decisive.</span></div>`;
+    }).join('')}
+  </div>` : ''}
   <div class="card">
-    <h2>All PEAK Days</h2>
+    <h2>All PEAK Days (${peaks.length})</h2>
     <table><tr><th>Date</th><th>Score</th><th>Transit</th></tr>`;
   peaks.forEach(d => {
     const e = d.events[0];
@@ -359,9 +494,26 @@ function renderDatabase() {
 
 function renderAreas() {
   const areas = D.areas;
-  let html = `<div class="card"><h2>All Life Areas — Today</h2>`;
+  const today = D.today_hourly.date;
+  const areaActions = {
+    1:'Define how you want to be seen — then be that.',
+    2:'Review one financial decision. Move money toward your goals.',
+    3:'Write down the idea that keeps coming back.',
+    4:'Make home feel safe. One small improvement.',
+    5:'Do something purely for joy. No outcome required.',
+    6:'Drink water. Move. Sleep. The basics are the edge.',
+    7:'Send the message. Make the call. Connection is wealth.',
+    8:'Go deeper in one conversation today.',
+    9:'Read something outside your usual domain.',
+    10:'Do one thing your future self will thank you for.',
+    11:'Reach out to someone who inspires you.',
+    12:'Sit in silence for 5 minutes. Listen.',
+    13:'Help someone without expecting anything back.'
+  };
+  let html = `<div class="card"><h2>Life Areas — ${today}</h2>`;
   areas.forEach(a => {
     const cls = a.house === 2 ? 'color:var(--gold)' : a.house === 7 ? 'color:#ff6b9d' : a.house === 6 ? 'color:#81c784' : '';
+    const action = areaActions[a.house] || 'Take aligned action.';
     html += `<div class="area" style="border-left-color:${cls ? cls.split(':')[1] : 'var(--border)'}">
       <div class="t">
         <span class="hn">H${a.house}</span>
@@ -369,6 +521,10 @@ function renderAreas() {
         <span class="sc" style="${cls}">${a.score.toFixed(0)}</span>
       </div>
       <div class="as">${a.aspects.join(' &middot; ')}</div>
+      <div class="action do" style="margin:4px 0 0;padding:4px 6px;font-size:11px">
+        <span class="label" style="min-width:30px;font-size:9px">DO</span>
+        <span style="color:var(--text)">${action}</span>
+      </div>
     </div>`;
   });
   html += `</div>`;
@@ -380,8 +536,16 @@ function renderWealth() {
   let html = `
   <div class="card" style="text-align:center;padding:24px">
     <div style="font-size:42px;font-weight:700;color:var(--gold)">${w.score.toFixed(0)}</div>
-    <div class="dim" style="font-size:12px">Wealth Score &middot; ${w.patterns}/8 Billionaire Patterns Active</div>
-    <div style="margin-top:8px"><span class="badge" style="background:#44cc4418;color:var(--high);border:1px solid #44cc4430">VERDICT: ${w.verdict}</span></div>
+    <div class="dim" style="font-size:12px">${w.patterns}/8 Billionaire Patterns Active</div>
+    <div style="margin-top:8px"><span class="badge" style="background:#44cc4418;color:var(--high);border:1px solid #44cc4430">${w.verdict}</span></div>
+  </div>
+  <div class="card">
+    <h2>Financial Actions Today</h2>
+    <div class="action do"><span class="label">DO</span><span>Review your numbers. Know exactly where your money is and where it's going. Make one decisive financial move.</span></div>
+    <div class="action do"><span class="label">DO</span><span>Invest in your earning capacity. A skill, a tool, a connection — spend where it multiplies.</span></div>
+    <div class="action dont"><span class="label">DON'T</span><span>Spend to feel better. Emotional purchases dilute your wealth building.</span></div>
+    <div class="action dont"><span class="label">DON'T</span><span>Undervalue your work. Your price reflects your worth — raise both.</span></div>
+    <div class="action watch"><span class="label">WATCH</span><span>All 13 houses contribute to wealth. Neglecting health, relationships, or purpose costs you money.</span></div>
   </div>
   <div class="card">
     <h2>Natal Wealth Blueprint</h2>
