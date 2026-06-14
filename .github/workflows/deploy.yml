@@ -1,0 +1,22 @@
+name: Mazzaroth Auto-Deploy
+on:
+  schedule:
+    - cron: '0 0 * * 0' # Sunday Midnight
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install
+        run: pip install skyfield pandas jplephem
+      - name: Generate ICS
+        run: python mazz.py ics generate
+      - name: Deploy
+        run: |
+          git config user.name "MazzarothBot"
+          git config user.email "bot@mazzaroth.app"
+          git add mazzaroth_exact.ics
+          git diff --quiet && git diff --staged --quiet || git commit -m "Auto-deploy: Refresh calendar"
+          git push

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mazzaroth Dashboard</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+body{background:#0a0a0f;color:#e0e0e0;padding:20px;max-width:800px;margin:auto}
+h1{font-size:1.5em;margin-bottom:4px;color:#fff}
+.sub{color:#888;font-size:.85em;margin-bottom:20px}
+.card{background:#12121a;border:1px solid #222;border-radius:12px;padding:16px;margin-bottom:16px}
+.card h2{font-size:.85em;text-transform:uppercase;letter-spacing:1px;color:#666;margin-bottom:12px}
+.score-big{font-size:3em;font-weight:700}
+.score-big.peak{color:#ff4444}.score-big.vhigh{color:#ff8800}.score-big.high{color:#44cc44}.score-big.normal{color:#666}
+.meta{color:#888;font-size:.85em;margin-top:8px}
+.event{border-left:3px solid #444;padding:8px 12px;margin:6px 0;background:#0e0e18;border-radius:0 6px 6px 0}
+.event.peak{border-left-color:#ff4444}.event.vhigh{border-left-color:#ff8800}.event.high{border-left-color:#44cc44}
+.event .dt{color:#888;font-size:.8em}
+.event .desc{color:#ccc;margin:2px 0}
+.event .sc{color:#666;font-size:.8em}
+</style>
+</head>
+<body>
+<h1>Mazzaroth</h1>
+<div class="sub" id="sub">Loading...</div>
+
+<div class="card" id="score-card">
+  <h2>Current Score</h2>
+  <div class="score-big normal" id="score">--</div>
+  <div class="meta" id="meta">--</div>
+</div>
+
+<div class="card">
+  <h2>Upcoming PEAK Days</h2>
+  <div id="peak-list">Loading...</div>
+</div>
+
+<div class="card">
+  <h2>10-Year Database</h2>
+  <div id="stats">Loading...</div>
+</div>
+
+<div class="card">
+  <h2>Quick Links</h2>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">
+    <a href="https://raw.githubusercontent.com/geraldkombo/mazzaroth/main/mazzaroth_exact.ics" style="background:#1a1a24;color:#ccc;padding:8px 16px;border-radius:8px;text-decoration:none;font-size:.9em">Download ICS Calendar</a>
+    <a href="https://raw.githubusercontent.com/geraldkombo/mazzaroth/main/Mazzaroth_Engine_Data/mazzaroth_master_log.csv" style="background:#1a1a24;color:#ccc;padding:8px 16px;border-radius:8px;text-decoration:none;font-size:.9em">Master Log CSV</a>
+    <a href="https://raw.githubusercontent.com/geraldkombo/mazzaroth/main/Mazzaroth_Engine_Data/high_leverage_windows.csv" style="background:#1a1a24;color:#ccc;padding:8px 16px;border-radius:8px;text-decoration:none;font-size:.9em">Top Windows CSV</a>
+  </div>
+</div>
+
+<script>
+function parseCSV(text) {
+  // Strip UTF-8 BOM
+  if (text.charCodeAt(0) === 0xFEFF) text = text.slice(1);
+  const rows = [];
+  let inQuote = false, field = '', line = [];
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (ch === '"') { inQuote = !inQuote; continue; }
+    if (ch === ',' && !inQuote) { line.push(field.trim()); field = ''; continue; }
+    if ((ch === '\n' || ch === '\r') && !inQuote) {
+      if (field.trim() || line.length) { line.push(field.trim()); rows.push(line); }
+      field = ''; line = [];
+      if (ch === '\r' && text[i + 1] === '\n') i++;
+      continue;
+    }
+    field += ch;
+  }
+  if (field.trim() || line.length) { line.push(field.trim()); rows.push(line); }
+  if (!rows.length) return [];
+  const headers = rows[0];
+  return rows.slice(1).map(r => {
+    const o = {};
+    headers.forEach((h, i) => o[h] = (r[i] || '').trim());
+    return o;
+  }).filter(r => r[headers[0]]);
+}
+
+async function loadCSV(path) {
+  const r = await fetch(path);
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  const text = await r.text();
+  return parseCSV(text);
+}
+
+async function main() {
+  let db;
+  try {
+    db = await loadCSV('https://raw.githubusercontent.com/geraldkombo/mazzaroth/main/Mazzaroth_Engine_Data/mazzaroth_master_log.csv');
+  } catch(e) {
+    document.getElementById('sub').textContent = 'Failed to load data: ' + e.message;
+    return;
+  }
+  if (!db.length) { document.getElementById('sub').textContent = 'No data loaded'; return; }
+
+  // Stats
+  const all = db;
+  const peak = all.filter(e => e.Level === 'PEAK');
+  const vh = all.filter(e => e.Level === 'VERY HIGH');
+  const h = all.filter(e => e.Level === 'HIGH');
+  document.getElementById('stats').innerHTML =
+    `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center">
+      <div><div class="score-big" style="font-size:2em;color:#ff4444">${peak.length}</div><div class="meta">PEAK</div></div>
+      <div><div class="score-big" style="font-size:2em;color:#ff8800">${vh.length}</div><div class="meta">VERY HIGH</div></div>
+      <div><div class="score-big" style="font-size:2em;color:#44cc44">${h.length}</div><div class="meta">HIGH</div></div>
+      <div><div class="score-big" style="font-size:2em;color:#888">${all.length}</div><div class="meta">Total Events</div></div>
+      <div><div class="score-big" style="font-size:2em;color:#888">${Math.round(peak.length/all.length*100)}%</div><div class="meta">PEAK Rate</div></div>
+      <div><div class="score-big" style="font-size:2em;color:#888">${all.sort((a,b) => a.Date.localeCompare(b.Date)).pop()?.Date || '--'}</div><div class="meta">Last Entry</div></div>
+    </div>`;
+
+  // Upcoming PEAK days (next 10)
+  const today = new Date().toISOString().slice(0,10);
+  const upcoming = peak.filter(e => e.Date >= today).sort((a,b) => a.Date.localeCompare(b.Date)).slice(0,10);
+  if (upcoming.length) {
+    document.getElementById('peak-list').innerHTML = upcoming.map(e =>
+      `<div class="event peak">
+        <div class="dt">${e.Date}</div>
+        <div class="desc">${e.Transit} H${e.House}</div>
+        <div class="sc">Score: ${e.Score} &middot; ${e.Meaning ? e.Meaning.slice(0,80) : ''}</div>
+      </div>`
+    ).join('');
+  } else {
+    document.getElementById('peak-list').innerHTML = '<div class="meta">No upcoming PEAK days found</div>';
+  }
+
+  function cssLevel(lvl) {
+    const m = { 'PEAK':'peak', 'VERY HIGH':'vhigh', 'HIGH':'high', 'NORMAL':'normal' };
+    return m[lvl] || 'normal';
+  }
+
+  // Current score (latest day in DB)
+  const latest = all.filter(e => e.Date === today).sort((a,b) => parseFloat(b.Score) - parseFloat(a.Score));
+  if (latest.length) {
+    const top = latest[0];
+    const lvl = top.Level || 'NORMAL';
+    const el = document.getElementById('score');
+    el.textContent = parseFloat(top.Score).toFixed(0);
+    el.className = 'score-big ' + cssLevel(lvl);
+    document.getElementById('meta').textContent = `${top.Transit} H${top.House} | ${lvl}`;
+  } else {
+    const allSorted = [...all].sort((a,b) => parseFloat(b.Score) - parseFloat(a.Score));
+    if (allSorted.length) {
+      const top = allSorted[0];
+      const lvl = top.Level || 'NORMAL';
+      const el = document.getElementById('score');
+      el.textContent = parseFloat(top.Score).toFixed(0);
+      el.className = 'score-big ' + cssLevel(lvl);
+      document.getElementById('meta').textContent = `All-time high: ${top.Transit} H${top.House} on ${top.Date}`;
+    }
+  }
+
+  document.getElementById('sub').textContent =
+    `Private Dashboard &middot; ${all.length} events &middot; ${new Date().toISOString().slice(0,10)}`;
+}
+main();
+</script>
+</body>
+</html>
