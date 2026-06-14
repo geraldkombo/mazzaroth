@@ -79,6 +79,11 @@ tr:last-child td{border-bottom:none}
   <a onclick="showTab('houses')">13 Houses</a>
 </div>
 
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;padding:6px 8px;background:var(--card);border:1px solid var(--border);border-radius:6px;font-size:10px;color:var(--dim)">
+  <span><span class="badge peak">PEAK</span> = Highest intensity. Major transits. Decisive moments.</span>
+  <span><span class="badge vhigh">VERY HIGH</span> = Strong energy. Important developments.</span>
+  <span><span class="badge high">HIGH</span> = Notable activity. Pay attention.</span>
+</div>
 <div id="tab-today" class="tab"></div>
 <div id="tab-hourly" class="tab" style="display:none"></div>
 <div id="tab-calendar" class="tab" style="display:none"></div>
@@ -355,12 +360,12 @@ function getAdvice(transit, house, level) {
     Plu:'Go deep. Transform. What needs to die so something new can be born?'
   };
   const p2do = {
-    Sun:'Let your authentic self be seen. Don't hide your light.',
-    Moon:'Honor your feelings. They're valid, even if inconvenient.',
+    Sun:`Let your authentic self be seen. Don't hide your light.`,
+    Moon:`Honor your feelings. They're valid, even if inconvenient.`,
     Merc:'Think before you speak. Words have extra weight now.',
     Ven:'Open your heart. Let yourself receive love and value.',
     Mars:'Channel anger into action. Move your body. Release the pressure.',
-    Jup:'Trust the expansion. Good things are coming. Don't block them.',
+    Jup:`Trust the expansion. Good things are coming. Don't block them.`,
     Sat:'Respect the process. Discipline now = freedom later.',
     Ura:'Embrace the change. The disruption is making room for better.',
     Nep:'Trust your vision. Not everything needs to be explained.',
@@ -536,7 +541,7 @@ function renderWealth() {
   let html = `
   <div class="card" style="text-align:center;padding:24px">
     <div style="font-size:42px;font-weight:700;color:var(--gold)">${w.score.toFixed(0)}</div>
-    <div class="dim" style="font-size:12px">${w.patterns}/8 Billionaire Patterns Active</div>
+    <div class="dim" style="font-size:12px">${w.patterns}/8 Wealth Patterns Active</div>
     <div style="margin-top:8px"><span class="badge" style="background:#44cc4418;color:var(--high);border:1px solid #44cc4430">${w.verdict}</span></div>
   </div>
   <div class="card">
