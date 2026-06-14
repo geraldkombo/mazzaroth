@@ -58,7 +58,7 @@ tr:last-child td{border-bottom:none}
 <div class="container">
 
 <h1>MAZZAROTH</h1>
-<div class="sub">Gerald Kombo &middot; 1989-09-13 Nairobi &middot; Profection H11</div>
+
 
 <div class="bar" id="top-nav">
   <a class="on" onclick="showTab('today')">Today</a>
@@ -248,17 +248,81 @@ function showDay(date) {
   const db = D.database;
   const day = db.find(d => d.date === date);
   if (!day || !day.events.length) return;
-  let html = `<div class="card">
-    <h2>${date} ${badge(day.max_level)}</h2>
-    <table><tr><th>Transit</th><th>House</th><th class="r">Score</th><th>Level</th></tr>`;
-  day.events.forEach(e => {
-    html += `<tr><td style="font-size:11px">${e.transit}</td><td>H${e.house}</td>
-      <td class="r">${e.score.toFixed(0)}</td><td>${badge(e.level)}</td></tr>`;
+  let html = `<div class="card" style="text-align:center;padding:20px">
+    <div style="font-size:24px;font-weight:700;color:#fff">${date}</div>
+    <div style="margin-top:6px">${badge(day.max_level)} &middot; Score ${day.max_score.toFixed(0)}</div>
+  </div>`;
+  day.events.forEach((e,i) => {
+    const advice = getAdvice(e.transit, e.house, e.level);
+    html += `<div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <span class="mono" style="color:var(--accent);font-weight:500">${e.transit}</span>
+        <span>${badge(e.level)}</span>
+      </div>
+      <div style="display:flex;gap:8px;font-size:11px;color:var(--dim);margin-bottom:8px">
+        <span>H${e.house} &middot; ${HOUSE_NAMES[e.house]}</span>
+      </div>
+      <div style="font-size:13px;line-height:1.7;color:var(--text);padding:8px 0;border-top:1px solid var(--border)">${advice}</div>
+    </div>`;
   });
-  html += `</table><div style="margin-top:10px">
+  html += `<div style="text-align:center;margin-top:6px">
     <a onclick="renderCalendar()" style="cursor:pointer;color:var(--accent);font-size:12px">&larr; Back to calendar</a>
-  </div></div>`;
+  </div>`;
   document.getElementById('tab-calendar').innerHTML = html;
+}
+
+function getAdvice(transit, house, level) {
+  const p = transit.match(/^(\w+)\s+(\w+)\s+(\w+)/);
+  if (!p) return `This transit activates H${house} — ${HOUSE_NAMES[house]}. Act with awareness.`;
+  const [, p1, asp, p2] = p;
+  const aspMap = {
+    'Conj':'Conjunction — a merging, a beginning, a seed planted.',
+    'Sq':'Square — tension, friction, forced growth. The obstacle is the way.',
+    'Tri':'Trine — ease, flow, talent activation. Grace arrives without effort.',
+    'Sex':'Sextile — opportunity knocking. A door opens, step through.',
+    'Opp':'Opposition — reflection, balance, the other. What you resist teaches you.',
+    'SS':'Semi-Sextile — subtle nudge. Small shifts prepare the ground.',
+    'QS':'Quincunx — adjustment required. Something must realign.'
+  };
+  const aspectDesc = aspMap[asp] || `Aspect — pay attention to this configuration.`;
+
+  const arch = {
+    Sun:'Sun — your core identity, your will, your light. This is about who you are.',
+    Moon:'Moon — your emotions, intuition, habits. How you feel shapes your reality.',
+    Merc:'Mercury — your mind, communication, decisions. Words carry weight now.',
+    Ven:'Venus — your values, relationships, what you attract. Love and worth intertwine.',
+    Mars:'Mars — your drive, action, ambition. Energy demands an outlet.',
+    Jup:'Jupiter — expansion, luck, wisdom. Growth finds you. Do not shrink.',
+    Sat:'Saturn — structure, discipline, karma. What you build now must last.',
+    Ura:'Uranus — disruption, liberation, innovation. The old breaks so the new fits.',
+    Nep:'Neptune — dreams, illusion, transcendence. Reality dissolves. Seek truth.',
+    Plu:'Pluto — transformation, power, depth. You are being remade.'
+  };
+  const p1d = arch[p1] || `${p1} — this planetary force acts.`;
+  const p2d = arch[p2] || `${p2} — this planetary force responds.`;
+
+  const houseAdvice = {
+    1:'This touches your identity. Ask: who am I becoming?',
+    2:'Your resources and self-worth are activated. Money and value are mirrors.',
+    3:'Communication, ideas, siblings, writing. Your voice is the instrument.',
+    4:'Home, family, roots. What is beneath you, what holds you.',
+    5:'Creativity, romance, joy, risk. Play is not trivial — it is essential.',
+    6:'Health, daily work, routines, service. Small disciplines compound.',
+    7:'Partnerships, contracts, marriage. The other is your teacher.',
+    8:'Sex, intimacy, shared resources, transformation. Depth demands courage.',
+    9:'Philosophy, travel, publishing, meaning. Expand your horizon.',
+    10:'Career, reputation, legacy. The world watches your next move.',
+    11:'Friends, networks, community, hopes. Your people are your power.',
+    12:'Solitude, spirituality, retreat, subconscious. Silence reveals.',
+    13:'Ophiuchus — healing, higher service, synthesis. You are the bridge.'
+  };
+  const ha = houseAdvice[house] || `H${house} is activated. Respond accordingly.`;
+
+  const levelPrefix = level === 'PEAK' ? 'This is a PEAK transit — the energy is at maximum intensity. ' :
+                      level === 'VERY HIGH' ? 'This transit is very strong. The effect will be pronounced. ' :
+                      level === 'HIGH' ? 'This transit is active and noticeable. ' : '';
+
+  return `${levelPrefix}${p1d} ${p2d} ${aspectDesc} ${ha}`;
 }
 
 function jumpToDate() {
