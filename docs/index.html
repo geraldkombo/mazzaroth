@@ -2,390 +2,364 @@
 <html lang="en">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Mazzaroth — Daily Oracle</title>
+<script src="data/daily.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#06060c;--card:#0c0c18;--border:#1a1a2e;--text:#c8c8d4;--dim:#666680;--accent:#7c5cfc;--peak:#ff4444;--vhigh:#ff8800;--high:#44cc44;--gold:#ffd700}
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;line-height:1.6;padding:0;min-height:100vh}
-.container{max-width:880px;margin:0 auto;padding:32px 20px}
-/* Header */
-.header{margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--border)}
-.header h1{font-size:28px;font-weight:700;color:#fff;letter-spacing:-0.5px}
-.header .sub{color:var(--dim);font-size:13px;margin-top:4px}
-.header .badge-row{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
-.badge{padding:3px 10px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.3px;text-transform:uppercase}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;line-height:1.6;min-height:100vh}
+.container{max-width:960px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;font-weight:700;color:#fff;letter-spacing:-0.3px}
+.sub{color:var(--dim);font-size:12px;margin:2px 0 12px}
+.bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.bar a{color:var(--dim);text-decoration:none;font-size:11px;padding:3px 10px;border-radius:4px;border:1px solid var(--border);cursor:pointer}
+.bar a:hover,.bar a.on{color:#fff;border-color:var(--accent);background:#7c5cfc10}
+.badge{display:inline-block;padding:2px 8px;border-radius:3px;font-size:10px;font-weight:600;letter-spacing:0.3px;text-transform:uppercase}
 .badge.peak{background:#ff444418;color:var(--peak);border:1px solid #ff444430}
 .badge.vhigh{background:#ff880018;color:var(--vhigh);border:1px solid #ff880030}
 .badge.high{background:#44cc4418;color:var(--high);border:1px solid #44cc4430}
-.badge.normal{background:#66668018;color:var(--dim);border:1px solid #66668030}
-.badge.gold{background:#ffd70018;color:var(--gold);border:1px solid #ffd70030}
-.badge.accent{background:#7c5cfc18;color:var(--accent);border:1px solid #7c5cfc30}
-/* Cards */
-.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px}
-.card h2{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:var(--dim);margin-bottom:16px}
-.card h3{font-size:13px;font-weight:600;color:#fff;margin:16px 0 8px}
-.card h3:first-child{margin-top:0}
-/* Score */
-.score-hero{text-align:center;padding:32px 20px}
-.score-hero .number{font-size:56px;font-weight:700;letter-spacing:-2px;line-height:1}
-.score-hero .number.peak{color:var(--peak)}
-.score-hero .number.vhigh{color:var(--vhigh)}
-.score-hero .number.high{color:var(--high)}
-.score-hero .number.normal{color:var(--dim)}
-.score-hero .label{font-size:13px;color:var(--dim);margin-top:8px}
-.score-hero .strategy{font-size:16px;color:#fff;font-weight:500;margin-top:16px}
-.score-hero .actions{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
-.score-hero .actions span{background:var(--border);padding:4px 12px;border-radius:20px;font-size:12px;color:var(--text)}
-/* Tables */
-table{width:100%;border-collapse:collapse;font-size:13px}
-th{text-align:left;padding:8px 10px;color:var(--dim);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid var(--border)}
-td{padding:7px 10px;border-bottom:1px solid #1a1a2e80}
+.badge.normal{color:var(--dim)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px}
+.card h2{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:var(--dim);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;padding:5px 8px;color:var(--dim);font-weight:500;font-size:9px;text-transform:uppercase;letter-spacing:0.6px;border-bottom:1px solid var(--border)}
+td{padding:4px 8px;border-bottom:1px solid #1a1a2e40}
 tr:last-child td{border-bottom:none}
-td.score{font-weight:600;font-family:'JetBrains Mono',monospace;font-size:13px;text-align:right}
-td.peak{color:var(--peak)}
-td.vhigh{color:var(--vhigh)}
-td.high{color:var(--high)}
-.mono{font-family:'JetBrains Mono',monospace;font-size:12px}
-/* Grid */
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-.stat-box{text-align:center;padding:16px;background:#08081a;border-radius:8px;border:1px solid var(--border)}
-.stat-box .num{font-size:24px;font-weight:700;font-family:'JetBrains Mono',monospace;color:#fff}
-.stat-box .lbl{font-size:11px;color:var(--dim);margin-top:4px;text-transform:uppercase;letter-spacing:0.5px}
-/* House list */
-.house-item{padding:10px 14px;margin-bottom:6px;background:#08081a;border-radius:8px;border-left:3px solid var(--border);transition:0.15s}
-.house-item:hover{border-left-color:var(--accent);background:#0c0c1e}
-.house-item .top{display:flex;justify-content:space-between;align-items:center}
-.house-item .hnum{font-weight:600;color:#fff;font-size:13px}
-.house-item .hname{color:var(--dim);font-size:12px}
-.house-item .hscore{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600}
-.house-item .haspects{margin-top:4px;font-size:11px;color:#555}
-/* Collapsible */
-details{background:#08081a;border-radius:8px;border:1px solid var(--border);margin-bottom:8px}
-details summary{padding:12px 14px;cursor:pointer;font-weight:500;color:#fff;font-size:13px;list-style:none;display:flex;justify-content:space-between;align-items:center}
-details summary::-webkit-details-marker{display:none}
-details summary:after{content:'+';color:var(--dim);font-size:16px;font-weight:300}
-details[open] summary:after{content:'\u2212'}
-details .content{padding:0 14px 14px;font-size:12px}
-details .content table{margin:0}
-details .content td{padding:4px 8px;font-size:12px}
-/* Footer */
-.footer{text-align:center;padding:32px 0;color:var(--dim);font-size:11px;letter-spacing:0.5px;border-top:1px solid var(--border);margin-top:32px}
+.r{text-align:right;font-family:'JetBrains Mono',monospace;font-weight:500}
+.mono{font-family:'JetBrains Mono',monospace;font-size:11px}
+.grid{display:grid;gap:8px}.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.stat{padding:10px;text-align:center;background:#08081a;border-radius:6px;border:1px solid var(--border)}
+.stat .n{font-size:20px;font-weight:700;font-family:'JetBrains Mono',monospace;color:#fff}
+.stat .l{font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:0.5px;margin-top:2px}
+.area{padding:8px 12px;margin-bottom:4px;background:#08081a;border-radius:6px;border-left:3px solid var(--border)}
+.area .t{display:flex;justify-content:space-between;align-items:center}
+.area .hn{font-weight:600;color:#fff;font-size:12px;min-width:28px}
+.area .nm{color:var(--dim);font-size:11px;flex:1}
+.area .sc{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600}
+.area .as{font-size:10px;color:#555;margin-top:2px}
+.dim{color:var(--dim)}
+#hourly-bar{display:flex;gap:2px;overflow-x:auto;padding:8px 0}
+.hour-block{flex:0 0 auto;width:36px;text-align:center;padding:4px 0;border-radius:4px;cursor:pointer;font-size:10px}
+.hour-block .h{color:var(--dim)}
+.hour-block .s{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600}
+.hour-block.peak{background:#ff444415}.hour-block.vhigh{background:#ff880015}.hour-block.high{background:#44cc4415}
+.date-nav{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px}
+.date-nav a{padding:2px 8px;border-radius:3px;font-size:11px;color:var(--dim);border:1px solid var(--border);cursor:pointer;text-decoration:none}
+.date-nav a:hover,.date-nav a.on{color:#fff;border-color:var(--accent)}
+#day-picker{background:var(--card);border:1px solid var(--border);padding:8px;border-radius:6px;margin-bottom:10px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+#day-picker input{background:#08081a;border:1px solid var(--border);color:#fff;padding:4px 8px;border-radius:4px;font-size:12px;font-family:'JetBrains Mono',monospace}
+#day-picker button{background:var(--accent);color:#fff;border:none;padding:4px 12px;border-radius:4px;cursor:pointer;font-size:11px}
+.footer{text-align:center;padding:20px 0;color:var(--dim);font-size:10px;border-top:1px solid var(--border);margin-top:16px}
 .footer a{color:var(--accent);text-decoration:none}
-.highlight{color:var(--gold);font-weight:600}
-.quote{border-left:2px solid var(--accent);padding:8px 14px;margin:12px 0;background:#08081a;border-radius:0 6px 6px 0;font-size:13px;color:#b8b8d0}
-@media(max-width:640px){.grid-2,.grid-3{grid-template-columns:1fr}}
+@media(max-width:600px){.g2,.g3{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="container">
 
-<!-- HEADER -->
-<div class="header">
-  <h1>MAZZAROTH</h1>
-  <div class="sub">The Daily Oracle &middot; Gerald Kombo &middot; 1989-09-13 03:50 UTC Nairobi &middot; Profection H11</div>
-  <div class="badge-row">
-    <span class="badge peak">PEAK</span>
-    <span class="badge gold">Wealth 599</span>
-    <span class="badge accent">7/8 Patterns</span>
-    <span class="badge normal">H11 Year</span>
-    <span class="badge normal">986 Events</span>
-  </div>
+<h1>MAZZAROTH</h1>
+<div class="sub">Gerald Kombo &middot; 1989-09-13 Nairobi &middot; Profection H11</div>
+
+<div class="bar" id="top-nav">
+  <a class="on" onclick="showTab('today')">Today</a>
+  <a onclick="showTab('hourly')">Hourly</a>
+  <a onclick="showTab('calendar')">Calendar</a>
+  <a onclick="showTab('database')">Database</a>
+  <a onclick="showTab('areas')">Life Areas</a>
+  <a onclick="showTab('wealth')">Wealth</a>
+  <a onclick="showTab('audit')">Audit</a>
+  <a onclick="showTab('houses')">13 Houses</a>
 </div>
 
-<!-- SCORE HERO -->
-<div class="card score-hero">
-  <div class="number peak">5,909</div>
-  <div class="label">PEAK &middot; 2026-06-14 20:54 UTC</div>
-  <div class="strategy">Bold decisions now.</div>
-  <div class="actions">
-    <span>Make the major move</span>
-    <span>Act on what you delayed</span>
-    <span>Build something that lasts</span>
-  </div>
-</div>
-
-<!-- TOP TRANSITS -->
-<div class="card">
-  <h2>Active Aspects</h2>
-  <table>
-    <tr><th>Transit</th><th style="text-align:right">Score</th></tr>
-    <tr><td>Moon Sq natal Sun (0.477deg)</td><td class="score peak">210.0</td></tr>
-    <tr><td>Neptune Sq natal Neptune (5.860deg)</td><td class="score">171.5</td></tr>
-    <tr><td>Pluto // natal Neptune decl (0.938deg)</td><td class="score">168.0</td></tr>
-    <tr><td>Sun Tri natal N.Node (0.969deg)</td><td class="score">162.0</td></tr>
-    <tr><td>Sun Sq natal Sun (2.965deg)</td><td class="score">157.5</td></tr>
-    <tr><td>Venus Sq natal Venus (0.403deg)</td><td class="score">151.2</td></tr>
-    <tr><td>Neptune // natal N.Node decl (0.312deg)</td><td class="score">151.2</td></tr>
-    <tr><td>Neptune Sq natal Uranus (2.425deg)</td><td class="score">147.0</td></tr>
-  </table>
-</div>
-
-<!-- DATABASE SNAPSHOT -->
-<div class="card">
-  <h2>10-Year Database</h2>
-  <div class="grid-3">
-    <div class="stat-box"><div class="num" style="color:var(--peak)">198</div><div class="lbl">PEAK</div></div>
-    <div class="stat-box"><div class="num" style="color:var(--vhigh)">197</div><div class="lbl">VERY HIGH</div></div>
-    <div class="stat-box"><div class="num" style="color:var(--high)">591</div><div class="lbl">HIGH</div></div>
-  </div>
-  <div class="grid-2" style="margin-top:8px">
-    <div class="stat-box"><div class="num">986</div><div class="lbl">Total Events</div></div>
-    <div class="stat-box"><div class="num" style="color:var(--gold)">20.1%</div><div class="lbl">PEAK Rate</div></div>
-  </div>
-</div>
-
-<!-- WEALTH -->
-<div class="card">
-  <h2>Wealth Intelligence</h2>
-  <div class="grid-3">
-    <div class="stat-box"><div class="num">599</div><div class="lbl">Wealth Score</div></div>
-    <div class="stat-box"><div class="num" style="color:var(--gold)">7/8</div><div class="lbl">Billionaire Patterns</div></div>
-    <div class="stat-box"><div class="num" style="color:var(--high)">FAVORABLE</div><div class="lbl">Investment Verdict</div></div>
-  </div>
-  <h3>Natal Blueprint</h3>
-  <table>
-    <tr><th>Planet</th><th>House</th><th>Role</th></tr>
-    <tr><td>Mercury</td><td>H2 Finances</td><td>Mercury-H3 Deal Maker — negotiation, information arbitrage</td></tr>
-    <tr><td>Venus</td><td>H2 Finances</td><td>Venus-Jupiter Amplifier — money through relationships</td></tr>
-    <tr><td>Mars</td><td>H2 Finances</td><td>Mars-H2 Money Warrior — aggressive wealth building</td></tr>
-  </table>
-  <h3>Active Patterns</h3>
-  <table>
-    <tr><th>Pattern</th><th>Trigger</th></tr>
-    <tr><td>Jupiter-Saturn Bridge</td><td class="mono">N.Node Tri natal Jupiter</td></tr>
-    <tr><td>Pluto Wealth Transformer</td><td class="mono">Mars Opp natal Pluto</td></tr>
-    <tr><td>Venus-Jupiter Amplifier</td><td class="mono">N.Node Tri natal Venus</td></tr>
-    <tr><td>Uranus H11 Network Disruptor</td><td class="mono">N.Node Sxt natal Uranus</td></tr>
-    <tr><td>Mars-H2 Money Warrior</td><td class="mono">Jupiter Sxt natal Mars</td></tr>
-    <tr><td>Neptune Brand Visionary</td><td class="mono">Mercury Sxt natal Sun</td></tr>
-    <tr><td>Mercury-H3 Deal Maker</td><td class="mono">Pluto Tri natal Mercury</td></tr>
-  </table>
-  <div class="quote">Investment window open. Jupiter sextile Mars H2 — opportunity, act.</div>
-</div>
-
-<!-- LIFE AREAS -->
-<div class="card">
-  <h2>Life Areas — Sorted by Intensity</h2>
-  <div class="house-item">
-    <div class="top">
-      <div><span class="hnum">H2</span> <span class="hname">Finances, Values, Self-Worth</span></div>
-      <div class="hscore" style="color:#fff">1,340</div>
-    </div>
-    <div class="haspects">Sun Sq Mars &middot; Moon Sq Mars &middot; Venus Sq Venus &middot; Mars Tri Mars &middot; Jupiter Sq Venus</div>
-  </div>
-  <div class="house-item">
-    <div class="top">
-      <div><span class="hnum">H7</span> <span class="hname">Partnerships, Marriage, Contracts</span></div>
-      <div class="hscore" style="color:#fff">1,232</div>
-    </div>
-    <div class="haspects">Sun Tri Moon &middot; Sun Tri N.Node &middot; Moon Tri Moon &middot; Moon Tri N.Node &middot; Mercury Qnx Moon</div>
-  </div>
-  <div class="house-item">
-    <div class="top">
-      <div><span class="hnum">H6</span> <span class="hname">Health, Daily Work, Routines, Service</span></div>
-      <div class="hscore" style="color:#fff">1,173</div>
-    </div>
-    <div class="haspects">Venus Qnx Uranus &middot; Saturn Sq Saturn &middot; Saturn Sq Neptune &middot; Uranus BQnt Saturn &middot; Uranus Qnx Uranus</div>
-  </div>
-  <div class="house-item">
-    <div class="top">
-      <div><span class="hnum">H1</span> <span class="hname">Identity, Self-Image, Personal Brand</span></div>
-      <div class="hscore">718</div>
-    </div>
-    <div class="haspects">Sun Sq Sun &middot; Moon Sq Sun &middot; Mercury Sxt Sun &middot; Mars Tri Sun &middot; Pluto SqSq Sun</div>
-  </div>
-  <div class="house-item">
-    <div class="top">
-      <div><span class="hnum">H3</span> <span class="hname">Communication, Siblings, Writing</span></div>
-      <div class="hscore">553</div>
-    </div>
-    <div class="haspects">Moon BQnt Pluto &middot; Mercury Tri Pluto &middot; Mars Opp Pluto &middot; Saturn Qnx Pluto &middot; Sun SqSq H3 cusp</div>
-  </div>
-  <div class="house-item">
-    <div class="top">
-      <div><span class="hnum">H4</span> <span class="hname">Home, Family, Roots, Emotional Foundation</span></div>
-      <div class="hscore">503</div>
-    </div>
-    <div class="haspects">Mercury SqSq H4 cusp &middot; Venus Tri H4 cusp &middot; Jupiter Tri H4 cusp &middot; Uranus Opp H4 cusp &middot; Neptune Tri H4 cusp</div>
-  </div>
-  <div class="house-item">
-    <div class="top">
-      <div><span class="hnum">H12</span> <span class="hname">Solitude, Spirituality, Retreat, Subconscious</span></div>
-      <div class="hscore">420</div>
-    </div>
-    <div class="haspects">Saturn Sq Jupiter &middot; Neptune Sq Jupiter &middot; Pluto Qnx Jupiter &middot; N.Node Tri Jupiter &middot; Chiron Sq Jupiter</div>
-  </div>
-  <div class="house-item">
-    <div class="top">
-      <div><span class="hnum">H11</span> <span class="hname">Friends, Networks, Community, Hopes</span></div>
-      <div class="hscore">412</div>
-    </div>
-    <div class="haspects">Venus Sxt Chiron &middot; Mars Conj Chiron &middot; Jupiter Sxt Chiron &middot; Saturn SSq Chiron &middot; Uranus Conj Chiron</div>
-  </div>
-  <div class="house-item">
-    <div class="top">
-      <div><span class="hnum">H5</span> <span class="hname">Creativity, Romance, Children, Risk</span></div>
-      <div class="hscore">314</div>
-    </div>
-    <div class="haspects">Venus Tri H5 cusp &middot; Saturn Tri H5 cusp &middot; Uranus Opp H5 cusp &middot; Neptune Tri H5 cusp &middot; Pluto Sxt H5 cusp</div>
-  </div>
-  <div class="house-item">
-    <div class="top">
-      <div><span class="hnum">H9</span> <span class="hname">Philosophy, Travel, Higher Education, Publishing</span></div>
-      <div class="hscore">254</div>
-    </div>
-    <div class="haspects">Sun Sq H9 cusp &middot; Venus Tri H9 cusp &middot; Jupiter Tri H9 cusp &middot; Uranus Sxt H9 cusp &middot; Neptune Conj H9 cusp</div>
-  </div>
-  <div class="house-item">
-    <div class="top">
-      <div><span class="hnum">H13</span> <span class="hname">Ophiuchus — Healing, Higher Service, Synthesis</span></div>
-      <div class="hscore">243</div>
-    </div>
-    <div class="haspects">Venus Conj H13 cusp &middot; Jupiter Conj H13 cusp &middot; Uranus Sxt H13 cusp &middot; Neptune Tri H13 cusp &middot; Pluto Opp H13 cusp</div>
-  </div>
-  <div class="house-item">
-    <div class="top">
-      <div><span class="hnum">H8</span> <span class="hname">Sex, Intimacy, Shared Resources, Transformation</span></div>
-      <div class="hscore">206</div>
-    </div>
-    <div class="haspects">Sun Tri H8 cusp &middot; Jupiter Qnx H8 cusp &middot; Saturn SSq H8 cusp &middot; Uranus Sq H8 cusp &middot; N.Node Conj H8 cusp</div>
-  </div>
-  <div class="house-item">
-    <div class="top">
-      <div><span class="hnum">H10</span> <span class="hname">Career, Reputation, Public Life, Legacy</span></div>
-      <div class="hscore">200</div>
-    </div>
-    <div class="haspects">Sun Sxt H10 cusp &middot; Venus Sq H10 cusp &middot; Jupiter Sq H10 cusp</div>
-  </div>
-</div>
-
-<!-- UPCOMING -->
-<div class="card">
-  <h2>Upcoming Windows</h2>
-  <table>
-    <tr><th>Date</th><th>Event</th><th style="text-align:right">Score</th></tr>
-    <tr><td>2026-07-06</td><td>Neptune Sq Neptune H6</td><td class="score peak">4,877</td></tr>
-  </table>
-</div>
-
-<!-- 13-HOUSE SYSTEM -->
-<div class="card">
-  <h2>The 13-House System — Architecture</h2>
-  <details>
-    <summary>House Cusps &amp; Domains</summary>
-    <div class="content">
-      <table>
-        <tr><th>House</th><th>Constellation</th><th>Cusp</th><th>Domain</th></tr>
-        <tr><td>H1</td><td>Leo</td><td class="mono">138.2deg</td><td>Identity, Self-Image, Personal Brand</td></tr>
-        <tr><td>H2</td><td>Virgo</td><td class="mono">174.0deg</td><td>Finances, Values, Self-Worth</td></tr>
-        <tr><td>H3</td><td>Libra</td><td class="mono">218.0deg</td><td>Communication, Siblings, Writing</td></tr>
-        <tr><td>H4</td><td>Scorpius</td><td class="mono">241.0deg</td><td>Home, Family, Roots</td></tr>
-        <tr><td>H5</td><td>Ophiuchus</td><td class="mono">248.0deg</td><td>Creativity, Romance, Pleasure</td></tr>
-        <tr><td>H6</td><td>Sagittarius</td><td class="mono">266.5deg</td><td>Health, Daily Work, Service</td></tr>
-        <tr><td>H7</td><td>Capricornus</td><td class="mono">300.0deg</td><td>Partnerships, Marriage, Contracts</td></tr>
-        <tr><td>H8</td><td>Aquarius</td><td class="mono">327.5deg</td><td>Sex, Intimacy, Shared Resources</td></tr>
-        <tr><td>H9</td><td>Pisces</td><td class="mono">0.0deg</td><td>Philosophy, Travel, Publishing</td></tr>
-        <tr><td>H10</td><td>Aries</td><td class="mono">27.0deg</td><td>Career, Reputation, Legacy</td></tr>
-        <tr><td>H11</td><td>Taurus</td><td class="mono">53.5deg</td><td>Friends, Networks, Hopes</td></tr>
-        <tr><td>H12</td><td>Gemini</td><td class="mono">90.4deg</td><td>Solitude, Spirituality, Subconscious</td></tr>
-        <tr><td>H13</td><td>Cancer</td><td class="mono">118.1deg</td><td>Ophiuchus — Healing, Higher Service</td></tr>
-      </table>
-    </div>
-  </details>
-  <details>
-    <summary>Scoring System</summary>
-    <div class="content">
-      <p style="margin-bottom:8px"><strong>Formula:</strong> House Score = SUM of (Base_Score &times; Orb_Precision &times; Planet_Weight &times; House_Weight) + Cusp_Activation</p>
-      <table>
-        <tr><th>Class</th><th>Houses</th><th>Weight</th></tr>
-        <tr><td>Angular</td><td>H1, H4, H7, H10</td><td><strong>2.0x</strong></td></tr>
-        <tr><td>Succedent</td><td>H2, H5, H8, H11</td><td><strong>1.5x</strong></td></tr>
-        <tr><td>Cadent</td><td>H3, H6, H9, H12</td><td><strong>1.0x</strong></td></tr>
-        <tr><td>Ophiuchus</td><td>H13</td><td><strong>1.0x</strong></td></tr>
-      </table>
-    </div>
-  </details>
-  <details>
-    <summary>Planetary Weights</summary>
-    <div class="content">
-      <table>
-        <tr><th>Planet</th><th>Weight</th><th></th><th>Planet</th><th>Weight</th></tr>
-        <tr><td>Pluto</td><td><strong>4.0</strong></td><td></td><td>Mars</td><td><strong>1.5</strong></td></tr>
-        <tr><td>Neptune</td><td><strong>3.5</strong></td><td></td><td>Sun</td><td><strong>1.5</strong></td></tr>
-        <tr><td>Uranus</td><td><strong>3.0</strong></td><td></td><td>Mercury</td><td><strong>1.2</strong></td></tr>
-        <tr><td>Saturn</td><td><strong>2.5</strong></td><td></td><td>Venus</td><td><strong>1.2</strong></td></tr>
-        <tr><td>Jupiter</td><td><strong>2.0</strong></td><td></td><td>Moon</td><td><strong>1.0</strong></td></tr>
-        <tr><td>N.Node</td><td><strong>1.8</strong></td><td></td><td>Chiron</td><td><strong>1.5</strong></td></tr>
-      </table>
-    </div>
-  </details>
-  <details>
-    <summary>Aspect Types &amp; Orbs</summary>
-    <div class="content">
-      <table>
-        <tr><th>Aspect</th><th>Angle</th><th>Max Orb</th><th>Base Score</th></tr>
-        <tr><td>Conjunction</td><td class="mono">0deg</td><td>8.0</td><td>10</td></tr>
-        <tr><td>Opposition</td><td class="mono">180deg</td><td>8.0</td><td>8</td></tr>
-        <tr><td>Square</td><td class="mono">90deg</td><td>7.0</td><td>7</td></tr>
-        <tr><td>Trine</td><td class="mono">120deg</td><td>7.0</td><td>6</td></tr>
-        <tr><td>Sextile</td><td class="mono">60deg</td><td>5.0</td><td>4</td></tr>
-        <tr><td>Quincunx</td><td class="mono">150deg</td><td>3.0</td><td>3</td></tr>
-        <tr><td>Semi-Square</td><td class="mono">45deg</td><td>2.0</td><td>2</td></tr>
-        <tr><td>Sesquiquadrate</td><td class="mono">135deg</td><td>2.0</td><td>2</td></tr>
-        <tr><td>Quintile</td><td class="mono">72deg</td><td>2.0</td><td>2</td></tr>
-        <tr><td>Bi-Quintile</td><td class="mono">144deg</td><td>2.0</td><td>2</td></tr>
-      </table>
-    </div>
-  </details>
-</div>
-
-<!-- NATAL CHART -->
-<div class="card">
-  <h2>Natal Chart — Gerald Kombo</h2>
-  <table>
-    <tr><th>Body</th><th>Longitude</th><th>Declination</th><th>Constellation</th></tr>
-    <tr><td>Sun</td><td class="mono">170.5deg</td><td class="mono">+3.77deg</td><td>Leo</td></tr>
-    <tr><td>Moon</td><td class="mono">318.6deg</td><td class="mono">-15.89deg</td><td>Capricornus</td></tr>
-    <tr><td>Mercury</td><td class="mono">190.6deg</td><td class="mono">-7.94deg</td><td>Virgo</td></tr>
-    <tr><td>Venus</td><td class="mono">210.9deg</td><td class="mono">-12.44deg</td><td>Libra</td></tr>
-    <tr><td>Mars</td><td class="mono">176.0deg</td><td class="mono">+2.41deg</td><td>Virgo</td></tr>
-    <tr><td>Jupiter</td><td class="mono">97.8deg</td><td class="mono">+22.92deg</td><td>Gemini</td></tr>
-    <tr><td>Saturn</td><td class="mono">277.4deg</td><td class="mono">-22.75deg</td><td>Capricornus</td></tr>
-    <tr><td>Uranus</td><td class="mono">271.5deg</td><td class="mono">-23.70deg</td><td>Capricornus</td></tr>
-    <tr><td>Neptune</td><td class="mono">279.8deg</td><td class="mono">-22.18deg</td><td>Capricornus</td></tr>
-    <tr><td>Pluto</td><td class="mono">223.3deg</td><td class="mono">-1.13deg</td><td>Scorpius</td></tr>
-    <tr><td>N.Node</td><td class="mono">324.4deg</td><td class="mono">0.00deg</td><td>Aquarius</td></tr>
-    <tr><td>Chiron</td><td class="mono">57.3deg</td><td class="mono">0.00deg</td><td>Taurus</td></tr>
-  </table>
-</div>
-
-<!-- DAILY LOG -->
-<div class="card">
-  <h2>Daily Entry Log</h2>
-  <table>
-    <tr><th>Date</th><th>Level</th><th>Score</th><th>Top Transit</th><th>Rating</th></tr>
-    <tr><td>2026-06-12</td><td class="peak">PEAK</td><td>6,158</td><td>Neptune Sq Neptune H6</td><td>4/5</td></tr>
-    <tr><td>2026-06-14</td><td class="peak">PEAK</td><td>5,909</td><td>Moon Sq Sun H7</td><td>--</td></tr>
-  </table>
-</div>
-
-<!-- ENGINE CONFIG -->
-<div class="card">
-  <h2>Engine Configuration</h2>
-  <div class="grid-2">
-    <div class="stat-box"><div class="num" style="font-size:14px">DE421</div><div class="lbl">Ephemeris</div></div>
-    <div class="stat-box"><div class="num" style="font-size:14px">13</div><div class="lbl">Houses</div></div>
-    <div class="stat-box"><div class="num" style="font-size:14px">12</div><div class="lbl">Bodies</div></div>
-    <div class="stat-box"><div class="num" style="font-size:14px">10</div><div class="lbl">Aspects</div></div>
-  </div>
-</div>
+<div id="tab-today" class="tab"></div>
+<div id="tab-hourly" class="tab" style="display:none"></div>
+<div id="tab-calendar" class="tab" style="display:none"></div>
+<div id="tab-database" class="tab" style="display:none"></div>
+<div id="tab-areas" class="tab" style="display:none"></div>
+<div id="tab-wealth" class="tab" style="display:none"></div>
+<div id="tab-audit" class="tab" style="display:none"></div>
+<div id="tab-houses" class="tab" style="display:none"></div>
 
 <div class="footer">
-  Mazzaroth v3 &middot; Production Grade &middot; Self-Tuning System<br>
-  <a href="https://github.com/geraldkombo/mazzaroth">github.com/geraldkombo/mazzaroth</a>
+  Mazzaroth v3 &middot; <a href="https://github.com/geraldkombo/mazzaroth">github.com/geraldkombo/mazzaroth</a>
 </div>
 
 </div>
+
+<script>
+const D = window.MD;
+const LV = { PEAK:'peak', 'VERY HIGH':'vhigh', HIGH:'high', NORMAL:'normal' };
+const HOUSE_NAMES = {
+  1:'Identity, Self-Image, Personal Brand', 2:'Finances, Values, Self-Worth',
+  3:'Communication, Siblings, Writing', 4:'Home, Family, Roots',
+  5:'Creativity, Romance, Pleasure, Risk', 6:'Health, Daily Work, Routines, Service',
+  7:'Partnerships, Marriage, Contracts', 8:'Sex, Intimacy, Shared Resources, Transformation',
+  9:'Philosophy, Travel, Publishing', 10:'Career, Reputation, Legacy',
+  11:'Friends, Networks, Community, Hopes', 12:'Solitude, Spirituality, Retreat, Subconscious',
+  13:'Ophiuchus — Healing, Higher Service, Synthesis'
+};
+const CUSPS = {1:'Leo 138.2',2:'Virgo 174.0',3:'Libra 218.0',4:'Scorpius 241.0',5:'Ophiuchus 248.0',
+  6:'Sagittarius 266.5',7:'Capricornus 300.0',8:'Aquarius 327.5',9:'Pisces 0.0',
+  10:'Aries 27.0',11:'Taurus 53.5',12:'Gemini 90.4',13:'Cancer 118.1'};
+
+function showTab(id) {
+  document.querySelectorAll('.tab').forEach(t => t.style.display='none');
+  document.querySelectorAll('.bar a').forEach(a => a.classList.remove('on'));
+  document.getElementById('tab-'+id).style.display='block';
+  document.querySelector(`.bar a[onclick*="'${id}'"]`)?.classList.add('on');
+  renderTab(id);
+}
+
+function renderTab(id) {
+  if (id==='today') renderToday();
+  else if (id==='hourly') renderHourly();
+  else if (id==='calendar') renderCalendar();
+  else if (id==='database') renderDatabase();
+  else if (id==='areas') renderAreas();
+  else if (id==='wealth') renderWealth();
+  else if (id==='audit') renderAudit();
+  else if (id==='houses') renderHouses();
+}
+
+function badge(lvl) {
+  const cls = LV[lvl] || 'normal';
+  return `<span class="badge ${cls}">${lvl}</span>`;
+}
+
+function renderToday() {
+  const h = D.today_hourly;
+  const latest = h.hourly.filter(x => x.score > 0).pop() || h.hourly[0];
+  const peakCount = h.hourly.filter(x => x.level==='PEAK').length;
+  const vhCount = h.hourly.filter(x => x.level==='VERY HIGH').length;
+  const hiCount = h.hourly.filter(x => x.level==='HIGH').length;
+
+  let html = `
+  <div class="card" style="text-align:center;padding:28px 16px">
+    <div style="font-size:48px;font-weight:700;letter-spacing:-1px;color:var(--peak)">${latest.score.toLocaleString()}</div>
+    <div class="dim" style="font-size:12px;margin-top:4px">${h.date} &middot; ${badge(latest.level)}</div>
+    <div style="font-size:15px;color:#fff;font-weight:500;margin-top:10px">${latest.top_transit}</div>
+  </div>
+  <div class="card">
+    <h2>Today's Score by Hour</h2>
+    <div id="hourly-bar">`;
+  h.hourly.forEach(x => {
+    const cls = LV[x.level] || '';
+    html += `<div class="hour-block ${cls}" title="${x.time} - ${x.score} (${x.level})">
+      <div class="h">${x.time}</div>
+      <div class="s">${x.score.toFixed(0)}</div>
+    </div>`;
+  });
+  html += `</div></div>
+  <div class="card">
+    <h2>Today Summary</h2>
+    <div class="g3 grid" style="margin-top:6px">
+      <div class="stat"><div class="n" style="color:var(--peak)">${peakCount}</div><div class="l">PEAK Hours</div></div>
+      <div class="stat"><div class="n" style="color:var(--vhigh)">${vhCount}</div><div class="l">VH Hours</div></div>
+      <div class="stat"><div class="n" style="color:var(--high)">${hiCount}</div><div class="l">HIGH Hours</div></div>
+    </div>
+  </div>`;
+
+  // Next PEAK day
+  const db = D.database;
+  const today = h.date;
+  const upcoming = db.filter(d => d.date > today && d.max_level === 'PEAK').slice(0,5);
+  if (upcoming.length) {
+    html += `<div class="card"><h2>Next PEAK Days</h2><table><tr><th>Date</th><th>Event</th><th class="r">Score</th></tr>`;
+    upcoming.forEach(d => {
+      const e = d.events[0];
+      html += `<tr><td>${d.date}</td><td>${e ? e.transit : '--'}</td><td class="r" style="color:var(--peak)">${d.max_score.toLocaleString()}</td></tr>`;
+    });
+    html += `</table></div>`;
+  }
+
+  document.getElementById('tab-today').innerHTML = html;
+}
+
+function renderHourly() {
+  const h = D.today_hourly;
+  let html = `<div class="card"><h2>Hourly Breakdown — ${h.date}</h2><table><tr><th>Time</th><th>Score</th><th>Level</th><th>Top Transit</th></tr>`;
+  h.hourly.forEach(x => {
+    html += `<tr><td class="mono">${x.time}</td>
+      <td class="r">${x.score.toFixed(0)}</td>
+      <td>${badge(x.level)}</td>
+      <td style="font-size:11px">${x.top_transit}</td></tr>`;
+  });
+  html += `</table></div>`;
+  document.getElementById('tab-hourly').innerHTML = html;
+}
+
+function renderCalendar() {
+  const db = D.database;
+  const peaks = db.filter(d => d.max_level === 'PEAK');
+  const vhs = db.filter(d => d.max_level === 'VERY HIGH');
+  const his = db.filter(d => d.max_level === 'HIGH');
+  let html = `
+  <div class="card">
+    <h2>Browse All Days</h2>
+    <div id="day-picker">
+      <input type="date" id="date-input" onchange="jumpToDate()">
+      <button onclick="jumpToDate()">Go</button>
+    </div>
+  </div>
+  <div class="card">
+    <h2>High-Impact Days (${peaks.length + vhs.length + his.length})</h2>
+    <div class="g3 grid" style="margin-bottom:10px">
+      <div class="stat"><div class="n" style="color:var(--peak)">${peaks.length}</div><div class="l">PEAK</div></div>
+      <div class="stat"><div class="n" style="color:var(--vhigh)">${vhs.length}</div><div class="l">VERY HIGH</div></div>
+      <div class="stat"><div class="n" style="color:var(--high)">${his.length}</div><div class="l">HIGH</div></div>
+    </div>
+    <div class="date-nav">`;
+  const years = [...new Set(db.map(d => d.date.slice(0,4)))].sort();
+  years.forEach(y => {
+    html += `<a onclick="filterYear('${y}')">${y}</a>`;
+  });
+  html += `</div><div id="calendar-list"></div></div>`;
+  document.getElementById('tab-calendar').innerHTML = html;
+  window._allDays = db;
+  window._filter = '';
+  renderCalendarList();
+}
+
+function filterYear(y) {
+  window._filter = y;
+  document.querySelectorAll('.date-nav a').forEach(a => a.classList.remove('on'));
+  event.target.classList.add('on');
+  renderCalendarList();
+}
+
+function renderCalendarList() {
+  const db = window._allDays;
+  const f = window._filter;
+  const items = f ? db.filter(d => d.date.startsWith(f)) : db.slice(0,100);
+  let html = '<table><tr><th>Date</th><th>Score</th><th>Level</th><th>Events</th></tr>';
+  items.forEach(d => {
+    if (d.event_count === 0) return;
+    html += `<tr onclick="showDay('${d.date}')" style="cursor:pointer">
+      <td class="mono">${d.date}</td>
+      <td class="r">${d.max_score.toFixed(0)}</td>
+      <td>${badge(d.max_level)}</td>
+      <td style="font-size:11px">${d.events.map(e => e.transit).join(', ')}</td></tr>`;
+  });
+  html += '</table>';
+  document.getElementById('calendar-list').innerHTML = html;
+}
+
+function showDay(date) {
+  const db = D.database;
+  const day = db.find(d => d.date === date);
+  if (!day || !day.events.length) return;
+  let html = `<div class="card">
+    <h2>${date} ${badge(day.max_level)}</h2>
+    <table><tr><th>Transit</th><th>House</th><th class="r">Score</th><th>Level</th></tr>`;
+  day.events.forEach(e => {
+    html += `<tr><td style="font-size:11px">${e.transit}</td><td>H${e.house}</td>
+      <td class="r">${e.score.toFixed(0)}</td><td>${badge(e.level)}</td></tr>`;
+  });
+  html += `</table><div style="margin-top:10px">
+    <a onclick="renderCalendar()" style="cursor:pointer;color:var(--accent);font-size:12px">&larr; Back to calendar</a>
+  </div></div>`;
+  document.getElementById('tab-calendar').innerHTML = html;
+}
+
+function jumpToDate() {
+  const val = document.getElementById('date-input').value;
+  if (val) showDay(val);
+}
+
+function renderDatabase() {
+  const db = D.database;
+  const peaks = db.filter(d => d.max_level === 'PEAK');
+  const vhs = db.filter(d => d.max_level === 'VERY HIGH');
+  const his = db.filter(d => d.max_level === 'HIGH');
+  const total = db.length;
+  let html = `
+  <div class="card">
+    <h2>10-Year Database (${total} days with events)</h2>
+    <div class="g3 grid">
+      <div class="stat"><div class="n" style="color:var(--peak)">${peaks.length}</div><div class="l">PEAK Days</div></div>
+      <div class="stat"><div class="n" style="color:var(--vhigh)">${vhs.length}</div><div class="l">VERY HIGH</div></div>
+      <div class="stat"><div class="n" style="color:var(--high)">${his.length}</div><div class="l">HIGH Days</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>All PEAK Days</h2>
+    <table><tr><th>Date</th><th>Score</th><th>Transit</th></tr>`;
+  peaks.forEach(d => {
+    const e = d.events[0];
+    html += `<tr><td class="mono">${d.date}</td><td class="r" style="color:var(--peak)">${d.max_score.toFixed(0)}</td>
+      <td style="font-size:11px">${e ? e.transit : ''}</td></tr>`;
+  });
+  html += `</table></div>`;
+  document.getElementById('tab-database').innerHTML = html;
+}
+
+function renderAreas() {
+  const areas = D.areas;
+  let html = `<div class="card"><h2>All Life Areas — Today</h2>`;
+  areas.forEach(a => {
+    const cls = a.house === 2 ? 'color:var(--gold)' : a.house === 7 ? 'color:#ff6b9d' : a.house === 6 ? 'color:#81c784' : '';
+    html += `<div class="area" style="border-left-color:${cls ? cls.split(':')[1] : 'var(--border)'}">
+      <div class="t">
+        <span class="hn">H${a.house}</span>
+        <span class="nm">${a.name}</span>
+        <span class="sc" style="${cls}">${a.score.toFixed(0)}</span>
+      </div>
+      <div class="as">${a.aspects.join(' &middot; ')}</div>
+    </div>`;
+  });
+  html += `</div>`;
+  document.getElementById('tab-areas').innerHTML = html;
+}
+
+function renderWealth() {
+  const w = D.wealth;
+  let html = `
+  <div class="card" style="text-align:center;padding:24px">
+    <div style="font-size:42px;font-weight:700;color:var(--gold)">${w.score.toFixed(0)}</div>
+    <div class="dim" style="font-size:12px">Wealth Score &middot; ${w.patterns}/8 Billionaire Patterns Active</div>
+    <div style="margin-top:8px"><span class="badge" style="background:#44cc4418;color:var(--high);border:1px solid #44cc4430">VERDICT: ${w.verdict}</span></div>
+  </div>
+  <div class="card">
+    <h2>Natal Wealth Blueprint</h2>
+    <table><tr><th>Planet</th><th>Role</th></tr>`;
+  w.natal.forEach(n => {
+    html += `<tr><td class="mono">${n.split(' — ')[0]}</td><td style="font-size:11px">${n.split(' — ')[1] || n}</td></tr>`;
+  });
+  html += `</table></div>`;
+  document.getElementById('tab-wealth').innerHTML = html;
+}
+
+function renderAudit() {
+  const a = D.audit;
+  let html = `<div class="card"><h2>Ground Truth Audit (${a.length} entries)</h2>`;
+  if (!a.length) {
+    html += `<div class="dim">No audit entries yet. Rate outcomes with: python mazz.py audit rate 1-5 "tag"</div>`;
+  } else {
+    html += `<table><tr><th>Date</th><th>Score</th><th>Level</th><th>Outcome</th><th>Tag</th></tr>`;
+    a.forEach(e => {
+      html += `<tr><td class="mono">${e.date}</td><td class="r">${e.score}</td>
+        <td>${badge(e.level)}</td><td class="r" style="color:${parseInt(e.outcome) >= 4 ? 'var(--high)' : 'var(--peak)'}">${e.outcome}/5</td>
+        <td style="font-size:11px">${e.tag}</td></tr>`;
+    });
+    html += `</table>`;
+  }
+  html += `</div>`;
+  document.getElementById('tab-audit').innerHTML = html;
+}
+
+function renderHouses() {
+  let html = `<div class="card"><h2>The 13-House System</h2>
+    <table><tr><th>House</th><th>Constellation</th><th>Cusp</th><th>Domain</th></tr>`;
+  for (let h = 1; h <= 13; h++) {
+    html += `<tr><td>H${h}</td><td>${CUSPS[h].split(' ')[0]}</td><td class="mono">${CUSPS[h].split(' ')[1]}</td>
+      <td style="font-size:11px">${HOUSE_NAMES[h]}</td></tr>`;
+  }
+  html += `</table></div>`;
+  document.getElementById('tab-houses').innerHTML = html;
+}
+
+// Initial render
+renderToday();
+</script>
 </body>
 </html>
