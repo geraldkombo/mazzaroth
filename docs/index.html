@@ -304,95 +304,101 @@ function renderHourly() {
   const act = h.hourly.filter(x => hourAction(x)==='ACT');
   const plan = h.hourly.filter(x => hourAction(x)==='PLAN');
   const rest = h.hourly.filter(x => hourAction(x)==='REST' && x.score>0);
+  const zero = h.hourly.filter(x => x.score===0);
   let html = `<div class="card">
-    <h2>Full Hourly Guide — ${h.date}</h2>
-    ${act.length ? `<div style="margin-bottom:10px;padding:6px 8px;background:#44cc4408;border-left:2px solid var(--high);border-radius:4px">
-      <div style="color:var(--high);font-weight:600;font-size:11px">ACT — ${act.map(x=>x.time).join(', ')}</div>
-      <div class="dim" style="font-size:10px;margin-top:2px">Highest energy. Make decisions, pitch, create, take bold action.</div>
-    </div>` : ''}
-    ${plan.length ? `<div style="margin-bottom:10px;padding:6px 8px;background:#7c5cfc08;border-left:2px solid var(--accent);border-radius:4px">
-      <div style="color:var(--accent);font-weight:600;font-size:11px">PLAN — ${plan.map(x=>x.time).join(', ')}</div>
-      <div class="dim" style="font-size:10px;margin-top:2px">Moderate energy. Plan, organize, research, have conversations.</div>
-    </div>` : ''}
-    ${rest.length ? `<div style="margin-bottom:10px;padding:6px 8px;background:#66668008;border-left:2px solid var(--dim);border-radius:4px">
-      <div style="color:var(--dim);font-weight:600;font-size:11px">REST — ${rest.map(x=>x.time).join(', ')}</div>
-      <div class="dim" style="font-size:10px;margin-top:2px">Low energy. Recharge, routine work, reflect. Avoid major decisions.</div>
-    </div>` : ''}
-    ${h.hourly.filter(x=>x.score===0).length ? `<div class="dim" style="font-size:10px;margin-top:4px">${h.hourly.filter(x=>x.score===0).length} hours with no active transits.</div>` : ''}
-  </div>
-  <div class="card">
-    <h2>Hourly Table</h2>
-    <table><tr><th>Time</th><th>Score</th><th>Level</th><th>Advice</th><th>Transit</th></tr>`;
+    <h2>Your Hour-by-Hour Action Plan — ${h.date}</h2>`;
   h.hourly.forEach(x => {
     const cat = hourAction(x);
-    const catColor = cat==='ACT' ? 'var(--high)' : cat==='PLAN' ? 'var(--accent)' : 'var(--dim)';
-    html += `<tr><td class="mono">${x.time}</td>
-      <td class="r">${x.score.toFixed(0)}</td>
-      <td>${badge(x.level)}</td>
-      <td style="color:${catColor};font-weight:600;font-size:10px">${cat}</td>
-      <td style="font-size:10px">${x.top_transit||'--'}</td></tr>`;
+    const c = cat==='ACT' ? 'var(--high)' : cat==='PLAN' ? 'var(--accent)' : 'var(--dim)';
+    const bg = cat==='ACT' ? '#44cc4408' : cat==='PLAN' ? '#7c5cfc08' : '#66668008';
+    const border = cat==='ACT' ? 'var(--high)' : cat==='PLAN' ? 'var(--accent)' : 'var(--dim)';
+    const action = x.score >= 3700 ? 'Make bold moves. Decide. Pitch. Start something.' :
+                   x.score >= 3400 ? 'Push forward. Have the conversation. Take the step.' :
+                   x.score >= 3100 ? 'Prepare. Plan. Research. Organize your next move.' :
+                   x.score > 0 ? 'Rest. Do routine work. Reflect. Avoid major decisions.' :
+                   'No active transits. Quiet hour. Use for rest or deep work.';
+    html += `<div style="display:flex;align-items:center;gap:8px;padding:5px 8px;margin-bottom:3px;background:${bg};border-left:2px solid ${border};border-radius:4px">
+      <span class="mono" style="font-size:10px;color:var(--dim);min-width:36px">${x.time}</span>
+      <span style="font-size:10px;color:${c};font-weight:600;min-width:32px">${cat}</span>
+      <span style="font-size:10px;color:var(--text);flex:1">${action}</span>
+      ${x.top_transit ? `<span style="font-size:9px;color:var(--accent)">${x.top_transit}</span>` : ''}
+    </div>`;
   });
-  html += `</table></div>`;
+  html += `</div>`;
   document.getElementById('tab-hourly').innerHTML = html;
 }
 
 function renderCalendar() {
   const db = D.database;
-  const peaks = db.filter(d => d.max_level === 'PEAK');
-  const vhs = db.filter(d => d.max_level === 'VERY HIGH');
-  const his = db.filter(d => d.max_level === 'HIGH');
+  const all = [...new Set(db.map(d => d.date))].sort();
+  const today = D.today_hourly.date;
+  const years = [...new Set(all.map(d => d.slice(0,4)))].sort();
+  window._calAll = db;
+  window._calYears = years;
+  window._calYear = today.slice(0,4);
+  window._calMonth = today.slice(5,7);
   let html = `<div class="card">
     <h2>Browse All Days</h2>
-    <div id="day-picker">
+    <div id="day-picker" style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
       <input type="date" id="date-input" onchange="jumpToDate()">
       <button onclick="jumpToDate()">Go</button>
     </div>
     <div id="day-result" style="margin-top:6px;font-size:11px;color:var(--dim)"></div>
   </div>
-  <div class="card">
-    <h2>High-Impact Days (${peaks.length + vhs.length + his.length})</h2>
-    <div class="g3 grid" style="margin-bottom:10px">
-      <div class="stat"><div class="n" style="color:var(--peak)">${peaks.length}</div><div class="l">PEAK</div></div>
-      <div class="stat"><div class="n" style="color:var(--vhigh)">${vhs.length}</div><div class="l">VERY HIGH</div></div>
-      <div class="stat"><div class="n" style="color:var(--high)">${his.length}</div><div class="l">HIGH</div></div>
+  <div class="card" id="cal-card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <a onclick="calPrev()" style="cursor:pointer;color:var(--accent);font-size:13px">&larr;</a>
+      <span id="cal-header" style="font-weight:600;color:#fff;font-size:13px"></span>
+      <a onclick="calNext()" style="cursor:pointer;color:var(--accent);font-size:13px">&rarr;</a>
     </div>
-    <div class="date-nav">`;
-  const years = [...new Set(db.map(d => d.date.slice(0,4)))].sort();
-  years.forEach(y => {
-    html += `<a onclick="filterYear(event,'${y}')">${y}</a>`;
-  });
-  html += `</div><div id="calendar-list"></div></div>`;
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;font-size:9px;text-align:center;margin-bottom:4px">
+      <span class="dim">Mon</span><span class="dim">Tue</span><span class="dim">Wed</span><span class="dim">Thu</span><span class="dim">Fri</span><span class="dim">Sat</span><span class="dim">Sun</span>
+    </div>
+    <div id="cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px"></div>
+  </div>`;
   document.getElementById('tab-calendar').innerHTML = html;
-  window._allDays = db;
-  window._filter = '';
-  renderCalendarList();
+  calRender();
 }
 
-function filterYear(ev, y) {
-  window._filter = y;
-  document.querySelectorAll('.date-nav a').forEach(a => a.classList.remove('on'));
-  ev.target.classList.add('on');
-  renderCalendarList();
-}
-
-function renderCalendarList() {
-  const db = window._allDays;
-  const f = window._filter;
-  const items = f ? db.filter(d => d.date.startsWith(f) && d.event_count>0) : db.filter(d => d.event_count>0).slice(0,100);
-  if (!items.length) {
-    document.getElementById('calendar-list').innerHTML = '<div class="dim" style="padding:10px;text-align:center;font-size:11px">No high-impact days in this period.</div>';
-    return;
+function calRender() {
+  const y = window._calYear;
+  const m = window._calMonth;
+  const db = window._calAll;
+  document.getElementById('cal-header').textContent = new Date(y,m-1,1).toLocaleString('en',{month:'long',year:'numeric'});
+  const first = new Date(y,m-1,1).getDay();
+  const daysInMonth = new Date(y,m,0).getDate();
+  const offset = first === 0 ? 6 : first - 1;
+  let html = '';
+  for (let i = 0; i < offset; i++) html += '<div></div>';
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dateStr = `${y}-${m.padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const entry = db.find(x => x.date === dateStr);
+    const lvl = entry ? entry.max_level : '';
+    const score = entry ? entry.max_score : 0;
+    const bg = lvl === 'PEAK' ? 'var(--peak)' : lvl === 'VERY HIGH' ? 'var(--vhigh)' : lvl === 'HIGH' ? 'var(--high)' : entry ? 'var(--card)' : 'transparent';
+    const txt = lvl ? '#fff' : 'var(--dim)';
+    const title = entry && entry.event_count > 0 ? `${dateStr}: ${score.toFixed(0)} ${lvl}` : dateStr;
+    html += `<div onclick="showDay('${dateStr}')" title="${title}" style="cursor:pointer;padding:4px 2px;text-align:center;border-radius:3px;background:${bg};color:${txt};font-size:10px;font-weight:${lvl?'600':'400'}">${d}</div>`;
   }
-  let html = '<table><tr><th>Date</th><th>Score</th><th>Level</th><th>Events</th></tr>';
-  items.forEach(d => {
-    html += `<tr onclick="showDay('${d.date}')" style="cursor:pointer">
-      <td class="mono">${d.date}</td>
-      <td class="r">${d.max_score.toFixed(0)}</td>
-      <td>${badge(d.max_level)}</td>
-      <td style="font-size:10px">${d.events.map(e => e.transit).join(', ')}</td></tr>`;
-  });
-  html += '</table>';
-  document.getElementById('calendar-list').innerHTML = html;
+  document.getElementById('cal-grid').innerHTML = html;
+}
+
+function calPrev() {
+  let y = parseInt(window._calYear);
+  let m = parseInt(window._calMonth) - 1;
+  if (m < 1) { m = 12; y--; }
+  window._calYear = String(y);
+  window._calMonth = String(m).padStart(2,'0');
+  calRender();
+}
+
+function calNext() {
+  let y = parseInt(window._calYear);
+  let m = parseInt(window._calMonth) + 1;
+  if (m > 12) { m = 1; y++; }
+  window._calYear = String(y);
+  window._calMonth = String(m).padStart(2,'0');
+  calRender();
 }
 
 function showDay(date) {
