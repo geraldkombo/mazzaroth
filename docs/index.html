@@ -240,17 +240,57 @@ function renderToday() {
 
   const db = D.database;
   const td = h.date;
-  const upcoming = db.filter(d => d.date > td && d.date <= daysFrom(td, 90) && d.max_level === 'PEAK').slice(0,10);
-  if (upcoming.length) {
-    html += `<div class="card"><h2>Next PEAK Days (next 90 days)</h2><table><tr><th>Date</th><th>Event</th><th class="r">Score</th></tr>`;
-    upcoming.forEach(d => {
-      const e = d.events[0];
-      html += `<tr><td>${d.date}</td><td style="font-size:11px">${e ? e.transit : '--'}</td><td class="r" style="color:var(--peak)">${d.max_score.toFixed(0)}</td></tr>`;
-    });
-    html += `</table></div>`;
+  const nextEvent = db.filter(d => d.date > td && d.event_count > 0).sort((a,b) => a.date.localeCompare(b.date)).slice(0,1)[0];
+  const nextPeak = db.filter(d => d.date > td && d.max_level === 'PEAK').sort((a,b) => a.date.localeCompare(b.date)).slice(0,1)[0];
+
+  if (nextEvent) {
+    const daysUntil = Math.round((new Date(nextEvent.date) - new Date(td)) / 86400000);
+    const isPeak = nextEvent.max_level === 'PEAK';
+    const e = nextEvent.events[0];
+    html += `<div class="card">
+      <h2>What's Next — ${daysUntil === 1 ? 'Tomorrow' : daysUntil + ' days from now'}</h2>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <div style="font-size:28px;font-weight:700;color:${isPeak ? 'var(--peak)' : 'var(--vhigh)'}">${nextEvent.max_score.toFixed(0)}</div>
+        <div><div class="mono" style="font-size:13px;color:var(--accent)">${e ? e.transit : ''}</div>
+        <div style="font-size:10px;color:var(--dim)">${nextEvent.date} &middot; ${badge(nextEvent.max_level)} &middot; H${e ? e.house : '?'}</div>
+        <div style="font-size:10px;color:var(--dim);margin-top:2px">${e ? e.meaning||'' : ''}</div></div>
+      </div>
+      <div style="margin-top:6px;font-size:11px;padding-top:6px;border-top:1px solid var(--border)">
+        ${isPeak ? `<b style="color:var(--peak)">PEAK ALERT</b> — ` : ''}Prepare now. ${getPrep(e ? e.transit : '', e ? e.house : 1)}
+      </div>
+    </div>`;
+  }
+
+  if (nextPeak && (!nextEvent || nextPeak.date !== nextEvent.date)) {
+    const daysUntil = Math.round((new Date(nextPeak.date) - new Date(td)) / 86400000);
+    const e = nextPeak.events[0];
+    html += `<div class="card">
+      <h2>Next PEAK Day — ${nextPeak.date} (${daysUntil} days)</h2>
+      <div class="mono" style="color:var(--peak);font-size:12px">${e ? e.transit : ''} &middot; Score ${nextPeak.max_score.toFixed(0)}</div>
+      <div style="margin-top:4px;font-size:10px;color:var(--dim)">${e ? e.meaning||'' : ''}</div>
+    </div>`;
   }
 
   document.getElementById('tab-today').innerHTML = html;
+}
+
+function getPrep(transit, house) {
+  const h = {
+    1:'Get clear on who you need to be. Set intentions for how you will show up.',
+    2:'Review your finances. Have your numbers ready. Be ready to make a move.',
+    3:'Prepare your message. Write the draft. Plan the conversation.',
+    4:'Set your home environment for stability. Reduce distractions.',
+    5:'Plan your creative move. Have materials ready. Give yourself permission.',
+    6:'Lock in your routines. Sleep, hydration, movement — have the foundation ready.',
+    7:'Reach out now. Lay groundwork with key partners before the intensity hits.',
+    8:'Prepare to go deep. Clear your schedule for reflection.',
+    9:'Gather information. Read, research, prepare your perspective.',
+    10:'Ready your work. Have your deliverables prepared. The spotlight is coming.',
+    11:'Activate your network now. One conversation today sets up the PEAK.',
+    12:'Clear your mind. Rest now so you are sharp when the energy hits.',
+    13:'Prepare to serve. Have your offering ready.'
+  };
+  return h[house] || 'Clear your schedule. Rest. Be ready to act when the energy peaks.';
 }
 
 function daysFrom(d, n) {
@@ -540,7 +580,8 @@ function renderDatabase() {
   const his = db.filter(d => d.max_level === 'HIGH');
   const total = db.filter(d => d.event_count > 0).length;
   const today = D.today_hourly.date;
-  const nPeaks = peaks.filter(d => d.date > today && d.date <= daysFrom(today, 365)).slice(0,10);
+  const nPeaks = peaks.filter(d => d.date > today && d.date <= daysFrom(today, 30)).slice(0,10);
+  const recentPeaks = peaks.filter(d => d.date <= today).sort((a,b) => b.date.localeCompare(a.date)).slice(0,30);
 
   let html = `<div class="card">
     <h2>10-Year Database (${total} days with events)</h2>
@@ -550,22 +591,24 @@ function renderDatabase() {
       <div class="stat"><div class="n" style="color:var(--high)">${his.length}</div><div class="l">HIGH Days</div></div>
     </div>
   </div>
-  ${nPeaks.length ? `<div class="card"><h2>Upcoming PEAK Days (next 12 months)</h2>
+  ${nPeaks.length ? `<div class="card"><h2>Upcoming PEAK Days (next 30 days)</h2>
     ${nPeaks.map(d => {
       const e = d.events[0];
       return `<div class="action do"><span class="label">PREP</span><span><b>${d.date}</b> — ${e ? e.transit : 'PEAK'} (Score ${d.max_score.toFixed(0)}). ${e ? e.meaning||'' : ''}</span></div>`;
     }).join('')}
-  </div>` : ''}
+  </div>` : `<div class="card"><div class="dim" style="text-align:center;padding:8px;font-size:11px">No PEAK days in the next 30 days.</div></div>`}
   <div class="card">
-    <h2>All PEAK Days (${peaks.length})</h2>
+    <h2>Recent PEAK Days (last 30)</h2>
     <table><tr><th>Date</th><th>Score</th><th>Transit</th><th>Meaning</th></tr>`;
-  peaks.slice(0,200).forEach(d => {
+  recentPeaks.forEach(d => {
     const e = d.events[0];
     html += `<tr><td class="mono">${d.date}</td><td class="r" style="color:var(--peak)">${d.max_score.toFixed(0)}</td>
       <td style="font-size:10px">${e ? e.transit : ''}</td>
       <td style="font-size:10px;color:var(--dim)">${e ? (e.meaning||'') : ''}</td></tr>`;
   });
-  html += `</table></div>`;
+  html += `</table>
+    <div class="dim" style="font-size:9px;margin-top:6px">${peaks.length} total PEAK days in 10-year database. Showing last 30.</div>
+  </div>`;
   document.getElementById('tab-database').innerHTML = html;
 }
 
