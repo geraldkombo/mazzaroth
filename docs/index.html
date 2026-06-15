@@ -77,6 +77,7 @@ tr:last-child td{border-bottom:none}
   <a onclick="showTab('wealth')">Wealth</a>
   <a onclick="showTab('audit')">Audit</a>
   <a onclick="showTab('houses')">13 Houses</a>
+  <a onclick="showTab('stats')">Stats</a>
 </div>
 
 <div style="margin-bottom:12px;padding:8px 10px;background:var(--card);border:1px solid var(--border);border-radius:6px;font-size:10px;color:var(--dim);line-height:1.7">
@@ -97,6 +98,7 @@ tr:last-child td{border-bottom:none}
 <div id="tab-wealth" class="tab" style="display:none"></div>
 <div id="tab-audit" class="tab" style="display:none"></div>
 <div id="tab-houses" class="tab" style="display:none"></div>
+<div id="tab-stats" class="tab" style="display:none"></div>
 
 <div class="footer">
   Mazzaroth v3 &middot; <a href="https://github.com/geraldkombo/mazzaroth">github.com/geraldkombo/mazzaroth</a>
@@ -137,6 +139,7 @@ function renderTab(id) {
   else if (id==='wealth') renderWealth();
   else if (id==='audit') renderAudit();
   else if (id==='houses') renderHouses();
+  else if (id==='stats') renderStats();
 }
 
 function badge(lvl) {
@@ -144,79 +147,105 @@ function badge(lvl) {
   return `<span class="badge ${cls}">${lvl}</span>`;
 }
 
+function hourAction(x) {
+  const s = x.score;
+  if (s >= 3700) return 'ACT';
+  if (s >= 3400) return 'ACT';
+  if (s >= 3100) return 'PLAN';
+  return 'REST';
+}
+
+function hourLabel(cat) {
+  if (cat === 'ACT') return '<span style="color:var(--high);font-weight:600">ACT</span> — Make decisions, take bold action, have important conversations.';
+  if (cat === 'PLAN') return '<span style="color:var(--accent);font-weight:600">PLAN</span> — Prepare, organize, research. Not the peak but energy is building.';
+  return '<span style="color:var(--dim)">REST</span> — Recharge, reflect, do routine work. Avoid major decisions.';
+}
+
 function renderToday() {
   const h = D.today_hourly;
-  const latest = h.hourly.filter(x => x.score > 0).pop() || h.hourly[0];
+  const active = h.hourly.filter(x => x.score > 0);
+  const latest = active.length ? active[active.length-1] : h.hourly[0];
   const peakCount = h.hourly.filter(x => x.level==='PEAK').length;
   const vhCount = h.hourly.filter(x => x.level==='VERY HIGH').length;
   const hiCount = h.hourly.filter(x => x.level==='HIGH').length;
-  const best = h.hourly.filter(x => x.level==='PEAK'||x.level==='VERY HIGH').slice(0,3);
-  const worst = h.hourly.filter(x => x.score>0).sort((a,b)=>a.score-b.score).slice(0,3);
-  const p = latest.top_transit.match(/^(\w+)\s+(\w+)\s+(\w+)/);
-  const todayAdvice = getAdvice(latest.top_transit, latest.house||1, latest.level);
+  const actHours = h.hourly.filter(x => hourAction(x)==='ACT');
+  const planHours = h.hourly.filter(x => hourAction(x)==='PLAN');
+  const restHours = h.hourly.filter(x => hourAction(x)==='REST' && x.score>0);
 
   const maxScore = 10000;
   const pct = Math.min(latest.score / maxScore * 100, 100);
-  const levelColor = latest.level === 'PEAK' ? 'var(--peak)' : latest.level === 'VERY HIGH' ? 'var(--vhigh)' : latest.level === 'HIGH' ? 'var(--high)' : 'var(--dim)';
-  const scoreDesc = latest.score >= 5000 ? 'Extremely rare. Multiple major planets in tight orb. Life-defining energy.' :
-                    latest.score >= 3700 ? 'PEAK intensity. Major transit active. What you decide now will compound for years.' :
-                    latest.score >= 3400 ? 'Strong energy. Important developments are in motion.' :
-                    latest.score >= 3100 ? 'Above-baseline activity. Pay attention to the house being triggered.' :
-                    'Baseline energy. A regular operational day.';
+  const lc = latest.level === 'PEAK' ? 'var(--peak)' : latest.level === 'VERY HIGH' ? 'var(--vhigh)' : latest.level === 'HIGH' ? 'var(--high)' : 'var(--dim)';
+  const scd = latest.score >= 5000 ? 'Extremely rare. Multiple major planets in tight orb. Life-defining energy.' :
+              latest.score >= 3700 ? 'PEAK intensity. Major transit active. What you decide now compounds for years.' :
+              latest.score >= 3400 ? 'Strong energy. Important developments in motion.' :
+              latest.score >= 3100 ? 'Above-baseline. Pay attention to the triggered house.' :
+              'Baseline energy. Regular operational day.';
+  const guide = getGuide(latest.top_transit, latest.house||1, latest.level);
 
-  let html = `
-  <div class="card" style="text-align:center;padding:24px 16px 20px">
+  let html = `<div class="card" style="text-align:center;padding:24px 16px 20px">
     <div class="dim" style="font-size:9px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">${h.date}</div>
-    <div style="font-size:40px;font-weight:700;letter-spacing:-1px;color:${levelColor}">${latest.score.toFixed(0)}</div>
+    <div style="font-size:40px;font-weight:700;letter-spacing:-1px;color:${lc}">${latest.score.toFixed(0)}</div>
     <div style="margin-top:4px">${badge(latest.level)}</div>
     <div style="margin:8px auto 0;max-width:300px;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
-      <div style="height:100%;width:${pct}%;background:${levelColor};border-radius:2px;transition:width 0.3s"></div>
+      <div style="height:100%;width:${pct}%;background:${lc};border-radius:2px"></div>
     </div>
-    <div style="font-size:10px;color:var(--dim);margin-top:4px">0 &mdash; 10,000</div>
-    <div style="font-size:11px;color:var(--text);margin-top:8px;line-height:1.5">${scoreDesc}</div>
-    <div style="font-size:13px;color:var(--accent);font-weight:500;margin-top:8px">${latest.top_transit}</div>
+    <div style="font-size:10px;color:var(--dim);margin-top:4px">0 &mdash; 10,000 &middot; Score</div>
+    <div style="font-size:11px;color:var(--text);margin-top:8px;line-height:1.5">${scd}</div>
+    ${latest.top_transit ? `<div style="font-size:12px;color:var(--accent);font-weight:500;margin-top:8px">${latest.top_transit}</div>` : ''}
   </div>
   <div class="card">
-    <h2>Today's Hourly Energy</h2>
+    <h2>Hour-by-Hour Guide</h2>
     <div id="hourly-bar">`;
   h.hourly.forEach(x => {
-    const cls = LV[x.level] || '';
-    html += `<div class="hour-block ${cls}" title="${x.time} - ${x.score} (${x.level})">
+    const cx = LV[x.level] || '';
+    html += `<div class="hour-block ${cx}" title="${x.time} - ${x.score.toFixed(0)} - ${hourAction(x)}">
       <div class="h">${x.time}</div>
       <div class="s">${x.score.toFixed(0)}</div>
     </div>`;
   });
   html += `</div>
-    <div class="g2 grid" style="margin-top:8px">
-      <div><div class="dim" style="font-size:9px;text-transform:uppercase;letter-spacing:0.5px">BEST Hours</div>
-        ${best.map(x=>`<span class="mono" style="color:var(--high);font-size:11px">${x.time}</span>`).join(', ')}
-      </div>
-      <div><div class="dim" style="font-size:9px;text-transform:uppercase;letter-spacing:0.5px">LOWEST Hours</div>
-        ${worst.map(x=>`<span class="mono" style="color:var(--dim);font-size:11px">${x.time}</span>`).join(', ')}
-      </div>
+    <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;font-size:10px">
+      <span style="color:var(--high)">■ ACT</span><span class="dim">Make moves</span>
+      <span style="color:var(--accent)">■ PLAN</span><span class="dim">Prepare</span>
+      <span style="color:var(--dim)">■ REST</span><span class="dim">Recharge</span>
     </div>
   </div>
   <div class="card">
+    <h2>When to Do What</h2>
+    ${actHours.length ? `<div style="margin-bottom:8px">
+      <div style="color:var(--high);font-weight:600;font-size:11px">ACT NOW — ${actHours.map(x=>x.time).join(', ')}</div>
+      <div class="dim" style="font-size:10px">Make decisions, take bold action, pitch, negotiate, start something.</div>
+    </div>` : ''}
+    ${planHours.length ? `<div style="margin-bottom:8px">
+      <div style="color:var(--accent);font-weight:600;font-size:11px">PREPARE — ${planHours.map(x=>x.time).join(', ')}</div>
+      <div class="dim" style="font-size:10px">Plan, organize, research, have conversations. Energy is building.</div>
+    </div>` : ''}
+    ${restHours.length ? `<div>
+      <div style="color:var(--dim);font-weight:600;font-size:11px">REST — ${restHours.map(x=>x.time).join(', ')}</div>
+      <div class="dim" style="font-size:10px">Recharge, do routine work, reflect. Avoid major decisions.</div>
+    </div>` : ''}
+  </div>
+  <div class="card">
     <h2>Today's Guide</h2>
-    <div>${todayAdvice}</div>
+    <div>${guide}</div>
   </div>
   <div class="card">
     <h2>Summary</h2>
     <div class="g3 grid" style="margin-top:6px">
-      <div class="stat"><div class="n" style="color:var(--peak)">${peakCount}</div><div class="l">PEAK Hours</div></div>
-      <div class="stat"><div class="n" style="color:var(--vhigh)">${vhCount}</div><div class="l">VH Hours</div></div>
-      <div class="stat"><div class="n" style="color:var(--high)">${hiCount}</div><div class="l">HIGH Hours</div></div>
+      <div class="stat"><div class="n" style="color:var(--high)">${actHours.length}</div><div class="l">ACT Hours</div></div>
+      <div class="stat"><div class="n" style="color:var(--accent)">${planHours.length}</div><div class="l">PLAN Hours</div></div>
+      <div class="stat"><div class="n" style="color:var(--dim)">${restHours.length}</div><div class="l">REST Hours</div></div>
     </div>
   </div>`;
 
   const db = D.database;
-  const today = h.date;
-  const upcoming = db.filter(d => d.date > today && d.max_level === 'PEAK').slice(0,5);
+  const td = h.date;
+  const upcoming = db.filter(d => d.date > td && d.date <= daysFrom(td, 90) && d.max_level === 'PEAK').slice(0,10);
   if (upcoming.length) {
-    html += `<div class="card"><h2>Prepare For These PEAK Days</h2><table><tr><th>Date</th><th>Key Event</th><th class="r">Score</th></tr>`;
+    html += `<div class="card"><h2>Next PEAK Days (next 90 days)</h2><table><tr><th>Date</th><th>Event</th><th class="r">Score</th></tr>`;
     upcoming.forEach(d => {
       const e = d.events[0];
-      html += `<tr><td>${d.date}</td><td>${e ? e.transit : '--'}</td><td class="r" style="color:var(--peak)">${d.max_score.toFixed(0)}</td></tr>`;
+      html += `<tr><td>${d.date}</td><td style="font-size:11px">${e ? e.transit : '--'}</td><td class="r" style="color:var(--peak)">${d.max_score.toFixed(0)}</td></tr>`;
     });
     html += `</table></div>`;
   }
@@ -224,29 +253,44 @@ function renderToday() {
   document.getElementById('tab-today').innerHTML = html;
 }
 
+function daysFrom(d, n) {
+  const dt = new Date(d);
+  dt.setDate(dt.getDate() + n);
+  return dt.toISOString().slice(0,10);
+}
+
 function renderHourly() {
   const h = D.today_hourly;
-  const best = h.hourly.filter(x => x.level==='PEAK'||x.level==='VERY HIGH');
-  const worst = h.hourly.filter(x => x.score>0).sort((a,b)=>a.score-b.score).slice(0,3);
+  const act = h.hourly.filter(x => hourAction(x)==='ACT');
+  const plan = h.hourly.filter(x => hourAction(x)==='PLAN');
+  const rest = h.hourly.filter(x => hourAction(x)==='REST' && x.score>0);
   let html = `<div class="card">
-    <h2>When to Act &amp; When to Rest — ${h.date}</h2>
-    ${best.length ? `<div style="margin-bottom:10px">
-      <div class="dim" style="font-size:9px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">BEST TIMES FOR ACTION</div>
-      ${best.map(x => `<span class="badge vhigh" style="margin:2px">${x.time}</span>`).join(' ')}
+    <h2>Full Hourly Guide — ${h.date}</h2>
+    ${act.length ? `<div style="margin-bottom:10px;padding:6px 8px;background:#44cc4408;border-left:2px solid var(--high);border-radius:4px">
+      <div style="color:var(--high);font-weight:600;font-size:11px">ACT — ${act.map(x=>x.time).join(', ')}</div>
+      <div class="dim" style="font-size:10px;margin-top:2px">Highest energy. Make decisions, pitch, create, take bold action.</div>
     </div>` : ''}
-    <div style="margin-bottom:8px">
-      <div class="dim" style="font-size:9px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">LOWEST ENERGY — REST OR PLAN</div>
-      ${worst.map(x => `<span class="badge" style="margin:2px;color:var(--dim);border-color:var(--border)">${x.time}</span>`).join(' ')}
-    </div>
+    ${plan.length ? `<div style="margin-bottom:10px;padding:6px 8px;background:#7c5cfc08;border-left:2px solid var(--accent);border-radius:4px">
+      <div style="color:var(--accent);font-weight:600;font-size:11px">PLAN — ${plan.map(x=>x.time).join(', ')}</div>
+      <div class="dim" style="font-size:10px;margin-top:2px">Moderate energy. Plan, organize, research, have conversations.</div>
+    </div>` : ''}
+    ${rest.length ? `<div style="margin-bottom:10px;padding:6px 8px;background:#66668008;border-left:2px solid var(--dim);border-radius:4px">
+      <div style="color:var(--dim);font-weight:600;font-size:11px">REST — ${rest.map(x=>x.time).join(', ')}</div>
+      <div class="dim" style="font-size:10px;margin-top:2px">Low energy. Recharge, routine work, reflect. Avoid major decisions.</div>
+    </div>` : ''}
+    ${h.hourly.filter(x=>x.score===0).length ? `<div class="dim" style="font-size:10px;margin-top:4px">${h.hourly.filter(x=>x.score===0).length} hours with no active transits.</div>` : ''}
   </div>
   <div class="card">
     <h2>Hourly Table</h2>
-    <table><tr><th>Time</th><th>Score</th><th>Level</th><th>Top Transit</th></tr>`;
+    <table><tr><th>Time</th><th>Score</th><th>Level</th><th>Advice</th><th>Transit</th></tr>`;
   h.hourly.forEach(x => {
+    const cat = hourAction(x);
+    const catColor = cat==='ACT' ? 'var(--high)' : cat==='PLAN' ? 'var(--accent)' : 'var(--dim)';
     html += `<tr><td class="mono">${x.time}</td>
       <td class="r">${x.score.toFixed(0)}</td>
       <td>${badge(x.level)}</td>
-      <td style="font-size:11px">${x.top_transit}</td></tr>`;
+      <td style="color:${catColor};font-weight:600;font-size:10px">${cat}</td>
+      <td style="font-size:10px">${x.top_transit||'--'}</td></tr>`;
   });
   html += `</table></div>`;
   document.getElementById('tab-hourly').innerHTML = html;
@@ -257,13 +301,13 @@ function renderCalendar() {
   const peaks = db.filter(d => d.max_level === 'PEAK');
   const vhs = db.filter(d => d.max_level === 'VERY HIGH');
   const his = db.filter(d => d.max_level === 'HIGH');
-  let html = `
-  <div class="card">
+  let html = `<div class="card">
     <h2>Browse All Days</h2>
     <div id="day-picker">
       <input type="date" id="date-input" onchange="jumpToDate()">
       <button onclick="jumpToDate()">Go</button>
     </div>
+    <div id="day-result" style="margin-top:6px;font-size:11px;color:var(--dim)"></div>
   </div>
   <div class="card">
     <h2>High-Impact Days (${peaks.length + vhs.length + his.length})</h2>
@@ -275,7 +319,7 @@ function renderCalendar() {
     <div class="date-nav">`;
   const years = [...new Set(db.map(d => d.date.slice(0,4)))].sort();
   years.forEach(y => {
-    html += `<a onclick="filterYear('${y}')">${y}</a>`;
+    html += `<a onclick="filterYear(event,'${y}')">${y}</a>`;
   });
   html += `</div><div id="calendar-list"></div></div>`;
   document.getElementById('tab-calendar').innerHTML = html;
@@ -284,25 +328,28 @@ function renderCalendar() {
   renderCalendarList();
 }
 
-function filterYear(y) {
+function filterYear(ev, y) {
   window._filter = y;
   document.querySelectorAll('.date-nav a').forEach(a => a.classList.remove('on'));
-  event.target.classList.add('on');
+  ev.target.classList.add('on');
   renderCalendarList();
 }
 
 function renderCalendarList() {
   const db = window._allDays;
   const f = window._filter;
-  const items = f ? db.filter(d => d.date.startsWith(f)) : db.slice(0,100);
+  const items = f ? db.filter(d => d.date.startsWith(f) && d.event_count>0) : db.filter(d => d.event_count>0).slice(0,100);
+  if (!items.length) {
+    document.getElementById('calendar-list').innerHTML = '<div class="dim" style="padding:10px;text-align:center;font-size:11px">No high-impact days in this period.</div>';
+    return;
+  }
   let html = '<table><tr><th>Date</th><th>Score</th><th>Level</th><th>Events</th></tr>';
   items.forEach(d => {
-    if (d.event_count === 0) return;
     html += `<tr onclick="showDay('${d.date}')" style="cursor:pointer">
       <td class="mono">${d.date}</td>
       <td class="r">${d.max_score.toFixed(0)}</td>
       <td>${badge(d.max_level)}</td>
-      <td style="font-size:11px">${d.events.map(e => e.transit).join(', ')}</td></tr>`;
+      <td style="font-size:10px">${d.events.map(e => e.transit).join(', ')}</td></tr>`;
   });
   html += '</table>';
   document.getElementById('calendar-list').innerHTML = html;
@@ -311,22 +358,28 @@ function renderCalendarList() {
 function showDay(date) {
   const db = D.database;
   const day = db.find(d => d.date === date);
-  if (!day || !day.events.length) return;
+  const msg = document.getElementById('day-result');
+  if (msg) msg.innerHTML = '';
+  if (!day || !day.events.length) {
+    if (msg) msg.innerHTML = 'No transit events recorded for this date. It was a normal day.';
+    return;
+  }
   let html = `<div class="card" style="text-align:center;padding:20px">
     <div style="font-size:24px;font-weight:700;color:#fff">${date}</div>
     <div style="margin-top:6px">${badge(day.max_level)} &middot; Score ${day.max_score.toFixed(0)}</div>
   </div>`;
   day.events.forEach((e,i) => {
-    const advice = getAdvice(e.transit, e.house, e.level);
+    const ad = getGuide(e.transit, e.house, e.level);
     html += `<div class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
         <span class="mono" style="color:var(--accent);font-weight:500">${e.transit}</span>
         <span>${badge(e.level)}</span>
       </div>
-      <div style="display:flex;gap:8px;font-size:11px;color:var(--dim);margin-bottom:8px">
+      <div style="display:flex;gap:8px;font-size:10px;color:var(--dim);margin-bottom:8px">
         <span>H${e.house} &middot; ${HOUSE_NAMES[e.house]}</span>
+        <span>${e.meaning||''}</span>
       </div>
-      <div style="font-size:13px;line-height:1.7;color:var(--text);padding:8px 0;border-top:1px solid var(--border)">${advice}</div>
+      <div style="font-size:12px;line-height:1.7;padding:8px 0;border-top:1px solid var(--border)">${ad}</div>
     </div>`;
   });
   html += `<div style="text-align:center;margin-top:6px">
@@ -335,116 +388,121 @@ function showDay(date) {
   document.getElementById('tab-calendar').innerHTML = html;
 }
 
-function getAdvice(transit, house, level) {
+function jumpToDate() {
+  const val = document.getElementById('date-input').value;
+  if (val) showDay(val);
+}
+
+function getGuide(transit, house, level) {
   const p = transit.match(/^(\w+)\s+(\w+)\s+(\w+)/);
   if (!p) return getHouseGuide(house, level);
   const [, p1, asp, p2] = p;
 
   const doMap = {
-    'Conj':`Initiate. Start something new in this area. The energy is clean — use it.`,
-    'Sq':`Push through resistance. The obstacle is growing you. Take the hard action.`,
-    'Tri':`Move with the flow. Things align easily. Act now while it's effortless.`,
-    'Sex':`Say yes to the opportunity. A door just opened — step through.`,
-    'Opp':`Seek balance. Have the conversation you've been avoiding. Listen.`,
-    'SS':`Make the small adjustment. Tiny shifts now prevent big problems later.`,
-    'QS':`Realign something that's off. An honest course correction is needed.`
+    'Conj':'Initiate. Start something new. The energy is clean.',
+    'Sq':'Push through resistance. The obstacle is growing you.',
+    'Tri':'Move with the flow. Things align easily. Act now.',
+    'Sex':'Say yes to the opportunity. A door just opened.',
+    'Opp':'Seek balance. Have the conversation you have been avoiding.',
+    'SS':'Make the small adjustment. Tiny shifts prevent big problems.',
+    'QS':'Realign something off. An honest course correction is needed.'
   };
   const dontMap = {
-    'Conj':`Don't start if you aren't committed. This seed will grow.`,
-    'Sq':`Don't force a square peg into a round hole. Push, but don't break.`,
-    'Tri':`Don't waste the ease on trivial things. Use the flow for what matters.`,
-    'Sex':`Don't overthink it. Opportunity doesn't knock twice.`,
-    'Opp':`Don't pick a side. Both sides have truth — find the middle.`,
-    'SS':`Don't ignore the subtle signs. Small things matter now.`,
-    'QS':`Don't keep pretending nothing's wrong. Adjust and move on.`
+    'Conj':"Don't start if you are not committed.",
+    'Sq':"Don't force it. Push but do not break.",
+    'Tri':"Don't waste the ease on trivial things.",
+    'Sex':"Don't overthink it. Opportunity does not knock twice.",
+    'Opp':"Don't pick a side. Find the middle.",
+    'SS':"Don't ignore the subtle signs.",
+    'QS':"Don't pretend nothing is wrong."
   };
   const watchMap = {
-    'Conj':`Watch for new beginnings. What starts now will have staying power.`,
-    'Sq':`Watch for frustration. Pause before you react. The tension is the teacher.`,
-    'Tri':`Watch for easy wins. Not everything that flows is deserved — stay grounded.`,
-    'Sex':`Watch for unexpected offers. The universe sends help in strange packages.`,
-    'Opp':`Watch for projections. What irritates you in others is your own mirror.`,
-    'SS':`Watch for timing. Not yet, but soon. Prepare.`,
-    'QS':`Watch for small breakdowns. They're telling you what needs fixing.`
+    'Conj':'Watch for new beginnings with staying power.',
+    'Sq':'Watch for frustration. Pause before reacting.',
+    'Tri':'Watch for easy wins. Stay grounded.',
+    'Sex':'Watch for unexpected offers.',
+    'Opp':'Watch for projections. Others mirror you.',
+    'SS':'Watch for timing. Not yet, but soon.',
+    'QS':'Watch for small breakdowns telling you what needs fixing.'
   };
   const p1do = {
-    Sun:'Lead with clarity. Show up fully. Your presence sets the tone.',
-    Moon:'Trust your gut. Feel first, decide second. Your intuition is sharp.',
-    Merc:'Speak up. Write it down. Communicate clearly before assumptions harden.',
-    Ven:'Connect. Appreciate. Invest in the people and things you value.',
-    Mars:'Act with purpose. Energy is high — channel it into something real.',
-    Jup:'Expand. Take the risk. Say yes to growth. Luck favors the bold.',
-    Sat:'Build structure. Do the disciplined work. What you build now will last.',
-    Ura:'Break the pattern. Try something radically different. Freedom awaits.',
-    Nep:'Dream big. Visualize. But verify before you trust completely.',
-    Plu:'Go deep. Transform. What needs to die so something new can be born?'
+    Sun:'Lead with clarity. Your presence sets the tone.',
+    Moon:'Trust your gut. Feel first, decide second.',
+    Merc:'Speak up. Write it down. Communicate clearly.',
+    Ven:'Connect. Appreciate. Invest in what you value.',
+    Mars:'Act with purpose. Channel energy into something real.',
+    Jup:'Expand. Take the risk. Luck favors the bold.',
+    Sat:'Build structure. Discipline now equals freedom later.',
+    Ura:'Break the pattern. Try something radically different.',
+    Nep:'Dream big. Visualize. But verify before trusting.',
+    Plu:'Go deep. Transform. Let the old die to birth the new.'
   };
   const p2do = {
-    Sun:`Let your authentic self be seen. Don't hide your light.`,
-    Moon:`Honor your feelings. They're valid, even if inconvenient.`,
-    Merc:'Think before you speak. Words have extra weight now.',
-    Ven:'Open your heart. Let yourself receive love and value.',
-    Mars:'Channel anger into action. Move your body. Release the pressure.',
-    Jup:`Trust the expansion. Good things are coming. Don't block them.`,
-    Sat:'Respect the process. Discipline now = freedom later.',
-    Ura:'Embrace the change. The disruption is making room for better.',
-    Nep:'Trust your vision. Not everything needs to be explained.',
-    Plu:'Let go of control. The transformation is bigger than you.'
+    Sun:'Let your authentic self be seen.',
+    Moon:'Honor your feelings. They are valid.',
+    Merc:'Think before you speak.',
+    Ven:'Open your heart. Receive love and value.',
+    Mars:'Channel anger into action. Move your body.',
+    Jup:'Trust the expansion. Good things are coming.',
+    Sat:'Respect the process. Discipline pays.',
+    Ura:'Embrace the change. Disruption makes room.',
+    Nep:'Trust your vision. Not everything needs explaining.',
+    Plu:'Let go of control. Transformation is bigger than you.'
   };
   const p1dont = {
-    Sun:`Don't let ego drive. Lead, don't dominate.`,
-    Moon:`Don't let emotions decide long-term strategy. Feel, then think.`,
-    Merc:`Don't over-explain. Say what you mean, mean what you say.`,
-    Ven:`Don't compromise your worth for approval. You are enough.`,
-    Mars:`Don't be reckless. Energy without direction is destruction.`,
-    Jup:`Don't over-extend. Growth is good, overgrowth is chaos.`,
-    Sat:`Don't be rigid. Discipline without flexibility becomes prison.`,
-    Ura:`Don't burn bridges. Disrupt the pattern, not the relationships.`,
-    Nep:`Don't get lost in fantasy. Dream with your feet on the ground.`,
-    Plu:`Don't cling to what's fading. Let it go. Make room.`
+    Sun:"Don't let ego drive. Lead, do not dominate.",
+    Moon:"Don't let emotions decide long-term strategy.",
+    Merc:"Don't over-explain. Mean what you say.",
+    Ven:"Don't compromise your worth for approval.",
+    Mars:"Don't be reckless. Direction matters.",
+    Jup:"Don't over-extend. Growth without boundaries is chaos.",
+    Sat:"Don't be rigid. Discipline without flexibility is prison.",
+    Ura:"Don't burn bridges. Disrupt patterns, not people.",
+    Nep:"Don't get lost in fantasy. Stay grounded.",
+    Plu:"Don't cling to what is fading. Let go."
   };
   const houseDo = {
-    1:'Show up as your best self. Your identity is being shaped right now.',
-    2:'Make a financial move. Review your numbers. Invest in yourself.',
+    1:'Show up as your best self. Your identity is being shaped.',
+    2:'Make a financial move. Review numbers. Invest in yourself.',
     3:'Have the conversation. Send the message. Write the draft.',
     4:'Take care of home. Call family. Create safety in your space.',
-    5:'Create something. Play. Take a creative risk. Joy is productive.',
-    6:'Focus on health. Do one disciplined thing for your body or routine.',
+    5:'Create something. Play. Take a creative risk.',
+    6:'Focus on health. One disciplined thing for your body.',
     7:'Reach out to your key person. Partnership is highlighted.',
-    8:'Go deeper. Share what you usually hide. Intimacy requires courage.',
-    9:'Learn. Read. Travel in mind or body. Expand your perspective.',
-    10:'Advance your career. Take one visible step toward your goal.',
+    8:'Go deeper. Share what you usually hide.',
+    9:'Learn. Read. Travel in mind or body. Expand.',
+    10:'Advance your career. One step toward your goal.',
     11:'Connect with your network. One conversation changes everything.',
-    12:'Rest. Be still. The answers come when you stop searching.',
-    13:'Heal something. Help someone. You are needed as a bridge.'
+    12:'Rest. Be still. Answers come in silence.',
+    13:'Heal something. Help someone. You are the bridge.'
   };
   const houseDont = {
-    1:`Don't pretend to be someone you're not. Authenticity is the edge.`,
-    2:`Don't spend emotionally. Don't undervalue your worth.`,
-    3:`Don't assume understanding. Clarify everything.`,
-    4:`Don't neglect your foundation. Home is where you return to.`,
-    5:`Don't play it safe. Risk is required for the reward.`,
-    6:`Don't skip the basics. Sleep, water, movement -- non-negotiable.`,
-    7:`Don't avoid the hard talk. Silence costs more than honesty.`,
-    8:`Don't stay superficial. The treasure is in the depth.`,
-    9:`Don't stay in your bubble. The answer is outside your current view.`,
-    10:`Don't shrink. Your ambition is legitimate. Claim it.`,
-    11:`Don't isolate. Reach out even when you don't want to.`,
-    12:`Don't fill the silence. Boredom is where creativity is born.`,
-    13:`Don't ignore the call to serve. Your purpose includes others.`
+    1:"Don't pretend. Authenticity is the edge.",
+    2:"Don't spend emotionally. Do not undervalue your worth.",
+    3:"Don't assume understanding. Clarify everything.",
+    4:"Don't neglect your foundation. Home is where you return.",
+    5:"Don't play it safe. Risk is required for reward.",
+    6:"Don't skip basics. Sleep, water, movement are non-negotiable.",
+    7:"Don't avoid the hard talk. Silence costs more.",
+    8:"Don't stay superficial. The treasure is in depth.",
+    9:"Don't stay in your bubble. The answer is outside your view.",
+    10:"Don't shrink. Your ambition is legitimate.",
+    11:"Don't isolate. Reach out even when you do not want to.",
+    12:"Don't fill the silence. Boredom births creativity.",
+    13:"Don't ignore the call to serve. Purpose includes others."
   };
 
-  const d = (doMap[asp]||'Act with intention.').replace('this area',HOUSE_NAMES[house].toLowerCase());
-  const dnt = (dontMap[asp]||'Avoid unnecessary conflict.').replace('this area',HOUSE_NAMES[house].toLowerCase());
-  const w = (watchMap[asp]||'Stay aware.').replace('this area',HOUSE_NAMES[house].toLowerCase());
-  const p1Action = p1do[p1]||'Act with intention.';
-  const p2Action = p2do[p2]||'Receive with awareness.';
-  const p1Avoid = p1dont[p1]||'Avoid overcompensating.';
+  const d = doMap[asp]||'Act with intention.';
+  const dnt = dontMap[asp]||'Avoid unnecessary conflict.';
+  const w = watchMap[asp]||'Stay aware.';
+  const pa = p1do[p1]||'Act with intention.';
+  const pb = p2do[p2]||'Receive with awareness.';
+  const pav = p1dont[p1]||'Avoid overcompensating.';
   const hd = houseDo[house]||'Act in alignment with your values.';
   const hdnt = houseDont[house]||'Avoid neglecting this area.';
 
-  let html = `<div class="action do"><span class="label">DO</span><span>${p1Action} ${p2Action} ${d} ${hd}</span></div>
-<div class="action dont"><span class="label">DON'T</span><span>${p1Avoid} ${dnt} ${hdnt}</span></div>
+  let html = `<div class="action do"><span class="label">DO</span><span>${pa} ${pb} ${d} ${hd}</span></div>
+<div class="action dont"><span class="label">DON'T</span><span>${pav} ${dnt} ${hdnt}</span></div>
 <div class="action watch"><span class="label">WATCH</span><span>${w}</span></div>`;
   if (level === 'PEAK') {
     html = `<div style="margin-bottom:8px;padding:6px 10px;background:var(--peak);color:#fff;border-radius:4px;font-size:11px;font-weight:600;text-align:center;letter-spacing:0.4px">HIGH ALERT — PEAK INTENSITY</div>` + html;
@@ -456,16 +514,16 @@ function getHouseGuide(house, level) {
   const hd = {
     1:'Your identity is center stage. Show up boldly and authentically.',
     2:'Money and self-worth are linked. Make a bold financial move today.',
-    3:'Communication is potent. Have the hard conversation, send the message.',
+    3:'Communication is potent. Have the hard conversation.',
     4:'Home and family need attention. Nurture your foundation.',
     5:'Creativity and joy are calling. Take a risk that excites you.',
-    6:'Health and routines matter. Do one disciplined thing for your body.',
-    7:'Relationships are highlighted. Reach out, connect, commit.',
-    8:'Depth is available. Go beneath the surface — the gold is there.',
+    6:'Health and routines matter. One disciplined thing for your body.',
+    7:'Relationships are highlighted. Reach out and commit.',
+    8:'Depth is available. Go beneath the surface.',
     9:'Expand your mind. Read, learn, travel in thought or body.',
-    10:'Career focus. Take one step that your future self will thank you for.',
+    10:'Career focus. One step your future self will thank you for.',
     11:'Your network is your net worth. Make the connection.',
-    12:'Rest and retreat. The answers come in silence, not noise.',
+    12:'Rest and retreat. Answers come in silence.',
     13:'Healing and service. Help someone. You are the bridge.'
   };
   let html = `<div class="action do"><span class="label">DO</span><span>${hd[house]||'Act in alignment with your purpose.'}</span></div>`;
@@ -475,22 +533,16 @@ function getHouseGuide(house, level) {
   return html;
 }
 
-function jumpToDate() {
-  const val = document.getElementById('date-input').value;
-  if (val) showDay(val);
-}
-
 function renderDatabase() {
   const db = D.database;
   const peaks = db.filter(d => d.max_level === 'PEAK');
   const vhs = db.filter(d => d.max_level === 'VERY HIGH');
   const his = db.filter(d => d.max_level === 'HIGH');
-  const total = db.length;
+  const total = db.filter(d => d.event_count > 0).length;
   const today = D.today_hourly.date;
-  const nextPeaks = peaks.filter(d => d.date > today).slice(0,5);
+  const nPeaks = peaks.filter(d => d.date > today && d.date <= daysFrom(today, 365)).slice(0,10);
 
-  let html = `
-  <div class="card">
+  let html = `<div class="card">
     <h2>10-Year Database (${total} days with events)</h2>
     <div class="g3 grid">
       <div class="stat"><div class="n" style="color:var(--peak)">${peaks.length}</div><div class="l">PEAK Days</div></div>
@@ -498,20 +550,20 @@ function renderDatabase() {
       <div class="stat"><div class="n" style="color:var(--high)">${his.length}</div><div class="l">HIGH Days</div></div>
     </div>
   </div>
-  ${nextPeaks.length ? `<div class="card">
-    <h2>Prepare — Next PEAK Days</h2>
-    ${nextPeaks.map(d => {
+  ${nPeaks.length ? `<div class="card"><h2>Upcoming PEAK Days (next 12 months)</h2>
+    ${nPeaks.map(d => {
       const e = d.events[0];
-      return `<div class="action do"><span class="label">PREP</span><span><b>${d.date}</b> — ${e ? e.transit : 'PEAK transit'} (Score ${d.max_score.toFixed(0)}). Align your schedule. These days are decisive.</span></div>`;
+      return `<div class="action do"><span class="label">PREP</span><span><b>${d.date}</b> — ${e ? e.transit : 'PEAK'} (Score ${d.max_score.toFixed(0)}). ${e ? e.meaning||'' : ''}</span></div>`;
     }).join('')}
   </div>` : ''}
   <div class="card">
     <h2>All PEAK Days (${peaks.length})</h2>
-    <table><tr><th>Date</th><th>Score</th><th>Transit</th></tr>`;
-  peaks.forEach(d => {
+    <table><tr><th>Date</th><th>Score</th><th>Transit</th><th>Meaning</th></tr>`;
+  peaks.slice(0,200).forEach(d => {
     const e = d.events[0];
     html += `<tr><td class="mono">${d.date}</td><td class="r" style="color:var(--peak)">${d.max_score.toFixed(0)}</td>
-      <td style="font-size:11px">${e ? e.transit : ''}</td></tr>`;
+      <td style="font-size:10px">${e ? e.transit : ''}</td>
+      <td style="font-size:10px;color:var(--dim)">${e ? (e.meaning||'') : ''}</td></tr>`;
   });
   html += `</table></div>`;
   document.getElementById('tab-database').innerHTML = html;
@@ -520,35 +572,38 @@ function renderDatabase() {
 function renderAreas() {
   const areas = D.areas;
   const today = D.today_hourly.date;
-  const areaActions = {
-    1:'Define how you want to be seen — then be that.',
-    2:'Review one financial decision. Move money toward your goals.',
+  const sorted = [...areas].sort((a,b) => b.score - a.score);
+  const top3 = sorted.slice(0,3);
+  const bot3 = sorted.slice(-3).reverse();
+  const areaActs = {
+    1:'Define how you want to be seen and be that.',
+    2:'Review one financial decision. Move money toward goals.',
     3:'Write down the idea that keeps coming back.',
     4:'Make home feel safe. One small improvement.',
     5:'Do something purely for joy. No outcome required.',
-    6:'Drink water. Move. Sleep. The basics are the edge.',
-    7:'Send the message. Make the call. Connection is wealth.',
+    6:'Drink water. Move. Sleep. Basics are the edge.',
+    7:'Send the message. Make the call.',
     8:'Go deeper in one conversation today.',
     9:'Read something outside your usual domain.',
     10:'Do one thing your future self will thank you for.',
     11:'Reach out to someone who inspires you.',
-    12:'Sit in silence for 5 minutes. Listen.',
+    12:'Sit in silence for 5 minutes.',
     13:'Help someone without expecting anything back.'
   };
-  let html = `<div class="card"><h2>Life Areas — ${today}</h2>`;
-  areas.forEach(a => {
-    const cls = a.house === 2 ? 'color:var(--gold)' : a.house === 7 ? 'color:#ff6b9d' : a.house === 6 ? 'color:#81c784' : '';
-    const action = areaActions[a.house] || 'Take aligned action.';
-    html += `<div class="area" style="border-left-color:${cls ? cls.split(':')[1] : 'var(--border)'}">
-      <div class="t">
-        <span class="hn">H${a.house}</span>
-        <span class="nm">${a.name}</span>
-        <span class="sc" style="${cls}">${a.score.toFixed(0)}</span>
-      </div>
-      <div class="as">${a.aspects.join(' &middot; ')}</div>
-      <div class="action do" style="margin:4px 0 0;padding:4px 6px;font-size:11px">
+  let html = `<div class="card"><h2>Life Areas — ${today}</h2>
+    <div class="g2 grid" style="margin-bottom:10px">
+      <div class="stat"><div class="n" style="color:var(--high);font-size:16px">${top3.map(a=>'H'+a.house).join(' ')}</div><div class="l">Strongest Today</div></div>
+      <div class="stat"><div class="n" style="color:var(--dim);font-size:16px">${bot3.map(a=>'H'+a.house).join(' ')}</div><div class="l">Need Attention</div></div>
+    </div>`;
+  sorted.forEach(a => {
+    const c = a.house === 2 ? 'var(--gold)' : a.house === 7 ? '#ff6b9d' : a.house === 6 ? '#81c784' : '';
+    const ac = areaActs[a.house] || 'Take aligned action.';
+    html += `<div class="area" style="border-left-color:${c||'var(--border)'}">
+      <div class="t"><span class="hn">H${a.house}</span><span class="nm">${a.name}</span><span class="sc" style="${c?'color:'+c:''}">${a.score.toFixed(0)}</span></div>
+      <div class="as">${a.aspects.join(' · ')}</div>
+      <div class="action do" style="margin:4px 0 0;padding:4px 6px;font-size:10px">
         <span class="label" style="min-width:30px;font-size:9px">DO</span>
-        <span style="color:var(--text)">${action}</span>
+        <span style="color:var(--text)">${ac}</span>
       </div>
     </div>`;
   });
@@ -558,41 +613,54 @@ function renderAreas() {
 
 function renderWealth() {
   const w = D.wealth;
-  let html = `
-  <div class="card" style="text-align:center;padding:24px">
+  let html = `<div class="card" style="text-align:center;padding:24px">
     <div style="font-size:42px;font-weight:700;color:var(--gold)">${w.score.toFixed(0)}</div>
-    <div class="dim" style="font-size:12px">${w.patterns}/8 Wealth Patterns Active</div>
+    <div class="dim" style="font-size:12px">Wealth Score &middot; ${w.patterns}/8 Wealth Patterns Active</div>
     <div style="margin-top:8px"><span class="badge" style="background:#44cc4418;color:var(--high);border:1px solid #44cc4430">${w.verdict}</span></div>
   </div>
   <div class="card">
-    <h2>Financial Actions Today</h2>
-    <div class="action do"><span class="label">DO</span><span>Review your numbers. Know exactly where your money is and where it's going. Make one decisive financial move.</span></div>
-    <div class="action do"><span class="label">DO</span><span>Invest in your earning capacity. A skill, a tool, a connection — spend where it multiplies.</span></div>
-    <div class="action dont"><span class="label">DON'T</span><span>Spend to feel better. Emotional purchases dilute your wealth building.</span></div>
-    <div class="action dont"><span class="label">DON'T</span><span>Undervalue your work. Your price reflects your worth — raise both.</span></div>
-    <div class="action watch"><span class="label">WATCH</span><span>All 13 houses contribute to wealth. Neglecting health, relationships, or purpose costs you money.</span></div>
+    <h2>Complete Wealth Plan</h2>
+    <div class="action do"><span class="label">MONEY</span><span>Review every account. Know your net worth to the dollar. Awareness alone shifts behavior.</span></div>
+    <div class="action do"><span class="label">EARN</span><span>Invest in your earning capacity. One skill, one tool, one connection that multiplies your income.</span></div>
+    <div class="action do"><span class="label">ASSETS</span><span>Build assets that work without you. Income that arrives while you sleep is the goal.</span></div>
+    <div class="action do"><span class="label">LEVERAGE</span><span>Use other people's money, time, and expertise. The wealthy build systems, not just products.</span></div>
+    <div class="action dont"><span class="label">DON'T</span><span>Spend emotionally. Every purchase either builds wealth or dilutes it.</span></div>
+    <div class="action dont"><span class="label">DON'T</span><span>Undervalue your work. Your price reflects your worth. Raise both.</span></div>
+    <div class="action dont"><span class="label">DON'T</span><span>Neglect any life area. Weak health, weak relationships, or weak purpose leaks money.</span></div>
+    <div class="action watch"><span class="label">WATCH</span><span>House 2 (Finances) and House 10 (Career) drive visible wealth. House 6 (Work discipline) and House 11 (Network) are force multipliers.</span></div>
+    <div class="action watch"><span class="label">TRACK</span><span>Log every financial outcome. Your audit data trains the optimizer to find your personal wealth patterns.</span></div>
   </div>
   <div class="card">
     <h2>Natal Wealth Blueprint</h2>
     <table><tr><th>Planet</th><th>Role</th></tr>`;
   w.natal.forEach(n => {
-    html += `<tr><td class="mono">${n.split(' — ')[0]}</td><td style="font-size:11px">${n.split(' — ')[1] || n}</td></tr>`;
+    const parts = n.split(' — ');
+    html += `<tr><td class="mono">${parts[0]}</td><td style="font-size:11px">${parts[1]||n}</td></tr>`;
   });
-  html += `</table></div>`;
+  html += `</table>
+    <div class="dim" style="font-size:10px;margin-top:6px">3 natal planets in House 2 (Finances) — wealth building is coded into your chart. The question is execution.</div>
+  </div>`;
   document.getElementById('tab-wealth').innerHTML = html;
 }
 
 function renderAudit() {
   const a = D.audit;
-  let html = `<div class="card"><h2>Ground Truth Audit (${a.length} entries)</h2>`;
+  let html = `<div class="card"><h2>Ground Truth Audit</h2>`;
   if (!a.length) {
-    html += `<div class="dim">No audit entries yet. Rate outcomes with: python mazz.py audit rate 1-5 "tag"</div>`;
+    html += `<div class="dim" style="padding:8px 0">No audit entries yet. Command: python mazz.py audit rate 1-5 "tag"</div>`;
   } else {
-    html += `<table><tr><th>Date</th><th>Score</th><th>Level</th><th>Outcome</th><th>Tag</th></tr>`;
+    const avg = a.reduce((s,e) => s + parseInt(e.outcome), 0) / a.length;
+    const peaks = a.filter(e => e.level === 'PEAK');
+    const pAvg = peaks.length ? peaks.reduce((s,e) => s + parseInt(e.outcome), 0) / peaks.length : 0;
+    html += `<div class="g2 grid" style="margin-bottom:10px">
+      <div class="stat"><div class="n">${avg.toFixed(1)}</div><div class="l">Avg Outcome /5</div></div>
+      <div class="stat"><div class="n" style="color:var(--peak)">${pAvg.toFixed(1)}</div><div class="l">PEAK Day Avg</div></div>
+    </div>
+    <table><tr><th>Date</th><th>Score</th><th>Level</th><th>Outcome</th><th>Tag</th></tr>`;
     a.forEach(e => {
       html += `<tr><td class="mono">${e.date}</td><td class="r">${e.score}</td>
         <td>${badge(e.level)}</td><td class="r" style="color:${parseInt(e.outcome) >= 4 ? 'var(--high)' : 'var(--peak)'}">${e.outcome}/5</td>
-        <td style="font-size:11px">${e.tag}</td></tr>`;
+        <td style="font-size:10px">${e.tag}</td></tr>`;
     });
     html += `</table>`;
   }
@@ -609,6 +677,98 @@ function renderHouses() {
   }
   html += `</table></div>`;
   document.getElementById('tab-houses').innerHTML = html;
+}
+
+function renderStats() {
+  const db = D.database.filter(d => d.event_count > 0);
+  const today = D.today_hourly.date;
+  const total = db.length;
+  if (!total) { document.getElementById('tab-stats').innerHTML = '<div class="card"><h2>Stats</h2><div class="dim">No data available.</div></div>'; return; }
+
+  const scores = db.map(d => d.max_score);
+  const avg = scores.reduce((a,b) => a+b, 0) / total;
+  const max = Math.max(...scores);
+  const min = Math.min(...scores);
+
+  const buckets = [0,3100,3400,3700,4000,4500,5000,6000,10000];
+  const dist = buckets.map((b,i) => {
+    if (i === buckets.length-1) return null;
+    const label = b === 0 ? '<3100' : `${b}-${buckets[i+1]}`;
+    const cnt = db.filter(d => d.max_score >= b && d.max_score < buckets[i+1]).length;
+    return { label, count: cnt, pct: (cnt/total*100).toFixed(1) };
+  }).filter(Boolean);
+
+  const monthMap = {};
+  db.forEach(d => {
+    const m = d.date.slice(0,7);
+    if (!monthMap[m]) monthMap[m] = { sum:0, count:0 };
+    monthMap[m].sum += d.max_score;
+    monthMap[m].count++;
+  });
+  const months = Object.entries(monthMap).map(([m, v]) => ({ month: m, avg: v.sum/v.count, count: v.count })).sort((a,b) => a.month.localeCompare(b.month)).slice(-24);
+
+  const houseCount = {};
+  db.forEach(d => {
+    d.events.forEach(e => {
+      const h = e.house;
+      if (!houseCount[h]) houseCount[h] = { count:0, sum:0 };
+      houseCount[h].count++;
+      houseCount[h].sum += e.score;
+    });
+  });
+  const houses = Object.entries(houseCount).map(([h,v]) => ({ house: parseInt(h), count: v.count, avg: v.sum/v.count })).sort((a,b) => b.count - a.count);
+
+  const transitCount = {};
+  db.forEach(d => {
+    d.events.forEach(e => {
+      const t = e.transit;
+      if (!transitCount[t]) transitCount[t] = { count:0, sum:0 };
+      transitCount[t].count++;
+      transitCount[t].sum += e.score;
+    });
+  });
+  const transits = Object.entries(transitCount).map(([t,v]) => ({ transit: t, count: v.count, avg: v.sum/v.count })).sort((a,b) => b.avg - a.avg).slice(0,15);
+
+  const now = new Date(today);
+  const yearAgo = new Date(now);
+  yearAgo.setFullYear(yearAgo.getFullYear() - 1);
+  const recentAvg = db.filter(d => d.date >= yearAgo.toISOString().slice(0,10)).reduce((s,d) => s + d.max_score, 0) / db.filter(d => d.date >= yearAgo.toISOString().slice(0,10)).length || 0;
+
+  let html = `<div class="card"><h2>Full Data Analysis (${total} days)</h2>
+    <div class="g3 grid">
+      <div class="stat"><div class="n">${avg.toFixed(0)}</div><div class="l">Avg Score</div></div>
+      <div class="stat"><div class="n">${max.toFixed(0)}</div><div class="l">Highest Score</div></div>
+      <div class="stat"><div class="n">${recentAvg.toFixed(0)}</div><div class="l">Avg Last 12mo</div></div>
+    </div>
+  </div>
+  <div class="card"><h2>Score Distribution</h2>
+    <div style="display:flex;gap:4px;align-items:end;height:80px;padding:4px 0">
+      ${dist.map(b => `<div style="flex:1;display:flex;flex-direction:column;align-items:center;height:80px;justify-content:end">
+        <div style="font-size:8px;color:var(--dim);margin-bottom:2px">${b.count}</div>
+        <div style="width:100%;background:${b.label.includes('3700')||b.label.includes('4000')||b.label.includes('4500')||b.label.includes('5000')||b.label.includes('6000')?'var(--peak)':b.label.includes('3400')?'var(--vhigh)':b.label.includes('3100')?'var(--high)':'var(--border)'};height:${Math.max(b.pct*1.5,2)}px;border-radius:2px"></div>
+        <div style="font-size:7px;color:var(--dim);margin-top:2px">${b.label}</div>
+      </div>`).join('')}
+    </div>
+  </div>
+  <div class="card"><h2>Most Active Houses</h2>
+    <table><tr><th>House</th><th>Domain</th><th class="r">Events</th><th class="r">Avg Score</th></tr>
+    ${houses.slice(0,13).map(h => `<tr><td>H${h.house}</td><td style="font-size:10px">${HOUSE_NAMES[h.house]||''}</td><td class="r">${h.count}</td><td class="r">${h.avg.toFixed(0)}</td></tr>`).join('')}
+  </table></div>
+  <div class="card"><h2>Top Transits by Score</h2>
+    <table><tr><th>Transit</th><th class="r">Avg Score</th><th class="r">Occurrences</th></tr>
+    ${transits.map(t => `<tr><td style="font-size:10px">${t.transit}</td><td class="r" style="color:var(--peak)">${t.avg.toFixed(0)}</td><td class="r">${t.count}</td></tr>`).join('')}
+  </table></div>
+  <div class="card"><h2>Monthly Average Scores (last 24 months)</h2>
+    <div style="display:flex;gap:3px;align-items:end;height:60px;padding:4px 0;overflow-x:auto">
+      ${months.map(m => `<div style="flex:0 0 40px;display:flex;flex-direction:column;align-items:center;height:60px;justify-content:end">
+        <div style="font-size:7px;color:var(--dim);margin-bottom:2px">${m.avg.toFixed(0)}</div>
+        <div style="width:100%;background:${m.avg>=3700?'var(--peak)':m.avg>=3400?'var(--vhigh)':m.avg>=3100?'var(--high)':'var(--border)'};height:${Math.max((m.avg-3000)*0.15,2)}px;border-radius:2px"></div>
+        <div style="font-size:7px;color:var(--dim);margin-top:2px">${m.month.slice(5)}</div>
+      </div>`).join('')}
+    </div>
+  </div>`;
+
+  document.getElementById('tab-stats').innerHTML = html;
 }
 
 // Initial render
