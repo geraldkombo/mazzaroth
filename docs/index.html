@@ -662,22 +662,81 @@ function renderAreas() {
 
 function renderWealth() {
   const w = D.wealth;
-  let html = `<div class="card" style="text-align:center;padding:24px">
-    <div style="font-size:42px;font-weight:700;color:var(--gold)">${w.score.toFixed(0)}</div>
-    <div class="dim" style="font-size:12px">Wealth Score &middot; ${w.patterns}/8 Wealth Patterns Active</div>
-    <div style="margin-top:8px"><span class="badge" style="background:#44cc4418;color:var(--high);border:1px solid #44cc4430">${w.verdict}</span></div>
+  const areas = D.areas;
+  const h2 = areas.find(a => a.house === 2);
+  const today = D.today_hourly;
+  const latest = today.hourly.filter(x => x.score > 0).pop() || today.hourly[0];
+  const h2Score = h2 ? h2.score.toFixed(0) : '--';
+  const h10 = areas.find(a => a.house === 10);
+  const h10Score = h10 ? h10.score.toFixed(0) : '--';
+
+  // Generate wealth action based on today's top transit
+  let wealthMove = 'Review your numbers. Know exactly where your money is.';
+  if (latest.top_transit) {
+    const t = latest.top_transit;
+    if (t.includes('Jup')) wealthMove = 'Jupiter energy active. Opportunity expands. Pitch, raise visibility, ask for the raise.';
+    else if (t.includes('Sat')) wealthMove = 'Saturn active. Build structure. Create systems, set financial discipline, plan long-term.';
+    else if (t.includes('Plu')) wealthMove = 'Pluto active. Deep wealth restructuring. Cut what drains you. Invest in transformation.';
+    else if (t.includes('Ura')) wealthMove = 'Uranus active. Disruption creates opportunity. Try a new income stream. Think unconventional.';
+    else if (t.includes('Nep')) wealthMove = 'Neptune active. Vision is powerful but verify facts. Dream big, check the numbers twice.';
+    else if (t.includes('Mar')) wealthMove = 'Mars active. Energy to earn. Take bold action on a money goal.';
+    else if (t.includes('Ven')) wealthMove = 'Venus active. Your value is rising. Raise your prices. Invest in what you love.';
+    else if (t.includes('Merc')) wealthMove = 'Mercury active. Communicate your value. Pitch, write, negotiate. Your words create wealth.';
+    else if (t.includes('Sun')) wealthMove = 'Sun active. Your identity and wealth are linked. Own your ambition. Lead.';
+    else if (t.includes('Moo')) wealthMove = 'Moon active. Emotional spending risk. Pause before purchases. Trust your gut on money.';
+  }
+
+  // Use house 2 aspects for deeper advice
+  let h2Advice = '';
+  if (h2) {
+    const sq = h2.aspects.filter(a => a.includes('Sq') || a.includes('Opp'));
+    const tri = h2.aspects.filter(a => a.includes('Tri') || a.includes('Sex'));
+    if (sq.length > tri.length) h2Advice = 'Tension in H2. Financial friction is forcing growth. Resistance is the path.';
+    else if (tri.length > sq.length) h2Advice = 'Flow in H2. Money moves easily now. Take the aligned action.';
+  }
+
+  let html = `<div class="card" style="text-align:center;padding:20px">
+    <div style="font-size:36px;font-weight:700;color:var(--gold)">${w.score.toFixed(0)}</div>
+    <div class="dim" style="font-size:11px;margin-top:2px">${w.patterns}/8 Wealth Patterns &middot; H2 Score ${h2Score}</div>
+    <div style="margin-top:6px"><span class="badge" style="background:#44cc4418;color:var(--high);border:1px solid #44cc4430">${w.verdict}</span></div>
   </div>
   <div class="card">
-    <h2>Complete Wealth Plan</h2>
-    <div class="action do"><span class="label">MONEY</span><span>Review every account. Know your net worth to the dollar. Awareness alone shifts behavior.</span></div>
-    <div class="action do"><span class="label">EARN</span><span>Invest in your earning capacity. One skill, one tool, one connection that multiplies your income.</span></div>
-    <div class="action do"><span class="label">ASSETS</span><span>Build assets that work without you. Income that arrives while you sleep is the goal.</span></div>
-    <div class="action do"><span class="label">LEVERAGE</span><span>Use other people's money, time, and expertise. The wealthy build systems, not just products.</span></div>
-    <div class="action dont"><span class="label">DON'T</span><span>Spend emotionally. Every purchase either builds wealth or dilutes it.</span></div>
-    <div class="action dont"><span class="label">DON'T</span><span>Undervalue your work. Your price reflects your worth. Raise both.</span></div>
-    <div class="action dont"><span class="label">DON'T</span><span>Neglect any life area. Weak health, weak relationships, or weak purpose leaks money.</span></div>
-    <div class="action watch"><span class="label">WATCH</span><span>House 2 (Finances) and House 10 (Career) drive visible wealth. House 6 (Work discipline) and House 11 (Network) are force multipliers.</span></div>
-    <div class="action watch"><span class="label">TRACK</span><span>Log every financial outcome. Your audit data trains the optimizer to find your personal wealth patterns.</span></div>
+    <h2>Your Wealth-Building System</h2>
+    <div style="margin-bottom:6px;padding:6px 8px;background:var(--gold);color:#000;border-radius:4px;font-size:11px;font-weight:600;text-align:center">TODAY'S MONEY MOVE: ${wealthMove}</div>
+    ${h2Advice ? `<div style="margin-bottom:6px;padding:6px 8px;background:#7c5cfc08;border-left:2px solid var(--accent);border-radius:4px;font-size:10px;color:var(--text)">${h2Advice}</div>` : ''}
+  </div>
+  <div class="card">
+    <h2>The 5 Stages to Wealth</h2>
+    <div style="display:flex;flex-direction:column;gap:4px;font-size:10px">
+      <div style="display:flex;gap:6px;padding:4px 6px;background:#08081a;border-radius:4px">
+        <span style="color:var(--accent);font-weight:600;min-width:24px">1</span>
+        <span><b style="color:#fff">Know</b> — Track every dollar. Net worth, income, expenses, debts. Awareness is 50% of the fix. Use today's transit to audit your finances.</span>
+      </div>
+      <div style="display:flex;gap:6px;padding:4px 6px;background:#08081a;border-radius:4px">
+        <span style="color:var(--accent);font-weight:600;min-width:24px">2</span>
+        <span><b style="color:#fff">Earn</b> — Increase your income. One new skill, one new client, one raise. Your earning potential is not fixed. House 10 (Career) score: ${h10Score}.</span>
+      </div>
+      <div style="display:flex;gap:6px;padding:4px 6px;background:#08081a;border-radius:4px">
+        <span style="color:var(--accent);font-weight:600;min-width:24px">3</span>
+        <span><b style="color:#fff">Keep</b> — Stop leaking money. Emotional spending, subscriptions you forgot, fees you ignore. Plug the holes before you fill the bucket.</span>
+      </div>
+      <div style="display:flex;gap:6px;padding:4px 6px;background:#08081a;border-radius:4px">
+        <span style="color:var(--accent);font-weight:600;min-width:24px">4</span>
+        <span><b style="color:#fff">Grow</b> — Invest. Assets that work while you sleep. Stocks, business, skills, relationships. House 6 (Work discipline) builds the engine.</span>
+      </div>
+      <div style="display:flex;gap:6px;padding:4px 6px;background:#08081a;border-radius:4px">
+        <span style="color:var(--accent);font-weight:600;min-width:24px">5</span>
+        <span><b style="color:#fff">Leverage</b> — Use systems, not just effort. Other people's time, money, expertise. Build once, earn forever.</span>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>Your Next Step Based on Transits</h2>
+    <div class="action do"><span class="label">DO</span><span>${wealthMove} Your H2 score is ${h2Score} out of 10,000. Every point is a signal.</span></div>
+    <div class="action do"><span class="label">BUILD</span><span>Use PEAK days for big financial moves. Use HIGH days for planning and review. Use NORMAL days for routine tracking.</span></div>
+    <div class="action dont"><span class="label">DON'T</span><span>Wait to be ready. Start with what you have. Track one number today. Just one.</span></div>
+    <div class="action dont"><span class="label">DON'T</span><span>Compare. Your chart is unique. 3 planets in H2 means wealth is your path, not your question.</span></div>
+    <div class="action watch"><span class="label">TRACK</span><span>Log every financial outcome in the audit. python mazz.py audit rate 1-5 "description". Over time, the engine learns YOUR wealth patterns.</span></div>
   </div>
   <div class="card">
     <h2>Natal Wealth Blueprint</h2>
@@ -687,7 +746,7 @@ function renderWealth() {
     html += `<tr><td class="mono">${parts[0]}</td><td style="font-size:11px">${parts[1]||n}</td></tr>`;
   });
   html += `</table>
-    <div class="dim" style="font-size:10px;margin-top:6px">3 natal planets in House 2 (Finances) — wealth building is coded into your chart. The question is execution.</div>
+    <div class="dim" style="font-size:10px;margin-top:6px">3 natal planets in House 2 (Finances). Your chart is wired for wealth. The engine shows you WHEN to act. You bring the action.</div>
   </div>`;
   document.getElementById('tab-wealth').innerHTML = html;
 }
