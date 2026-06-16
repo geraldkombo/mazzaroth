@@ -79,6 +79,7 @@ details ul{list-style:none;padding:4px 0 0 12px;font-size:10px;color:var(--dim);
 .footer{text-align:center;padding:20px 0;color:var(--dim);font-size:10px;border-top:1px solid var(--border);margin-top:16px}
 .footer a{color:var(--accent);text-decoration:none}
 @media(max-width:600px){.g2,.g3{grid-template-columns:1fr}}
+select, input[type=number]{font-family:'Inter',sans-serif}
 </style>
 </head>
 <body>
@@ -97,6 +98,7 @@ details ul{list-style:none;padding:4px 0 0 12px;font-size:10px;color:var(--dim);
   <a onclick="showTab('audit')">Audit</a>
   <a onclick="showTab('houses')">13 Houses</a>
   <a onclick="showTab('stats')">Stats</a>
+  <a onclick="showTab('location')">Location</a>
 </div>
 
 <details style="margin-bottom:12px;padding:6px 8px;background:var(--card);border:1px solid var(--border);border-radius:6px;font-size:10px;color:var(--dim)">
@@ -118,6 +120,7 @@ details ul{list-style:none;padding:4px 0 0 12px;font-size:10px;color:var(--dim);
 <div id="tab-audit" class="tab" style="display:none"></div>
 <div id="tab-houses" class="tab" style="display:none"></div>
 <div id="tab-stats" class="tab" style="display:none"></div>
+<div id="tab-location" class="tab" style="display:none"></div>
 
 <div class="footer">
   Daily readings
@@ -159,6 +162,7 @@ function renderTab(id) {
   else if (id==='audit') renderAudit();
   else if (id==='houses') renderHouses();
   else if (id==='stats') renderStats();
+  else if (id==='location') renderLocation();
 }
 
 function badge(lvl) {
@@ -172,6 +176,65 @@ function to12h(t) {
   const ampm = hour >= 12 ? 'PM' : 'AM';
   const h12 = hour % 12 || 12;
   return `${h12}:${m}${ampm}`;
+}
+
+// IAU constellation boundaries (used for ascendant-to-constellation mapping)
+const IAU_CONST = [
+  [0,27,'Pisces'],[27,53.5,'Aries'],[53.5,90.4,'Taurus'],[90.4,118.1,'Gemini'],
+  [118.1,138.2,'Cancer'],[138.2,174,'Leo'],[174,218,'Virgo'],[218,241,'Libra'],
+  [241,248,'Scorpius'],[248,266.5,'Ophiuchus'],[266.5,300,'Sagittarius'],
+  [300,327.5,'Capricornus'],[327.5,360,'Aquarius']
+];
+function lonToConst(lon) {
+  lon = ((lon % 360) + 360) % 360;
+  for (const [s,e,n] of IAU_CONST) { if (lon >= s && lon < e) return n; }
+  return 'Pisces';
+}
+
+// Kenyan cities
+const KENYAN_CITIES = {
+  'Nairobi (-1.29, 36.82)':[-1.29,36.82],
+  'Mombasa (-4.05, 39.67)':[-4.05,39.67],
+  'Kisumu (-0.10, 34.75)':[-0.10,34.75],
+  'Nakuru (-0.30, 36.07)':[-0.30,36.07],
+  'Eldoret (0.52, 35.27)':[0.52,35.27],
+  'Thika (-1.04, 37.07)':[-1.04,37.07],
+  'Malindi (-3.22, 40.12)':[-3.22,40.12],
+  'Kitale (1.02, 35.00)':[1.02,35.00],
+  'Garissa (-0.46, 39.64)':[-0.46,39.64],
+  'Kakamega (0.28, 34.75)':[0.28,34.75],
+  'Nyeri (-0.42, 36.95)':[-0.42,36.95],
+  'Machakos (-1.52, 37.26)':[-1.52,37.26],
+  'Meru (0.05, 37.65)':[0.05,37.65],
+  'Nanyuki (0.02, 37.07)':[0.02,37.07],
+  'Naivasha (-0.72, 36.43)':[-0.72,36.43],
+  'Lamu (-2.27, 40.90)':[-2.27,40.90],
+  'Voi (-3.40, 38.57)':[-3.40,38.57],
+  'Isiolo (0.35, 37.58)':[0.35,37.58],
+  'Bungoma (0.57, 34.56)':[0.57,34.56],
+  'Busia (0.46, 34.11)':[0.46,34.11],
+  'Narok (-1.09, 35.87)':[-1.09,35.87],
+  'Embu (-0.53, 37.45)':[-0.53,37.45]
+};
+
+function computeRising(lat, lon) {
+  const D = window.MD;
+  const dt = new Date(D.today_hourly.date + 'T12:00:00Z');
+  const jd = 2451545.0 + (dt.getTime() / 86400000) + 40587;
+  const T = (jd - 2451545.0) / 36525.0;
+  let GMST = 280.46061837 + 360.98564736629 * (jd - 2451545.0) + 0.000387933 * T * T - T * T * T / 38710000.0;
+  GMST = ((GMST % 360) + 360) % 360;
+  const LST = ((GMST + lon + 360) % 360);
+  const epsRad = (23.439291 - 0.0130042 * T) * Math.PI / 180;
+  const latRad = lat * Math.PI / 180;
+  const RAMCRad = LST * Math.PI / 180;
+  let Asc = Math.atan2(-(Math.tan(epsRad) * Math.sin(RAMCRad) + Math.sin(latRad) * Math.sin(epsRad)), Math.cos(RAMCRad)) * 180 / Math.PI;
+  Asc = ((Asc % 360) + 360) % 360;
+  let MC = ((LST + 360) % 360);
+  const ascConst = lonToConst(Asc);
+  const mcConst = lonToConst(MC);
+  const house1 = ((IAU_CONST.findIndex(c => c[2] === ascConst) - IAU_CONST.findIndex(c => c[2] === lonToConst(170.5)) + 13) % 13) + 1;
+  return { asc: Asc.toFixed(1), mc: MC.toFixed(1), ascConst, mcConst, ascHouse: house1 };
 }
 
 function hourAction(x) {
@@ -1011,6 +1074,100 @@ function renderStats() {
   </div>`;
 
   document.getElementById('tab-stats').innerHTML = html;
+}
+
+function renderLocation() {
+  const D = window.MD;
+  const natalSun = 170.5;
+  const sunIdx = IAU_CONST.findIndex(c => c[2] === lonToConst(natalSun));
+  let html = `<div class="card">
+    <h2>Kenya — Your Chart, Any Town</h2>
+    <div style="font-size:11px;color:var(--dim);margin-bottom:8px">Select a city to see how your chart shifts when you relocate. The Ascendant (rising constellation) changes, which shifts which house is "rising" — changing what life area leads.</div>
+    <select id="loc-select" onchange="showLocation()" style="width:100%;background:#08081a;border:1px solid var(--border);color:#fff;padding:8px;border-radius:4px;font-size:12px;font-family:'Inter',sans-serif">
+      <option value="">-- Select a Kenyan town --</option>
+      ${Object.keys(KENYAN_CITIES).map(k => `<option value="${k}">${k}</option>`).join('')}
+    </select>
+    <div style="margin-top:6px;font-size:10px;color:var(--dim)">Or enter coordinates:</div>
+    <div style="display:flex;gap:6px;margin-top:4px">
+      <input type="number" id="loc-lat" placeholder="Latitude" step="0.01" style="flex:1;background:#08081a;border:1px solid var(--border);color:#fff;padding:6px;border-radius:4px;font-size:11px">
+      <input type="number" id="loc-lon" placeholder="Longitude" step="0.01" style="flex:1;background:#08081a;border:1px solid var(--border);color:#fff;padding:6px;border-radius:4px;font-size:11px">
+      <button onclick="showLocationCoords()" class="btn-sm" style="background:var(--accent);color:#fff;border:none">Go</button>
+    </div>
+  </div>
+  <div id="loc-result"></div>`;
+  document.getElementById('tab-location').innerHTML = html;
+}
+
+function showLocation() {
+  const val = document.getElementById('loc-select').value;
+  if (!val) { document.getElementById('loc-result').innerHTML = ''; return; }
+  const [lat, lon] = KENYAN_CITIES[val];
+  renderLocationResult(lat, lon, val.split('(')[0].trim());
+}
+
+function showLocationCoords() {
+  const lat = parseFloat(document.getElementById('loc-lat').value);
+  const lon = parseFloat(document.getElementById('loc-lon').value);
+  if (isNaN(lat) || isNaN(lon)) { alert('Enter valid latitude and longitude.'); return; }
+  renderLocationResult(lat, lon, `Custom (${lat.toFixed(2)}, ${lon.toFixed(2)})`);
+}
+
+function renderLocationResult(lat, lon, name) {
+  const D = window.MD;
+  const natalSun = 170.5;
+  const sunIdx = IAU_CONST.findIndex(c => c[2] === lonToConst(natalSun));
+  const r = computeRising(lat, lon);
+  const ascDeg = parseFloat(r.asc);
+  const mcDeg = parseFloat(r.mc);
+  const ascIdx = IAU_CONST.findIndex(c => c[2] === r.ascConst);
+  const natalRising = computeRising(-1.29, 36.82);
+  const nativeAscIdx = IAU_CONST.findIndex(c => c[2] === natalRising.ascConst);
+
+  // Determine which houses are angular: H1 (rising), H4 (IC opposite MC), H7 (setting opposite ASC), H10 (MC)
+  // For equal houses: house 1 cusp = Asc, house 10 cusp = MC
+  // H1 = house 1, H10 = house 10, H4 = house 4, H7 = house 7
+  // The "house" for Ascendant in our constellation system:
+  const shift = (ascIdx - sunIdx + 13) % 13 + 1;  // ascending house
+  const mcShift = (IAU_CONST.findIndex(c => c[2] === r.mcConst) - sunIdx + 13) % 13 + 1;
+
+  const houses = [1,2,3,4,5,6,7,8,9,10,11,12,13];
+  const shifted = houses.map((h,i) => ((h - 1 + shift - 1 + 13) % 13) + 1);
+
+  html = `<div class="card">
+    <h2>${name}</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+      <div class="stat"><div class="n">${r.ascConst}</div><div class="l">Rising (ASC)</div></div>
+      <div class="stat"><div class="n">${r.mcConst}</div><div class="l">Midheaven (MC)</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:10px;color:var(--dim);margin-bottom:8px">
+      <div>Natal rising: ${natalRising.ascConst} (H${natalRising.ascHouse})</div>
+      <div>Shift: ${r.ascConst} → H${shift} becomes your new H1</div>
+    </div>
+    <div style="font-size:10px;color:var(--dim);margin-bottom:6px">Your houses rotate by ${shift - (natalRising.ascHouse)} positions in this location. H${mcShift} (${HOUSE_NAMES[mcShift].split(',')[0]}) is at the MC — career focus shifts here.</div>
+  </div>
+  <div class="card">
+    <h2>How Your Houses Shift</h2>
+    <table><tr><th>Location House</th><th>Natal House</th><th>Life Area</th></tr>`;
+  for (let h = 1; h <= 13; h++) {
+    const nh = shifted[h-1];
+    const is = h === shift || h === mcShift || h === ((shift + 3) % 13) + 1 || h === ((mcShift + 6) % 13) + 1;
+    html += `<tr style="${is?'background:#7c5cfc10':''}"><td>H${h}</td><td>H${nh}</td><td style="font-size:10px">${HOUSE_NAMES[nh]||''}${is?' <span style="color:var(--accent);font-size:9px">(angular)</span>':''}</td></tr>`;
+  }
+  html += `</table>
+    <div class="dim" style="font-size:9px;margin-top:6px">Angular houses (highlighted) are where you feel the energy most intensely.</div>
+  </div>
+  <div class="card">
+    <h2>Interpretation for ${name}</h2>
+    <div style="font-size:11px;line-height:1.7">`;
+  const nav = (h) => HOUSE_NAMES[h] || '';
+  html += `<p><b>H${shift} (${nav(shift).split(',')[0]})</b> is your new Ascendant house — this life area becomes your personal front door. The way the world sees you shifts toward ${nav(shift)} matters.</p>`;
+  html += `<p><b>H${mcShift} (${nav(mcShift).split(',')[0]})</b> is at your Midheaven — your career and public reputation focus shifts to ${nav(mcShift)} themes.</p>`;
+  if (shift === 2 || mcShift === 2) html += `<p style="color:var(--gold)">Your H2 (wealth/values) is angular here — money matters are more visible and active in this location.</p>`;
+  if (shift === 10 || mcShift === 10) html += `<p style="color:var(--accent)">Your H10 (career) is angular here — this location supports professional ambition and legacy.</p>`;
+  if (shift === 7 || mcShift === 7) html += `<p style="color:#ff6b9d">Your H7 (partnerships) is angular here — relationships and collaborations thrive in this location.</p>`;
+  html += `</div>
+  </div>`;
+  document.getElementById('loc-result').innerHTML = html;
 }
 
 // Initial render
