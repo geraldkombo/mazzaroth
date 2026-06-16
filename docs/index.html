@@ -141,8 +141,22 @@ const HOUSE_NAMES = {
   13:'Ophiuchus — Healing, Higher Service, Synthesis'
 };
 const CUSPS = {1:'Leo 138.2',2:'Virgo 174.0',3:'Libra 218.0',4:'Scorpius 241.0',5:'Ophiuchus 248.0',
-  6:'Sagittarius 266.5',7:'Capricornus 300.0',8:'Aquarius 327.5',9:'Pisces 0.0',
-  10:'Aries 27.0',11:'Taurus 53.5',12:'Gemini 90.4',13:'Cancer 118.1'};
+   6:'Sagittarius 266.5',7:'Capricornus 300.0',8:'Aquarius 327.5',9:'Pisces 0.0',
+   10:'Aries 27.0',11:'Taurus 53.5',12:'Gemini 90.4',13:'Cancer 118.1'};
+const BIRTH_YEAR = 1989;
+const PROF_HOUSE = ((new Date().getFullYear() - BIRTH_YEAR) % 13) + 1;
+const FOCUS_KEY = 'mazz_focus';
+function getFocus() { try { return parseInt(localStorage.getItem(FOCUS_KEY)) || 0; } catch(e) { return 0; } }
+function setFocus(h) { localStorage.setItem(FOCUS_KEY, h); renderAreas(); }
+function focusStar(h) {
+  const f = getFocus();
+  if (f === h) return '★';
+  return h === PROF_HOUSE ? '◎' : '☆';
+}
+function focusLabel(f) {
+  if (!f) return '';
+  return `Focus: H${f} — ${HOUSE_NAMES[f].split(',')[0]}`;
+}
 
 function showTab(id) {
   document.querySelectorAll('.tab').forEach(t => t.style.display='none');
@@ -358,7 +372,14 @@ function renderToday() {
     <div style="font-size:10px;color:var(--dim);margin-top:4px">0 &mdash; 10,000 &middot; Score</div>
     <div style="font-size:11px;color:var(--text);margin-top:8px;line-height:1.5">${scd}</div>
     ${latest.top_transit ? `<div style="font-size:12px;color:var(--accent);font-weight:500;margin-top:8px">${latest.top_transit}</div>` : ''}
+    ${h.retrograde_planets && h.retrograde_planets.length ? `<div style="margin-top:6px;padding:3px 8px;background:#7c5cfc10;border-radius:4px;font-size:9px;color:var(--dim);display:inline-block">Retrograde: ${h.retrograde_planets.join(', ')} (1.5x intensity)</div>` : ''}
   </div>
+  ${(() => {
+    const f = getFocus();
+    if (!f) return '';
+    const fa = D.areas.find(a => a.house === f);
+    return `<div class="card"><h2>★ Focus House — H${f}</h2><div style="font-size:11px"><b>${HOUSE_NAMES[f].split(',')[0]}</b> &middot; Score: <b style="color:var(--accent)">${fa ? fa.score.toFixed(0) : '--'}</b></div><div class="dim" style="font-size:10px;margin-top:2px">${fa ? fa.aspects.join(' · ') : ''}</div></div>`;
+  })()}
   <div class="card">
     <h2>Hour-by-Hour Guide</h2>
     <div class="scroll-hint">Swipe horizontally for all hours →</div>
@@ -402,6 +423,13 @@ function renderToday() {
       <div class="stat"><div class="n" style="color:var(--high)">${actHours.length}</div><div class="l">ACT Hours</div></div>
       <div class="stat"><div class="n" style="color:var(--accent)">${planHours.length}</div><div class="l">PLAN Hours</div></div>
       <div class="stat"><div class="n" style="color:var(--dim)">${restHours.length}</div><div class="l">REST Hours</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>Your Year — Profection H${PROF_HOUSE}</h2>
+    <div style="font-size:11px;line-height:1.6">
+      <span style="color:var(--accent);font-weight:600">Age ${new Date().getFullYear() - BIRTH_YEAR}:</span> H${PROF_HOUSE} — ${HOUSE_NAMES[PROF_HOUSE].split(',')[0]}. This is your time-lord year. Events related to this house carry extra weight — what you build here compounds for the next 12 years.
+      <div style="margin-top:6px;padding:4px 6px;background:#08081a;border-radius:4px;font-size:10px;color:var(--dim)">Pin a focus house in the <b style="cursor:pointer;color:var(--accent)" onclick="showTab('areas')">Life Areas</b> tab to track a priority.</div>
     </div>
   </div>`;
 
@@ -791,6 +819,7 @@ function renderAreas() {
   const sorted = [...areas].sort((a,b) => b.score - a.score);
   const top3 = sorted.slice(0,3);
   const bot3 = sorted.slice(-3).reverse();
+  const focus = getFocus();
   const areaActs = {
     1:'Define how you want to be seen and be that.',
     2:'Review one financial decision. Move money toward goals.',
@@ -807,15 +836,20 @@ function renderAreas() {
     13:'Help someone without expecting anything back.'
   };
   let html = `<div class="card"><h2>Life Areas — ${today}</h2>
+    ${focus ? `<div style="margin-bottom:8px;padding:6px 8px;background:#7c5cfc15;border-left:2px solid var(--accent);border-radius:4px;font-size:10px;color:var(--accent);font-weight:500">★ Focus: H${focus} — ${HOUSE_NAMES[focus].split(',')[0]}. <span style="color:var(--dim);font-weight:400;cursor:pointer" onclick="setFocus(0)">(clear)</span></div>` : ''}
+    <div class="dim" style="font-size:9px;margin-bottom:6px">★ = focus house · ◎ = profection year house · ☆ = click to pin</div>
     <div class="g2 grid" style="margin-bottom:10px">
       <div class="stat"><div class="n" style="color:var(--high);font-size:16px">${top3.map(a=>'H'+a.house).join(' ')}</div><div class="l">Strongest Today</div></div>
       <div class="stat"><div class="n" style="color:var(--dim);font-size:16px">${bot3.map(a=>'H'+a.house).join(' ')}</div><div class="l">Need Attention</div></div>
     </div>`;
   sorted.forEach(a => {
-    const c = a.house === 2 ? 'var(--gold)' : a.house === 7 ? '#ff6b9d' : a.house === 6 ? '#81c784' : '';
+    const isFocus = focus === a.house;
+    const isProf = PROF_HOUSE === a.house;
+    const c = isFocus ? 'var(--accent)' : a.house === 2 ? 'var(--gold)' : a.house === 7 ? '#ff6b9d' : a.house === 6 ? '#81c784' : '';
+    const bg = isFocus ? '#7c5cfc15' : isProf ? '#7c5cfc08' : '';
     const ac = areaActs[a.house] || 'Take aligned action.';
-    html += `<div class="area" style="border-left-color:${c||'var(--border)'}">
-      <div class="t"><span class="hn">H${a.house}</span><span class="nm">${a.name}</span><span class="sc" style="${c?'color:'+c:''}">${a.score.toFixed(0)}</span></div>
+    html += `<div class="area" style="border-left-color:${c||'var(--border)'};${bg?'background:'+bg:''};cursor:pointer" onclick="setFocus(${a.house})" title="Click to pin as focus">
+      <div class="t"><span class="hn">${focusStar(a.house)} H${a.house}</span><span class="nm">${a.name}</span><span class="sc" style="${c?'color:'+c:''}">${a.score.toFixed(0)}</span></div>
       <div class="as">${a.aspects.join(' · ')}</div>
       <div class="action do" style="margin:4px 0 0;padding:4px 6px;font-size:10px">
         <span class="label" style="min-width:30px;font-size:9px">DO</span>

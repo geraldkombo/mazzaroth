@@ -1,22 +1,28 @@
 name: Mazzaroth Auto-Deploy
 on:
   schedule:
-    - cron: '0 0 * * 0' # Sunday Midnight
+    - cron: '0 0 * * *' # Daily at midnight UTC
   workflow_dispatch:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Install
-        run: pip install skyfield pandas jplephem
-      - name: Generate ICS
-        run: python mazz.py ics generate
-      - name: Deploy
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          pip install skyfield pandas jplephem
+          python -c "from skyfield.api import load; load('ephe/de421.bsp')"
+      - name: Generate all data
+        run: python generate_daily_data.py
+      - name: Commit and push
         run: |
           git config user.name "MazzarothBot"
           git config user.email "bot@mazzaroth.app"
-          git add mazzaroth_exact.ics
-          git diff --quiet && git diff --staged --quiet || git commit -m "Auto-deploy: Refresh calendar"
+          git add docs/data/ Mazzaroth_Engine_Data/
+          git diff --quiet && git diff --staged --quiet || git commit -m "Auto-deploy: Daily data refresh $(date +%Y-%m-%d)"
           git push

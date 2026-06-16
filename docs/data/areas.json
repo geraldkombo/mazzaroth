@@ -2,14 +2,14 @@
   {
     "house": 6,
     "name": "Health, Daily Work, Routines, Service",
-    "score": 1806.1,
+    "score": 1666.1,
     "level": "NORMAL",
     "aspects": [
-      "Sun Opp Uranus (6.80deg)",
-      "Moon Opp Saturn (2.28deg)",
-      "Moon Opp Neptune (0.05deg)",
-      "Venus Qnx Uranus (1.31deg)",
-      "Mars SqSq Saturn (1.92deg)"
+      "Sun Opp Uranus (6.78deg)",
+      "Moon Opp Saturn (2.54deg)",
+      "Moon Opp Neptune (0.21deg)",
+      "Venus Qnx Uranus (1.33deg)",
+      "Mars SqSq Saturn (1.91deg)"
     ]
   },
   {
@@ -18,24 +18,24 @@
     "score": 1291.7,
     "level": "NORMAL",
     "aspects": [
-      "Sun Tri Venus (6.21deg)",
-      "Sun Sq Mars (1.30deg)",
-      "Moon Sq Mercury (0.89deg)",
-      "Venus Sq Venus (1.90deg)",
-      "Mars Tri Mars (5.45deg)"
+      "Sun Tri Venus (6.19deg)",
+      "Sun Sq Mars (1.28deg)",
+      "Moon Sq Mercury (0.63deg)",
+      "Venus Sq Venus (1.92deg)",
+      "Mars Tri Mars (5.44deg)"
     ]
   },
   {
     "house": 7,
     "name": "Partnerships, Marriage, Contracts, Open Enemies",
-    "score": 1286.0,
+    "score": 1250.0,
     "level": "NORMAL",
     "aspects": [
-      "Sun Tri Moon (6.10deg)",
-      "Sun Tri N.Node (0.26deg)",
-      "Moon SqSq N.Node (0.30deg)",
-      "Mercury Qnx Moon (0.59deg)",
-      "Mercury BQnt N.Node (0.76deg)"
+      "Sun Tri Moon (6.11deg)",
+      "Sun Tri N.Node (0.28deg)",
+      "Moon SqSq N.Node (0.56deg)",
+      "Mercury Qnx Moon (0.61deg)",
+      "Mercury BQnt N.Node (0.78deg)"
     ]
   },
   {
@@ -44,11 +44,11 @@
     "score": 652.3,
     "level": "NORMAL",
     "aspects": [
-      "Moon Tri Pluto (3.54deg)",
-      "Mercury Tri Pluto (5.92deg)",
-      "Mars Opp Pluto (7.27deg)",
-      "Saturn Qnx Pluto (0.25deg)",
-      "Sun SqSq H3 cusp (1.68deg)"
+      "Moon Tri Pluto (3.28deg)",
+      "Mercury Tri Pluto (5.94deg)",
+      "Mars Opp Pluto (7.28deg)",
+      "Saturn Qnx Pluto (0.24deg)",
+      "Sun SqSq H3 cusp (1.70deg)"
     ]
   },
   {
@@ -57,10 +57,10 @@
     "score": 605.5,
     "level": "NORMAL",
     "aspects": [
-      "Sun Sq Sun (4.20deg)",
-      "Moon Qnt Sun (1.24deg)",
-      "Mercury Sxt Sun (1.30deg)",
-      "Mars Tri Sun (0.04deg)",
+      "Sun Sq Sun (4.22deg)",
+      "Moon Qnt Sun (1.50deg)",
+      "Mercury Sxt Sun (1.29deg)",
+      "Mars Tri Sun (0.05deg)",
       "Pluto SqSq Sun (0.70deg)"
     ]
   },
@@ -70,9 +70,9 @@
     "score": 519.9,
     "level": "NORMAL",
     "aspects": [
-      "Moon Conj Jupiter (1.94deg)",
+      "Moon Conj Jupiter (2.20deg)",
       "Saturn Sq Jupiter (5.23deg)",
-      "Neptune Sq Jupiter (3.86deg)",
+      "Neptune Sq Jupiter (3.85deg)",
       "Pluto Qnx Jupiter (3.00deg)",
       "N.Node Tri Jupiter (4.78deg)"
     ]
@@ -83,7 +83,7 @@
     "score": 409.4,
     "level": "NORMAL",
     "aspects": [
-      "Mars Conj Chiron (6.75deg)",
+      "Mars Conj Chiron (6.74deg)",
       "Jupiter Sxt Chiron (0.59deg)",
       "Saturn SSq Chiron (0.74deg)",
       "Uranus Conj Chiron (5.28deg)",
@@ -96,8 +96,8 @@
     "score": 407.2,
     "level": "NORMAL",
     "aspects": [
-      "Venus Tri H4 cusp (1.80deg)",
-      "Jupiter Tri H4 cusp (4.32deg)",
+      "Venus Tri H4 cusp (1.82deg)",
+      "Jupiter Tri H4 cusp (4.31deg)",
       "Uranus Opp H4 cusp (1.55deg)",
       "Neptune Tri H4 cusp (2.92deg)",
       "Pluto Sxt H4 cusp (3.78deg)"
@@ -109,8 +109,8 @@
     "score": 336.9,
     "level": "NORMAL",
     "aspects": [
-      "Moon Qnx H5 cusp (1.72deg)",
-      "Venus Tri H5 cusp (5.20deg)",
+      "Moon Qnx H5 cusp (1.98deg)",
+      "Venus Tri H5 cusp (5.18deg)",
       "Saturn Tri H5 cusp (5.01deg)",
       "Uranus Opp H5 cusp (5.45deg)",
       "Neptune Tri H5 cusp (4.08deg)"
@@ -122,10 +122,10 @@
     "score": 276.0,
     "level": "NORMAL",
     "aspects": [
-      "Sun Sxt H10 cusp (2.32deg)",
-      "Moon Qnt H10 cusp (0.72deg)",
-      "Venus Sq H10 cusp (5.80deg)",
-      "Jupiter Sq H10 cusp (0.32deg)"
+      "Sun Sxt H10 cusp (2.30deg)",
+      "Moon Qnt H10 cusp (0.98deg)",
+      "Venus Sq H10 cusp (5.82deg)",
+      "Jupiter Sq H10 cusp (0.31deg)"
     ]
   },
   {
@@ -134,9 +134,9 @@
     "score": 253.5,
     "level": "NORMAL",
     "aspects": [
-      "Sun Sq H9 cusp (5.32deg)",
-      "Venus Tri H9 cusp (2.80deg)",
-      "Jupiter Tri H9 cusp (3.32deg)",
+      "Sun Sq H9 cusp (5.30deg)",
+      "Venus Tri H9 cusp (2.82deg)",
+      "Jupiter Tri H9 cusp (3.31deg)",
       "Uranus Sxt H9 cusp (2.55deg)",
       "Neptune Conj H9 cusp (3.92deg)"
     ]
@@ -147,8 +147,8 @@
     "score": 242.6,
     "level": "NORMAL",
     "aspects": [
-      "Venus Conj H13 cusp (4.70deg)",
-      "Jupiter Conj H13 cusp (1.42deg)",
+      "Venus Conj H13 cusp (4.72deg)",
+      "Jupiter Conj H13 cusp (1.41deg)",
       "Uranus Sxt H13 cusp (4.45deg)",
       "Neptune Tri H13 cusp (5.82deg)",
       "Pluto Opp H13 cusp (6.68deg)"
@@ -160,9 +160,9 @@
     "score": 222.0,
     "level": "NORMAL",
     "aspects": [
-      "Sun Tri H8 cusp (2.82deg)",
-      "Mars Sq H8 cusp (6.97deg)",
-      "Jupiter Qnx H8 cusp (0.82deg)",
+      "Sun Tri H8 cusp (2.80deg)",
+      "Mars Sq H8 cusp (6.96deg)",
+      "Jupiter Qnx H8 cusp (0.81deg)",
       "Saturn SSq H8 cusp (0.51deg)",
       "Uranus Sq H8 cusp (5.05deg)"
     ]
