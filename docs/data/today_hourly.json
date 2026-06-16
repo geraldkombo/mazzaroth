@@ -1,219 +1,219 @@
 {
-  "date": "2026-06-14",
+  "date": "2026-06-16",
   "hourly": [
     {
       "hour": 0,
       "time": "00:00",
-      "score": 5668.3,
+      "score": 6688.5,
       "level": "PEAK",
-      "top_transit": "Neptune Sq natal Neptune (5.871deg)",
-      "top_score": 171.5,
-      "hit_count": 78
+      "top_transit": "Sun Tri natal N.Node (0.100deg)",
+      "top_score": 486.0,
+      "hit_count": 82
     },
     {
       "hour": 1,
       "time": "01:00",
-      "score": 5758.3,
+      "score": 6762.5,
       "level": "PEAK",
-      "top_transit": "Neptune Sq natal Neptune (5.871deg)",
-      "top_score": 171.5,
-      "hit_count": 79
+      "top_transit": "Sun Tri natal N.Node (0.140deg)",
+      "top_score": 324.0,
+      "hit_count": 83
     },
     {
       "hour": 2,
       "time": "02:00",
-      "score": 5780.8,
+      "score": 6417.5,
       "level": "PEAK",
-      "top_transit": "Neptune Sq natal Neptune (5.870deg)",
-      "top_score": 171.5,
-      "hit_count": 80
+      "top_transit": "Sun Tri natal N.Node (0.180deg)",
+      "top_score": 324.0,
+      "hit_count": 83
     },
     {
       "hour": 3,
       "time": "03:00",
-      "score": 5818.9,
+      "score": 6423.5,
       "level": "PEAK",
-      "top_transit": "Neptune Sq natal Neptune (5.869deg)",
-      "top_score": 171.5,
-      "hit_count": 80
+      "top_transit": "Sun Tri natal N.Node (0.219deg)",
+      "top_score": 324.0,
+      "hit_count": 83
     },
     {
       "hour": 4,
       "time": "04:00",
-      "score": 5800.9,
+      "score": 6515.5,
       "level": "PEAK",
-      "top_transit": "Neptune Sq natal Neptune (5.869deg)",
-      "top_score": 171.5,
-      "hit_count": 79
+      "top_transit": "Sun Tri natal N.Node (0.259deg)",
+      "top_score": 324.0,
+      "hit_count": 82
     },
     {
       "hour": 5,
       "time": "05:00",
-      "score": 5863.9,
+      "score": 6542.5,
       "level": "PEAK",
-      "top_transit": "Neptune Sq natal Neptune (5.868deg)",
-      "top_score": 171.5,
-      "hit_count": 79
+      "top_transit": "Sun Tri natal N.Node (0.299deg)",
+      "top_score": 324.0,
+      "hit_count": 82
     },
     {
       "hour": 6,
       "time": "06:00",
-      "score": 5872.9,
+      "score": 6415.0,
       "level": "PEAK",
-      "top_transit": "Neptune Sq natal Neptune (5.868deg)",
-      "top_score": 171.5,
-      "hit_count": 80
+      "top_transit": "Sun Tri natal N.Node (0.339deg)",
+      "top_score": 324.0,
+      "hit_count": 83
     },
     {
       "hour": 7,
       "time": "07:00",
-      "score": 5835.4,
+      "score": 6262.0,
       "level": "PEAK",
-      "top_transit": "Neptune Sq natal Neptune (5.867deg)",
-      "top_score": 171.5,
-      "hit_count": 79
+      "top_transit": "Sun Tri natal N.Node (0.379deg)",
+      "top_score": 324.0,
+      "hit_count": 82
     },
     {
       "hour": 8,
       "time": "08:00",
-      "score": 5819.8,
+      "score": 6327.0,
       "level": "PEAK",
-      "top_transit": "Neptune Sq natal Neptune (5.867deg)",
-      "top_score": 171.5,
-      "hit_count": 79
+      "top_transit": "Sun Tri natal N.Node (0.418deg)",
+      "top_score": 324.0,
+      "hit_count": 83
     },
     {
       "hour": 9,
       "time": "09:00",
-      "score": 5819.8,
+      "score": 6376.5,
       "level": "PEAK",
-      "top_transit": "Neptune Sq natal Neptune (5.866deg)",
-      "top_score": 171.5,
-      "hit_count": 79
+      "top_transit": "Sun Tri natal N.Node (0.458deg)",
+      "top_score": 324.0,
+      "hit_count": 82
     },
     {
       "hour": 10,
       "time": "10:00",
-      "score": 5827.3,
+      "score": 6356.5,
       "level": "PEAK",
-      "top_transit": "Neptune Sq natal Neptune (5.866deg)",
-      "top_score": 171.5,
-      "hit_count": 78
+      "top_transit": "Sun Tri natal N.Node (0.498deg)",
+      "top_score": 324.0,
+      "hit_count": 82
     },
     {
       "hour": 11,
       "time": "11:00",
-      "score": 6075.4,
+      "score": 6119.5,
       "level": "PEAK",
-      "top_transit": "Venus Sq natal Venus (0.089deg)",
-      "top_score": 226.8,
-      "hit_count": 80
+      "top_transit": "Sun Opp natal Uranus (6.526deg)",
+      "top_score": 180.0,
+      "hit_count": 82
     },
     {
       "hour": 12,
       "time": "12:00",
-      "score": 6033.4,
+      "score": 6032.0,
       "level": "PEAK",
-      "top_transit": "Venus Sq natal Venus (0.040deg)",
-      "top_score": 226.8,
-      "hit_count": 81
+      "top_transit": "Sun Opp natal Uranus (6.486deg)",
+      "top_score": 180.0,
+      "hit_count": 80
     },
     {
       "hour": 13,
       "time": "13:00",
-      "score": 6033.4,
+      "score": 6044.0,
       "level": "PEAK",
-      "top_transit": "Venus Sq natal Venus (0.008deg)",
-      "top_score": 226.8,
+      "top_transit": "Sun Opp natal Uranus (6.446deg)",
+      "top_score": 180.0,
       "hit_count": 81
     },
     {
       "hour": 14,
       "time": "14:00",
-      "score": 6051.4,
+      "score": 5934.0,
       "level": "PEAK",
-      "top_transit": "Venus Sq natal Venus (0.057deg)",
-      "top_score": 226.8,
+      "top_transit": "Sun Opp natal Uranus (6.407deg)",
+      "top_score": 180.0,
       "hit_count": 81
     },
     {
       "hour": 15,
       "time": "15:00",
-      "score": 5900.2,
+      "score": 5983.5,
       "level": "PEAK",
-      "top_transit": "Neptune Sq natal Neptune (5.863deg)",
-      "top_score": 171.5,
-      "hit_count": 79
+      "top_transit": "Sun Opp natal Uranus (6.367deg)",
+      "top_score": 180.0,
+      "hit_count": 81
     },
     {
       "hour": 16,
       "time": "16:00",
-      "score": 5750.2,
+      "score": 5983.5,
       "level": "PEAK",
-      "top_transit": "Neptune Sq natal Neptune (5.863deg)",
-      "top_score": 171.5,
-      "hit_count": 77
+      "top_transit": "Sun Opp natal Uranus (6.327deg)",
+      "top_score": 180.0,
+      "hit_count": 81
     },
     {
       "hour": 17,
       "time": "17:00",
-      "score": 5790.2,
+      "score": 5780.5,
       "level": "PEAK",
-      "top_transit": "Neptune Sq natal Neptune (5.862deg)",
-      "top_score": 171.5,
-      "hit_count": 78
+      "top_transit": "Sun Opp natal Uranus (6.287deg)",
+      "top_score": 180.0,
+      "hit_count": 79
     },
     {
       "hour": 18,
       "time": "18:00",
-      "score": 5658.2,
+      "score": 5882.5,
       "level": "PEAK",
-      "top_transit": "Neptune Sq natal Neptune (5.862deg)",
-      "top_score": 171.5,
-      "hit_count": 76
+      "top_transit": "Sun Opp natal Uranus (6.247deg)",
+      "top_score": 180.0,
+      "hit_count": 79
     },
     {
       "hour": 19,
       "time": "19:00",
-      "score": 5778.2,
+      "score": 5774.5,
       "level": "PEAK",
-      "top_transit": "Moon Tri natal Moon (0.050deg)",
+      "top_transit": "Sun Opp natal Uranus (6.208deg)",
       "top_score": 180.0,
-      "hit_count": 76
+      "hit_count": 80
     },
     {
       "hour": 20,
       "time": "20:00",
-      "score": 5884.4,
+      "score": 5690.5,
       "level": "PEAK",
-      "top_transit": "Neptune Sq natal Neptune (5.861deg)",
-      "top_score": 171.5,
-      "hit_count": 78
+      "top_transit": "Sun Opp natal Uranus (6.168deg)",
+      "top_score": 180.0,
+      "hit_count": 80
     },
     {
       "hour": 21,
       "time": "21:00",
-      "score": 5804.4,
+      "score": 5630.5,
       "level": "PEAK",
-      "top_transit": "Neptune Sq natal Neptune (5.860deg)",
-      "top_score": 171.5,
-      "hit_count": 78
+      "top_transit": "Sun Opp natal Uranus (6.128deg)",
+      "top_score": 180.0,
+      "hit_count": 79
     },
     {
       "hour": 22,
       "time": "22:00",
-      "score": 6237.6,
+      "score": 5594.5,
       "level": "PEAK",
-      "top_transit": "Moon Sq natal Sun (0.066deg)",
-      "top_score": 315.0,
-      "hit_count": 79
+      "top_transit": "Sun Opp natal Uranus (6.088deg)",
+      "top_score": 180.0,
+      "hit_count": 78
     },
     {
       "hour": 23,
       "time": "23:00",
-      "score": 6131.6,
+      "score": 5633.5,
       "level": "PEAK",
-      "top_transit": "Sun Opp natal Uranus (7.959deg)",
+      "top_transit": "Sun Opp natal Uranus (6.048deg)",
       "top_score": 180.0,
       "hit_count": 80
     }
