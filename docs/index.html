@@ -1285,6 +1285,32 @@ function renderRelationships() {
   html += `<p style="margin-top:6px">Your H7 (Partnerships) score is ${h7 ? h7.score.toFixed(0) : '--'}. ${h7 && h7.score >= 3100 ? 'Strong partnership energy today.' : 'Neutral day for partnerships. Good for maintenance, not major moves.'}</p>`;
   html += `</div></div>`;
 
+  // Upcoming relationship transits in the next 30 days
+  const db = D.database || [];
+  const td = today.date;
+  const upcoming = db.filter(d => d.date > td && d.date <= daysFrom(td, 30)).filter(d =>
+    d.events.some(e => [5,7,8].includes(parseInt(e.house)))
+  ).sort((a,b) => a.date.localeCompare(b.date)).slice(0,10);
+  if (upcoming.length) {
+    html += `<div class="card"><h2>Upcoming Relationship Windows (next 30 days)</h2>`;
+    upcoming.forEach(d => {
+      const relEvents = d.events.filter(e => [5,7,8].includes(parseInt(e.house)));
+      if (!relEvents.length) return;
+      const days = Math.round((new Date(d.date) - new Date(td)) / 86400000);
+      const dateLabel = days === 0 ? 'Today' : days === 1 ? 'Tomorrow' : `${days} days`;
+      const hColors = {5:'#ff6b9d',7:'#e040fb',8:'#ff1744'};
+      html += `<div style="display:flex;gap:8px;align-items:center;padding:5px 8px;margin:3px 0;background:#08081a;border-radius:4px;font-size:10px">
+        <span class="mono" style="color:var(--dim);min-width:60px">${d.date}</span>
+        <span style="color:var(--dim);min-width:50px">${dateLabel}</span>
+        <span style="flex:1">${relEvents.map(e =>
+          `<span style="color:${hColors[parseInt(e.house)]||'var(--text)'}">H${e.house} ${e.transit}</span>`
+        ).join(' · ')}</span>
+        <span>${badge(d.max_level)}</span>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
   document.getElementById('tab-relationships').innerHTML = html;
 }
 
