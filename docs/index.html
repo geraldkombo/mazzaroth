@@ -99,6 +99,7 @@ select, input[type=number]{font-family:'Inter',sans-serif}
   <a onclick="showTab('houses')">13 Houses</a>
   <a onclick="showTab('stats')">Stats</a>
   <a onclick="showTab('location')">Location</a>
+  <a onclick="showTab('relationships')">Relationships</a>
 </div>
 
 <details style="margin-bottom:12px;padding:6px 8px;background:var(--card);border:1px solid var(--border);border-radius:6px;font-size:10px;color:var(--dim)">
@@ -121,6 +122,7 @@ select, input[type=number]{font-family:'Inter',sans-serif}
 <div id="tab-houses" class="tab" style="display:none"></div>
 <div id="tab-stats" class="tab" style="display:none"></div>
 <div id="tab-location" class="tab" style="display:none"></div>
+<div id="tab-relationships" class="tab" style="display:none"></div>
 
 <div class="footer">
   Daily readings
@@ -177,6 +179,7 @@ function renderTab(id) {
   else if (id==='houses') renderHouses();
   else if (id==='stats') renderStats();
   else if (id==='location') renderLocation();
+  else if (id==='relationships') renderRelationships();
 }
 
 function badge(lvl) {
@@ -950,8 +953,20 @@ function renderWealth() {
     const parts = n.split(' — ');
     html += `<tr><td class="mono">${parts[0]}</td><td style="font-size:11px">${parts[1]||n}</td></tr>`;
   });
-  html += `</table>
+  html += `  </table>
     <div class="dim" style="font-size:10px;margin-top:6px">3 natal planets in House 2 (Finances). Your chart is wired for wealth. The engine shows you WHEN to act. You bring the action.</div>
+  </div>
+  <div class="card">
+    <h2>Crypto & Micro-Investing Timing</h2>
+    <div style="font-size:10px;color:var(--dim);margin-bottom:6px">With $1-2, you're not trading — you're learning the timing. That's the real edge.</div>
+    <div style="font-size:11px;line-height:1.7">
+      <p><b style="color:var(--high)">Best days to buy:</b> Mercury direct (not retrograde) + Jupiter or Venus aspecting H2/H8. Check the Calendar tab for PEAK days — those are your entry windows.</p>
+      <p><b style="color:var(--peak)">Worst days to buy:</b> Mercury retrograde, Mars square H2, Saturn opposite H8. The engine will show these as RED days.</p>
+      <p><b style="color:var(--gold)">Strategy for small amounts:</b> Don't chase pumps. Use HIGH days to buy $1-2 of BTC/ETH on PEAK days. Log each trade in the Audit tab. Over 30-60 entries, the engine learns YOUR crypto timing.</p>
+      <div style="margin-top:6px;padding:6px 8px;background:#08081a;border-radius:4px;font-size:10px">
+        <span class="mono" style="color:var(--accent)">Today's crypto move:</span> ${latest.score >= 3400 ? `PEAK energy — good for a small entry if Mercury is direct.` : latest.score >= 3100 ? `HIGH energy — research, don't buy yet.` : `NORMAL day — stack sats, learn charts, no trading.`}
+      </div>
+    </div>
   </div>`;
   document.getElementById('tab-wealth').innerHTML = html;
 }
@@ -1185,16 +1200,105 @@ function renderStats() {
   document.getElementById('tab-stats').innerHTML = html;
 }
 
+function renderRelationships() {
+  const areas = D.areas || [];
+  const today = D.today_hourly;
+  const latest = today.hourly.filter(x=>x.score>0).pop() || today.hourly[0];
+  const h5 = areas.find(a => a.house === 5);
+  const h7 = areas.find(a => a.house === 7);
+  const h8 = areas.find(a => a.house === 8);
+  const focus = getFocus();
+
+  const houseInfo = {
+    5: {name:'Romance & Creativity', color:'#ff6b9d', icon:'❤️',
+        aspects:{Venus:'Romantic energy. Express love, create beauty, date.', Mars:'Passionate. Pursue what you desire. Creative breakthroughs.',
+                 Jupiter:'Romance expands. Luck with love. Creative projects thrive.', Saturn:'Commitment or restraint. Take love seriously.',
+                 Pluto:'All-consuming connection. Creative transformation.', Neptune:'Dreamy romance. Artistic peak. Keep boundaries.',
+                 Sun:'Shine in love. Creative self-expression.', Moon:'Emotional bonding. Nurture through creativity.'}},
+    7: {name:'Partnerships & Marriage', color:'#e040fb', icon:'🤝',
+        aspects:{Venus:'Harmony in relationships. Attract naturally. Shared values.', Mars:'Passion or conflict. Channel into shared goals.',
+                 Jupiter:'Relationships expand your world. Growth through partnership.', Saturn:'Commitment. Karmic partnership. Heavy but solid.',
+                 Pluto:'Deep transformation through partnership. Power dynamics intense.', Neptune:'Spiritual connection or illusion. Need boundaries.',
+                 Sun:'Self-expression through partnership. Creative collaboration.', Moon:'Emotional attunement. The relationship feels like home.',
+                 Uranus:'Unexpected connection. Freedom needed. Electric.', Mercury:'Communication is everything. Talk it through.'}},
+    8: {name:'Sex & Intimacy', color:'#ff1744', icon:'🔥',
+        aspects:{Venus:'Sensual intimacy. Touch and presence. Deep bonding.', Mars:'Raw passion. High libido. Intense chemistry.',
+                 Jupiter:'Adventurous intimacy. Explore new territory.', Saturn:'Sexual discipline. Loyal once committed.',
+                 Pluto:'Primal connection. Merging of souls. Transformative.', Neptune:'Spiritual sexuality. Ecstatic but ground yourself.',
+                 Sun:'Sexual confidence. Identity affirmed through intimacy.', Moon:'Emotional sexuality. Need to feel safe.'}}
+  };
+
+  let html = `<div class="card">
+    <h2>Relationships & Romance — ${today.date}</h2>
+    <div style="font-size:10px;color:var(--dim);margin-bottom:6px">Based on your transits to H5 (Romance), H7 (Partnerships), and H8 (Intimacy).</div>
+    <div class="g3 grid">
+      ${[5,7,8].map(h => {
+        const a = areas.find(x => x.house === h);
+        const info = houseInfo[h];
+        const c = info.color;
+        return `<div class="stat" style="border:1px solid ${c}30">
+          <div class="n" style="color:${c};font-size:14px">${a ? a.score.toFixed(0) : '--'}</div>
+          <div class="l">${info.icon} ${info.name}</div>
+          <div style="font-size:8px;color:var(--dim);margin-top:2px">${a ? a.aspects.slice(0,2).join('<br>') : 'No active transits'}</div>
+        </div>`;
+      }).join('')}
+    </div>
+  </div>`;
+
+  [5,7,8].forEach(h => {
+    const info = houseInfo[h];
+    const a = areas.find(x => x.house === h);
+    if (!a || !a.aspects.length) {
+      html += `<div class="card"><h2>${info.icon} ${info.name}</h2><div class="dim" style="font-size:11px;padding:4px 0">No active transits in this area today.</div></div>`;
+      return;
+    }
+    const aspects = a.aspects.slice(0,4);
+    html += `<div class="card">
+      <h2 style="color:${info.color}">${info.icon} ${info.name} <span class="dim" style="font-weight:400">Score ${a.score.toFixed(0)}</span></h2>
+      ${aspects.map(asp => {
+        const p = asp.match(/^(\w+)/);
+        const pName = p ? p[1] : '';
+        const advice = info.aspects[pName] || 'This transit affects your relationships. Pay attention.';
+        return `<div class="action do" style="border-left-color:${info.color};margin-bottom:3px">
+          <span class="label" style="color:${info.color};min-width:30px;font-size:9px">${pName||''}</span>
+          <span style="font-size:10px">${advice} <span class="dim">(${asp})</span></span>
+        </div>`;
+      }).join('')}
+    </div>`;
+  });
+
+  // Advice based on today's top transit
+  html += `<div class="card">
+    <h2>Today's Relationship Advice</h2>
+    <div style="font-size:11px;line-height:1.7">`;
+  if (latest.top_transit) {
+    const t = latest.top_transit;
+    if (t.includes('Ven')) html += `<p>❤️ Venus energy active. Love, beauty, and connection are highlighted. Express appreciation. Invest in what you value.</p>`;
+    if (t.includes('Mar')) html += `<p>🔥 Mars active. Passion is high. Channel that energy into quality time together. Watch for arguments.</p>`;
+    if (t.includes('Jup')) html += `<p>🌟 Jupiter expanding relationships. Plan something meaningful. Growth through connection.</p>`;
+    if (t.includes('Sat')) html += `<p>📐 Saturn bringing structure. Have the honest conversation. Commitment deepens.</p>`;
+    if (t.includes('Plu')) html += `<p>⚡ Pluto transforming. Old patterns surface to be released. Go deep or let go.</p>`;
+    if (t.includes('Nep')) html += `<p>🌊 Neptune dreamy but blurry. Enjoy the romance but verify before trusting fully.</p>`;
+    if (t.includes('Ura')) html += `<p>⚡ Uranus bringing surprises. Expect the unexpected in relationships. Freedom matters.</p>`;
+    if (t.includes('Merc')) html += `<p>💬 Mercury active. Talk about everything. Communication heals and connects.</p>`;
+  }
+  html += `<p style="margin-top:6px">Your H7 (Partnerships) score is ${h7 ? h7.score.toFixed(0) : '--'}. ${h7 && h7.score >= 3100 ? 'Strong partnership energy today.' : 'Neutral day for partnerships. Good for maintenance, not major moves.'}</p>`;
+  html += `</div></div>`;
+
+  document.getElementById('tab-relationships').innerHTML = html;
+}
+
 function renderLocation() {
-  const D = window.MD;
-  const natalSun = 170.5;
-  const sunIdx = IAU_CONST.findIndex(c => c[2] === lonToConst(natalSun));
+  const cityKeys = Object.keys(KENYAN_CITIES);
   let html = `<div class="card">
     <h2>Kenya — Your Chart, Any Town</h2>
-    <div style="font-size:11px;color:var(--dim);margin-bottom:8px">Select a city to see how your chart shifts when you relocate. The Ascendant (rising constellation) changes, which shifts which house is "rising" — changing what life area leads.</div>
-    <select id="loc-select" onchange="showLocation()" style="width:100%;background:#08081a;border:1px solid var(--border);color:#fff;padding:8px;border-radius:4px;font-size:12px;font-family:'Inter',sans-serif">
-      <option value="">-- Select a Kenyan town --</option>
-      ${Object.keys(KENYAN_CITIES).map(k => `<option value="${k}">${k}</option>`).join('')}
+    <div style="font-size:11px;color:var(--dim);margin-bottom:8px">Select a city or use your location to see how your chart shifts.</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
+      <button onclick="useGeolocation()" class="btn-sm" style="background:var(--accent);color:#fff;border:none;padding:8px 14px">📍 Use my location</button>
+    </div>
+    <select id="loc-select" onchange="showLocation(this)" style="width:100%;background:#08081a;border:1px solid var(--border);color:#fff;padding:8px;border-radius:4px;font-size:12px;font-family:'Inter',sans-serif">
+      <option value="-1">-- Select a Kenyan town --</option>
+      ${cityKeys.map((k,i) => `<option value="${i}">${k.replace('★ ','')}</option>`).join('')}
     </select>
     <div style="margin-top:6px;font-size:10px;color:var(--dim)">Or enter coordinates:</div>
     <div style="display:flex;gap:6px;margin-top:4px">
@@ -1207,11 +1311,28 @@ function renderLocation() {
   document.getElementById('tab-location').innerHTML = html;
 }
 
-function showLocation() {
-  const val = document.getElementById('loc-select').value;
-  if (!val) { document.getElementById('loc-result').innerHTML = ''; return; }
-  const [lat, lon] = KENYAN_CITIES[val];
-  renderLocationResult(lat, lon, val.split('(')[0].trim());
+function useGeolocation() {
+  if (!navigator.geolocation) { alert('Geolocation not supported by your browser.'); return; }
+  navigator.geolocation.getCurrentPosition(
+    function(pos) {
+      const lat = pos.coords.latitude;
+      const lon = pos.coords.longitude;
+      renderLocationResult(lat, lon, `Your location (${lat.toFixed(4)}, ${lon.toFixed(4)})`);
+    },
+    function(err) {
+      alert('Could not get location. Select a town from the list or enter coordinates manually.');
+    },
+    { enableHighAccuracy: true, timeout: 10000 }
+  );
+}
+
+function showLocation(sel) {
+  const idx = parseInt(sel.value);
+  if (idx < 0) { document.getElementById('loc-result').innerHTML = ''; return; }
+  const keys = Object.keys(KENYAN_CITIES);
+  const key = keys[idx];
+  const [lat, lon] = KENYAN_CITIES[key];
+  renderLocationResult(lat, lon, key.replace('★ ',''));
 }
 
 function showLocationCoords() {
