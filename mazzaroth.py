@@ -132,6 +132,9 @@ def _chiron_geocentric(t, jd):
     lat = math.degrees(math.atan2(gz, math.sqrt(gx*gx+gy*gy)))
     return lon, lat
 
+def is_retrograde(spd):
+    return spd < 0 and spd > -10
+
 def get_transit_data(dt_utc):
     _ensure_loaded()
     t = _ts.utc(dt_utc.year, dt_utc.month, dt_utc.day, dt_utc.hour, dt_utc.minute, dt_utc.second)
@@ -151,13 +154,14 @@ def get_transit_data(dt_utc):
             if spd_pct < 0.05: mm = 5.0
             elif spd_pct < 0.25: mm = 2.0
             else: mm = 1.0
-            data[name] = {"lon":lon_deg, "lat":lat.degrees, "decl":dec.degrees, "spd":spd, "motion_mult":mm, "antiscion":_antiscion(lon_deg)}
+            retro = is_retrograde(spd)
+            data[name] = {"lon":lon_deg, "lat":lat.degrees, "decl":dec.degrees, "spd":spd, "motion_mult":mm, "antiscion":_antiscion(lon_deg), "retrograde":retro}
         except: pass
-    data["N.Node"] = {"lon":_lunar_node_lon(dt_utc), "lat":0.0, "decl":0.0, "spd":-0.053, "motion_mult":1.0, "antiscion":_antiscion(_lunar_node_lon(dt_utc))}
+    data["N.Node"] = {"lon":_lunar_node_lon(dt_utc), "lat":0.0, "decl":0.0, "spd":-0.053, "motion_mult":1.0, "antiscion":_antiscion(_lunar_node_lon(dt_utc)), "retrograde":True}
     try:
         jd = 2451545.0 + (dt_utc - datetime(2000,1,1,12,0)).total_seconds()/86400.0
         clon, clat = _chiron_geocentric(t, jd)
-        data["Chiron"] = {"lon":clon, "lat":clat, "decl":0.0, "spd":MEAN_SPD["Chiron"], "motion_mult":1.0, "antiscion":_antiscion(clon)}
+        data["Chiron"] = {"lon":clon, "lat":clat, "decl":0.0, "spd":MEAN_SPD["Chiron"], "motion_mult":1.0, "antiscion":_antiscion(clon), "retrograde":False}
     except: pass
     return data
 
@@ -168,6 +172,7 @@ def score_transit(transit_data):
     for tname, td in transit_data.items():
         tw = WEIGHTS.get(tname, 1.0)
         tmm = td["motion_mult"]
+        retro_wt = 1.5 if td.get("retrograde") else 1.0
         for nname, nd in NATAL.items():
             nw = WEIGHTS.get(nname, 1.0)
             h = _house_num(nd["lon"])
@@ -178,18 +183,18 @@ def score_transit(transit_data):
                 delta = abs(diff - angle)
                 if delta <= orb:
                     prec = 3.0 if delta<0.1 else (2.0 if delta<0.5 else 1.0)
-                    s = base * tw * nw * hw * tmm * prec
+                    s = base * tw * nw * hw * tmm * prec * retro_wt
                     total += s
                     hits.append((s, f"{tname} {aname} natal {nname} ({delta:.3f}deg)", aname))
             ddiff = abs(td["decl"] - nd["decl"])
             if ddiff <= 1.0:
-                s = 6 * tw * nw * hw * tmm * (2.0 if ddiff<0.1 else 1.0)
+                s = 6 * tw * nw * hw * tmm * (2.0 if ddiff<0.1 else 1.0) * retro_wt
                 total += s
                 hits.append((s, f"{tname} // natal {nname} decl ({ddiff:.3f}deg)", "PAR"))
             anti_diff = abs(td["lon"] - _antiscion(nd["lon"])) % 360
             if anti_diff > 180: anti_diff = 360 - anti_diff
             if anti_diff <= 1.5:
-                s = 5 * tw * nw * hw * tmm
+                s = 5 * tw * nw * hw * tmm * retro_wt
                 total += s
                 hits.append((s, f"{tname} anti-{nname} ({anti_diff:.3f}deg)", "ANTI"))
     hits.sort(reverse=True)

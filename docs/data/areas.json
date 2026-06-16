@@ -2,12 +2,12 @@
   {
     "house": 6,
     "name": "Health, Daily Work, Routines, Service",
-    "score": 1666.1,
+    "score": 1806.1,
     "level": "NORMAL",
     "aspects": [
-      "Sun Opp Uranus (6.81deg)",
-      "Moon Opp Saturn (2.17deg)",
-      "Moon Opp Neptune (0.15deg)",
+      "Sun Opp Uranus (6.80deg)",
+      "Moon Opp Saturn (2.28deg)",
+      "Moon Opp Neptune (0.05deg)",
       "Venus Qnx Uranus (1.31deg)",
       "Mars SqSq Saturn (1.92deg)"
     ]
@@ -20,9 +20,9 @@
     "aspects": [
       "Sun Tri Venus (6.21deg)",
       "Sun Sq Mars (1.30deg)",
-      "Moon Sq Mercury (1.00deg)",
+      "Moon Sq Mercury (0.89deg)",
       "Venus Sq Venus (1.90deg)",
-      "Mars Tri Mars (5.46deg)"
+      "Mars Tri Mars (5.45deg)"
     ]
   },
   {
@@ -31,11 +31,11 @@
     "score": 1286.0,
     "level": "NORMAL",
     "aspects": [
-      "Sun Tri Moon (6.09deg)",
+      "Sun Tri Moon (6.10deg)",
       "Sun Tri N.Node (0.26deg)",
-      "Moon SqSq N.Node (0.20deg)",
+      "Moon SqSq N.Node (0.30deg)",
       "Mercury Qnx Moon (0.59deg)",
-      "Mercury BQnt N.Node (0.75deg)"
+      "Mercury BQnt N.Node (0.76deg)"
     ]
   },
   {
@@ -44,9 +44,9 @@
     "score": 652.3,
     "level": "NORMAL",
     "aspects": [
-      "Moon Tri Pluto (3.64deg)",
+      "Moon Tri Pluto (3.54deg)",
       "Mercury Tri Pluto (5.92deg)",
-      "Mars Opp Pluto (7.26deg)",
+      "Mars Opp Pluto (7.27deg)",
       "Saturn Qnx Pluto (0.25deg)",
       "Sun SqSq H3 cusp (1.68deg)"
     ]
@@ -57,9 +57,9 @@
     "score": 605.5,
     "level": "NORMAL",
     "aspects": [
-      "Sun Sq Sun (4.19deg)",
-      "Moon Qnt Sun (1.13deg)",
-      "Mercury Sxt Sun (1.31deg)",
+      "Sun Sq Sun (4.20deg)",
+      "Moon Qnt Sun (1.24deg)",
+      "Mercury Sxt Sun (1.30deg)",
       "Mars Tri Sun (0.04deg)",
       "Pluto SqSq Sun (0.70deg)"
     ]
@@ -70,7 +70,7 @@
     "score": 519.9,
     "level": "NORMAL",
     "aspects": [
-      "Moon Conj Jupiter (1.84deg)",
+      "Moon Conj Jupiter (1.94deg)",
       "Saturn Sq Jupiter (5.23deg)",
       "Neptune Sq Jupiter (3.86deg)",
       "Pluto Qnx Jupiter (3.00deg)",
@@ -87,7 +87,7 @@
       "Jupiter Sxt Chiron (0.59deg)",
       "Saturn SSq Chiron (0.74deg)",
       "Uranus Conj Chiron (5.28deg)",
-      "N.Node Sq Chiron (5.73deg)"
+      "N.Node Sq Chiron (5.72deg)"
     ]
   },
   {
@@ -96,7 +96,7 @@
     "score": 407.2,
     "level": "NORMAL",
     "aspects": [
-      "Venus Tri H4 cusp (1.79deg)",
+      "Venus Tri H4 cusp (1.80deg)",
       "Jupiter Tri H4 cusp (4.32deg)",
       "Uranus Opp H4 cusp (1.55deg)",
       "Neptune Tri H4 cusp (2.92deg)",
@@ -109,8 +109,8 @@
     "score": 336.9,
     "level": "NORMAL",
     "aspects": [
-      "Moon Qnx H5 cusp (1.61deg)",
-      "Venus Tri H5 cusp (5.21deg)",
+      "Moon Qnx H5 cusp (1.72deg)",
+      "Venus Tri H5 cusp (5.20deg)",
       "Saturn Tri H5 cusp (5.01deg)",
       "Uranus Opp H5 cusp (5.45deg)",
       "Neptune Tri H5 cusp (4.08deg)"
@@ -123,8 +123,8 @@
     "level": "NORMAL",
     "aspects": [
       "Sun Sxt H10 cusp (2.32deg)",
-      "Moon Qnt H10 cusp (0.61deg)",
-      "Venus Sq H10 cusp (5.79deg)",
+      "Moon Qnt H10 cusp (0.72deg)",
+      "Venus Sq H10 cusp (5.80deg)",
       "Jupiter Sq H10 cusp (0.32deg)"
     ]
   },
@@ -135,7 +135,7 @@
     "level": "NORMAL",
     "aspects": [
       "Sun Sq H9 cusp (5.32deg)",
-      "Venus Tri H9 cusp (2.79deg)",
+      "Venus Tri H9 cusp (2.80deg)",
       "Jupiter Tri H9 cusp (3.32deg)",
       "Uranus Sxt H9 cusp (2.55deg)",
       "Neptune Conj H9 cusp (3.92deg)"
@@ -147,7 +147,7 @@
     "score": 242.6,
     "level": "NORMAL",
     "aspects": [
-      "Venus Conj H13 cusp (4.69deg)",
+      "Venus Conj H13 cusp (4.70deg)",
       "Jupiter Conj H13 cusp (1.42deg)",
       "Uranus Sxt H13 cusp (4.45deg)",
       "Neptune Tri H13 cusp (5.82deg)",
@@ -161,7 +161,7 @@
     "level": "NORMAL",
     "aspects": [
       "Sun Tri H8 cusp (2.82deg)",
-      "Mars Sq H8 cusp (6.98deg)",
+      "Mars Sq H8 cusp (6.97deg)",
       "Jupiter Qnx H8 cusp (0.82deg)",
       "Saturn SSq H8 cusp (0.51deg)",
       "Uranus Sq H8 cusp (5.05deg)"
