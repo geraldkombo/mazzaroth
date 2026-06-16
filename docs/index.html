@@ -1357,7 +1357,97 @@ function renderRelationships() {
     html += `</div>`;
   }
 
+  // Birth Year Compatibility
+  html += `<div class="card">
+    <h2>Birth Year Compatibility</h2>
+    <div style="font-size:10px;color:var(--dim);margin-bottom:6px">Check which birth years and dates align with your chart. No age judgment — just astrological resonance.</div>
+    <div style="display:flex;gap:6px;margin-bottom:8px">
+      <input type="number" id="by-input" placeholder="Enter birth year (e.g. 1985)" style="flex:1;background:#08081a;border:1px solid var(--border);color:#fff;padding:8px;border-radius:4px;font-size:12px">
+      <button onclick="checkBirthYear()" class="btn-sm" style="background:var(--accent);color:#fff;border:none;padding:8px 14px;white-space:nowrap">Check</button>
+    </div>
+    <div id="by-result" style="font-size:11px;line-height:1.6"></div>
+    <div style="margin-top:10px;padding:8px;background:#08081a;border-radius:4px;font-size:10px">
+      <b style="color:var(--accent)">Your chart snapshot:</b> Sun 26.5° Leo · Moon 18.6° Capricorn · 3 planets in House 2 · 1989 (Snake)<br>
+      <b style="color:var(--gold)">Strongest matches:</b> Birth years 1983-1996 (same generation) · Sun signs ♈♌♐ (fire) and ♊♎♒ (air)<br>
+      <b style="color:var(--dim)">Chinese zodiac:</b> Snake (you) + Ox · Rooster · Snake = excellent · Dragon · Dog = challenging
+    </div>
+  </div>`;
+
   document.getElementById('tab-relationships').innerHTML = html;
+}
+
+function getSunSign(month, day) {
+  const signs = [
+    {name:'♑ Capricorn', idx:0},{name:'♒ Aquarius', idx:1},{name:'♓ Pisces', idx:2},
+    {name:'♈ Aries', idx:3},{name:'♉ Taurus', idx:4},{name:'♊ Gemini', idx:5},
+    {name:'♋ Cancer', idx:6},{name:'♌ Leo', idx:7},{name:'♍ Virgo', idx:8},
+    {name:'♎ Libra', idx:9},{name:'♏ Scorpio', idx:10},{name:'♐ Sagittarius', idx:11}
+  ];
+  const cuts = [120,218,320,420,520,621,722,822,922,1023,1122,1221];
+  let idx = 11;
+  for (let i = 0; i < cuts.length; i++) {
+    if (month*100+day <= cuts[i]) { idx = i; break; }
+  }
+  return signs[idx];
+}
+
+function checkBirthYear() {
+  const input = document.getElementById('by-input');
+  const yr = parseInt(input.value);
+  const result = document.getElementById('by-result');
+  if (!yr || yr < 1900 || yr > 2030) { result.innerHTML = '<span class="dim">Enter a valid year (1900-2030).</span>'; return; }
+
+  const age = 2026 - yr;
+  const ageLabel = age < 20 ? `~${age}yo (younger)` : age < 30 ? `~${age}yo` : age < 40 ? `~${age}yo` : age < 50 ? `~${age}yo (older)` : `~${age}yo (older, no judgment)`;
+
+  // Chinese zodiac
+  const animals = ['Monkey','Rooster','Dog','Pig','Rat','Ox','Tiger','Rabbit','Dragon','Snake','Horse','Goat'];
+  const myAnimal = 'Snake';
+  const theirAnimal = animals[yr % 12];
+  const animalCompat = {Snake:['Ox','Rooster','Snake'],Ox:['Rat','Snake','Rooster'],Rooster:['Ox','Snake','Dragon'],
+    Rat:['Ox','Dragon','Monkey'],Dragon:['Rat','Monkey','Rooster'],Monkey:['Rat','Dragon','Snake'],
+    Dog:['Tiger','Rabbit','Horse'],Tiger:['Dog','Horse','Pig'],Rabbit:['Dog','Pig','Goat'],
+    Horse:['Dog','Tiger','Goat'],Goat:['Rabbit','Horse','Pig'],Pig:['Rabbit','Goat','Tiger']};
+  const bestForSnake = ['Ox','Rooster','Snake'];
+  const isAnimalMatch = bestForSnake.includes(theirAnimal);
+  const isAnimalConflict = ['Dragon','Dog'].includes(theirAnimal);
+
+  // Sun sign compatibility with his Leo
+  const mySign = '♌ Leo';
+  const fireAir = ['♈ Aries','♌ Leo','♐ Sagittarius','♊ Gemini','♎ Libra','♒ Aquarius'];
+  const sunNeutral = ['♉ Taurus','♍ Virgo','♑ Capricorn'];
+  // Check if the specific month/day matches (if they entered a full date, use first of month as approximation)
+  const signMatch = fireAir.includes('♌ Leo');
+  // Generational sync: his outer planets generational group
+  const genGroup = yr >= 1983 && yr <= 1996;
+
+  // Score out of 10
+  let score = 5;
+  let points = [];
+  if (isAnimalMatch) { score += 2; points.push('Zodiac match (Snake + ' + theirAnimal + ')'); }
+  else if (isAnimalConflict) { score -= 1; points.push('Zodiac tension (Snake + ' + theirAnimal + ')'); }
+  else { points.push('Zodiac neutral (' + theirAnimal + ')'); }
+
+  if (genGroup) { score += 2; points.push('Same generation — outer planets align'); }
+  else { points.push('Different generation — outer planets differ'); }
+
+  if (age >= -5 && age <= 5) { score += 1; points.push('Close age cohort — life stage sync'); }
+  else if (age >= 10) { points.push('Age gap ' + age + ' years — maturity dynamic, no judgment'); }
+
+  score = Math.max(0, Math.min(10, score));
+  const stars = '★'.repeat(Math.floor(score/2)) + '☆'.repeat(5 - Math.floor(score/2));
+  const color = score >= 8 ? 'var(--high)' : score >= 5 ? 'var(--gold)' : 'var(--dim)';
+
+  result.innerHTML = `<div style="padding:8px;background:#08081a;border-radius:4px">
+    <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px">
+      <span><b>Year ${yr}</b> · ${theirAnimal} · ${ageLabel}</span>
+      <span style="color:${color};font-size:14px">${stars} ${score}/10</span>
+    </div>
+    <ul style="margin:4px 0 0;padding-left:14px;font-size:10px;color:var(--dim);line-height:1.6">
+      ${points.map(p => `<li>${p}</li>`).join('')}
+    </ul>
+    <div style="margin-top:4px;font-size:10px">${score >= 8 ? '✅ Strong resonance. Worth exploring.' : score >= 5 ? '🔸 Mixed signals. Depends on full chart.' : '⚠️ Some friction. Would need strong moon/rising sync.'}</div>
+  </div>`;
 }
 
 function renderLocation() {
