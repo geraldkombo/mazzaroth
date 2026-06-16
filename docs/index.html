@@ -864,6 +864,45 @@ function renderAreas() {
   document.getElementById('tab-areas').innerHTML = html;
 }
 
+function mazziMove(today, areas, h2Score) {
+  const t = today.hourly.filter(x => x.score > 0).pop() || today.hourly[0];
+  const transit = (t.top_transit || '').toLowerCase();
+  const isPeak = t.score >= 3700;
+  const isHigh = t.score >= 3100;
+  const isRest = !isPeak && !isHigh;
+  const h2 = areas.find(a => a.house === 2);
+
+  // Determine planet type
+  const hasJup = transit.includes('jup');
+  const hasSat = transit.includes('sat');
+  const hasMar = transit.includes('mar');
+  const hasVen = transit.includes('ven');
+  const hasMerc = transit.includes('merc');
+  const hasPlu = transit.includes('plu');
+  const hasNep = transit.includes('nep');
+  const hasUra = transit.includes('ura');
+  const hasSun = transit.includes('sun');
+  const hasMoon = transit.includes('moo');
+  const retros = (today.retrograde_planets || []).filter(r => !r.includes('Node'));
+  const mercRx = retros.some(r => r.includes('Merc'));
+  const retrosStr = retros.map(r => r.split(' ')[0]).join(', ');
+
+  // Build Mazzi's move
+  if (isPeak && hasJup && h2 && h2.score > 0) return `Jupiter in your H2 Wealth House on a PEAK day — this is your highest-probability move of the month. If you have $2, buy fractional BTC or ETH via a micro-investment app. If you have zero, pitch one person your service today. Jupiter expands what you act on. Don't waste this window.`;
+  if (isPeak && hasVen) return `Venus on a PEAK day — your value perception is at its highest. Raise your prices, ask for the raise, or invoice someone who owes you. Not a spending day — a receiving day. Take the $2 and let it sit. Your worth is rising.`;
+  if (isPeak && hasMar) return `Mars on PEAK — high-octane earning energy. Channel $2 into a skill-building micro-course or a domain name for your side hustle. Mars rewards aggressive action. Move fast.`;
+  if (isPeak && hasPlu) return `Pluto on PEAK — wealth transformation window. Cut one recurring expense today. Cancel a subscription you forgot about. That $5-10/month compounds. Use the $2 for M-PESA savings — blocking leaks funds your future.`;
+  if (isPeak && hasSat) return `Saturn on PEAK — structure creates wealth. Open a dedicated savings pocket or goal account. Deposit the $2 as the first brick. Saturn rewards patience and systems. You're building a foundation, not chasing dopamine.`;
+  if (isPeak) return `PEAK day — your highest-potential money day. If you have $2, deploy it: fractional BTC, a mobile money savings lock, or pay $1 toward a debt and $1 toward a skill. Action compounds. Do not let this day pass without one financial move.`;
+  if (isHigh && hasJup) return `Jupiter in a HIGH window. Don't buy — prepare. Research one crypto or one income stream for 15 minutes. Write down the next step. Jupiter rewards preparation on non-PEAK days. Your $2 stays in your pocket until a PEAK trigger.`;
+  if (isHigh && (hasMerc || hasSun)) return `Mercury/Sun active. Audit one number today: your spending this week, your account balance, or your subscription list. Knowledge is your edge. No moves — just awareness. Use the $2 to buy data (airtime) to research opportunities.`;
+  if (isHigh) return `HIGH energy — good for planning, not deploying. Review your financial calendar. Which PEAK days are coming this month? Prepare your $2 entry for that day. Mazzi says: readiness is wealth's silent multiplier.`;
+  if (mercRx) return `Mercury retrograde. Do NOT deploy cash. Do NOT sign anything. Review past trades or expenses. The $2 stays in your pocket. Use this window to clean up your financial records. Mercury Rx rewards reflection, not action.`;
+  if (isRest && hasMoon) return `Moon day — emotional spending risk. Pause before any purchase. The $2 goes into savings, not spending. Trust your gut but lock your wallet. Mazzi says: rest is wealth protection today.`;
+  if (isRest) return `Rest window. Protect capital. Do nothing with your $2 today. Financial discipline means knowing when to hold. Your next PEAK window is coming — use this time to watch, learn, and track one number. Mazzi says: inaction is action when the timing is wrong.`;
+  return `Do nothing. Protect capital. Scan the calendar for the next PEAK day and prepare your $2 move. Mazzi says: most wealth is lost by acting when the sky is quiet. Wait for your signal.`;
+}
+
 function renderWealth() {
   const w = D.wealth;
   const areas = D.areas;
@@ -912,6 +951,13 @@ function renderWealth() {
     <h2>Your Wealth-Building System</h2>
     <div style="margin-bottom:6px;padding:6px 8px;background:var(--gold);color:#000;border-radius:4px;font-size:11px;font-weight:600;text-align:center">TODAY'S MONEY MOVE: ${wealthMove}</div>
     ${h2Advice ? `<div style="margin-bottom:6px;padding:6px 8px;background:#7c5cfc08;border-left:2px solid var(--accent);border-radius:4px;font-size:10px;color:var(--text)">${h2Advice}</div>` : ''}
+  </div>
+  <div class="card" style="border:1px solid var(--gold)40;background:linear-gradient(135deg,#1a1500 0%,#1a1a08 100%)">
+    <h2 style="color:var(--gold)">⚡ Mazzi's Move — ${today.date}</h2>
+    <div style="font-size:10px;color:var(--dim);margin-bottom:6px">One specific money move, based on today's transits.</div>
+    <div style="padding:8px 10px;background:#08080a;border-radius:4px;font-size:11px;line-height:1.6">
+      "${mazziMove(today, areas, h2Score)}"
+    </div>
   </div>
   <div class="card">
     <h2>The 5 Stages to Wealth</h2>
