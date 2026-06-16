@@ -81,8 +81,8 @@ tr:last-child td{border-bottom:none}
 </div>
 
 <div style="margin-bottom:12px;padding:8px 10px;background:var(--card);border:1px solid var(--border);border-radius:6px;font-size:10px;color:var(--dim);line-height:1.7">
-  <b style="color:var(--text)">How scores work:</b> Mazzaroth scores each day 0-10,000 based on which planets are active, how
-  tight the aspects are, and what life area (house) they hit.
+  <b style="color:var(--text)">How scores work:</b> Each day 0-10,000 based on which planets are active, how
+    tight the aspects are, and what life area (house) they hit.
   <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:4px">
     <span><span class="badge peak">PEAK</span> 3700-6500+ &mdash; Rare, intense. Decisions here compound for years.</span>
     <span><span class="badge vhigh">V.HIGH</span> 3400-3700 &mdash; Strong. Important developments likely.</span>
@@ -101,7 +101,7 @@ tr:last-child td{border-bottom:none}
 <div id="tab-stats" class="tab" style="display:none"></div>
 
 <div class="footer">
-  Mazzaroth v3 &middot; <a href="https://github.com/geraldkombo/mazzaroth">github.com/geraldkombo/mazzaroth</a>
+  Daily readings
 </div>
 
 </div>
@@ -145,6 +145,14 @@ function renderTab(id) {
 function badge(lvl) {
   const cls = LV[lvl] || 'normal';
   return `<span class="badge ${cls}">${lvl}</span>`;
+}
+
+function to12h(t) {
+  const [h, m] = t.split(':');
+  const hour = parseInt(h);
+  const ampm = hour >= 12 ? 'PM' : 'AM';
+  const h12 = hour % 12 || 12;
+  return `${h12}:${m}${ampm}`;
 }
 
 function hourAction(x) {
@@ -198,8 +206,8 @@ function renderToday() {
     <div id="hourly-bar">`;
   h.hourly.forEach(x => {
     const cx = LV[x.level] || '';
-    html += `<div class="hour-block ${cx}" title="${x.time} - ${x.score.toFixed(0)} - ${hourAction(x)}">
-      <div class="h">${x.time}</div>
+    html += `<div class="hour-block ${cx}" title="${to12h(x.time)} - ${x.score.toFixed(0)} - ${hourAction(x)}">
+      <div class="h">${to12h(x.time)}</div>
       <div class="s">${x.score.toFixed(0)}</div>
     </div>`;
   });
@@ -213,15 +221,15 @@ function renderToday() {
   <div class="card">
     <h2>When to Do What</h2>
     ${actHours.length ? `<div style="margin-bottom:8px">
-      <div style="color:var(--high);font-weight:600;font-size:11px">ACT NOW — ${actHours.map(x=>x.time).join(', ')}</div>
+      <div style="color:var(--high);font-weight:600;font-size:11px">ACT NOW — ${actHours.map(x=>to12h(x.time)).join(', ')}</div>
       <div class="dim" style="font-size:10px">Make decisions, take bold action, pitch, negotiate, start something.</div>
     </div>` : ''}
     ${planHours.length ? `<div style="margin-bottom:8px">
-      <div style="color:var(--accent);font-weight:600;font-size:11px">PREPARE — ${planHours.map(x=>x.time).join(', ')}</div>
+      <div style="color:var(--accent);font-weight:600;font-size:11px">PREPARE — ${planHours.map(x=>to12h(x.time)).join(', ')}</div>
       <div class="dim" style="font-size:10px">Plan, organize, research, have conversations. Energy is building.</div>
     </div>` : ''}
     ${restHours.length ? `<div>
-      <div style="color:var(--dim);font-weight:600;font-size:11px">REST — ${restHours.map(x=>x.time).join(', ')}</div>
+      <div style="color:var(--dim);font-weight:600;font-size:11px">REST — ${restHours.map(x=>to12h(x.time)).join(', ')}</div>
       <div class="dim" style="font-size:10px">Recharge, do routine work, reflect. Avoid major decisions.</div>
     </div>` : ''}
   </div>
@@ -318,7 +326,7 @@ function renderHourly() {
                    x.score > 0 ? 'Rest. Do routine work. Reflect. Avoid major decisions.' :
                    'No active transits. Quiet hour. Use for rest or deep work.';
     html += `<div style="display:flex;align-items:center;gap:8px;padding:5px 8px;margin-bottom:3px;background:${bg};border-left:2px solid ${border};border-radius:4px">
-      <span class="mono" style="font-size:10px;color:var(--dim);min-width:36px">${x.time}</span>
+      <span class="mono" style="font-size:10px;color:var(--dim);min-width:50px">${to12h(x.time)}</span>
       <span style="font-size:10px;color:${c};font-weight:600;min-width:32px">${cat}</span>
       <span style="font-size:10px;color:var(--text);flex:1">${action}</span>
       ${x.top_transit ? `<span style="font-size:9px;color:var(--accent)">${x.top_transit}</span>` : ''}
