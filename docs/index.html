@@ -1019,6 +1019,16 @@ function renderWealth() {
     </div>
   </div>
   <div class="card">
+    <h2>USD/KES Rate Tracker</h2>
+    <div style="font-size:10px;color:var(--dim);margin-bottom:6px">Enter today's rate to track trends and get timing guidance.</div>
+    <div style="display:flex;gap:6px;margin-bottom:8px">
+      <input type="number" id="rate-input" placeholder="e.g. 150" step="0.5" style="flex:1;background:#08081a;border:1px solid var(--border);color:#fff;padding:8px;border-radius:4px;font-size:14px;font-family:mono">
+      <button onclick="saveRate()" class="btn-sm" style="background:var(--accent);color:#fff;border:none;padding:8px 14px">Save</button>
+    </div>
+    <div id="rate-history" style="font-size:10px;line-height:1.6"></div>
+    <div style="margin-top:6px;padding:6px 8px;background:#08081a;border-radius:4px;font-size:9px;color:var(--dim)">Rates saved in browser. Clear by typing 0 and saving.</div>
+  </div>
+  <div class="card">
     <h2>Crypto Timing</h2>
     <div style="font-size:10px;color:var(--dim);margin-bottom:6px">Fractional BTC/ETH entries — timing over size.</div>
     <div style="font-size:11px;line-height:1.7">
@@ -1031,6 +1041,42 @@ function renderWealth() {
     </div>
   </div>`;
   document.getElementById('tab-wealth').innerHTML = html;
+  displayRates(loadRates());
+}
+
+// USD/KES rate tracking
+const RATE_KEY = 'mazz_rates';
+function loadRates() { try { return JSON.parse(localStorage.getItem(RATE_KEY)) || []; } catch(e) { return []; } }
+function saveRate() {
+  const input = document.getElementById('rate-input');
+  const val = parseFloat(input.value);
+  if (!val || val <= 0) { localStorage.removeItem(RATE_KEY); document.getElementById('rate-history').innerHTML = 'Cleared.'; input.value=''; return; }
+  const rates = loadRates();
+  rates.push({date: D.today_hourly.date, rate: val});
+  if (rates.length > 60) rates.splice(0, rates.length - 60);
+  localStorage.setItem(RATE_KEY, JSON.stringify(rates));
+  input.value = '';
+  displayRates(rates);
+}
+function displayRates(rates) {
+  const el = document.getElementById('rate-history');
+  if (!rates.length) { el.innerHTML = 'No rates saved yet. Enter today\'s rate above.'; return; }
+  const last = rates[rates.length - 1];
+  const prev = rates.length > 1 ? rates[rates.length - 2] : null;
+  const change = prev ? (last.rate - prev.rate).toFixed(2) : '—';
+  const dir = change > 0 ? '↑ KES weakening' : change < 0 ? '↓ KES strengthening' : '—';
+  const color = change > 0 ? 'var(--peak)' : change < 0 ? 'var(--high)' : 'var(--dim)';
+  const recent = rates.slice(-7).reverse();
+  el.innerHTML = `
+    <div style="display:flex;justify-content:space-between;margin-bottom:4px;padding:4px 6px;background:#08081a;border-radius:4px">
+      <span><b>Last:</b> ${last.rate} KES/USD (${last.date})</span>
+      <span style="color:${color}">${change} ${dir}</span>
+    </div>
+    <div style="font-size:9px;color:var(--dim);margin-bottom:4px">Last 7 entries:</div>
+    ${recent.map(r => `<div style="display:flex;justify-content:space-between;padding:2px 6px"><span class="mono">${r.date}</span><span class="mono">${r.rate}</span></div>`).join('')}
+    <div style="margin-top:4px;padding:4px 6px;background:#08081a;border-radius:4px;font-size:9px;color:var(--accent)">
+      ${change > 0 ? '⚠️ KES weakening — consider buying USD now if PEAK day.' : change < 0 ? '✅ KES strengthening — hold off on USD if you can wait.' : 'No trend yet. Save more entries.'}
+    </div>`;
 }
 
 const AUDIT_KEY = 'mazz_audit';
@@ -1385,20 +1431,20 @@ function renderRelationships() {
     <div id="natal-snapshot" style="margin-top:10px;padding:8px;background:#08081a;border-radius:4px;font-size:10px"></div>
   </div>`;
 
-  // Fill natal snapshot from engine data
+  document.getElementById('tab-relationships').innerHTML = html;
+
+  // Fill natal snapshot from engine data (AFTER HTML is in DOM)
   const n = D.natal;
   if (n && n.planets) {
     const sun = n.planets.find(p=>p.name==='Sun');
     const moon = n.planets.find(p=>p.name==='Moon');
     const h2p = n.houses['2'] || [];
-    const h2names = h2p.join(', ');
-    document.getElementById('natal-snapshot').innerHTML =
-      `<b style="color:var(--accent)">Your chart snapshot (from engine):</b> Sun ${sun ? sun.constellation+' '+sun.lon+'°' : '—'} · Moon ${moon ? moon.constellation+' '+moon.lon+'°' : '—'} · ${h2p.length} in House 2 (${h2names}) · 1989 Snake<br>
-      <b style="color:var(--gold)">Strongest matches:</b> Birth years ${n.planets.length ? '1983-1996 (same generation)' : '—'} · Fire/Air Sun signs<br>
+    const snap = document.getElementById('natal-snapshot');
+    if (snap) snap.innerHTML =
+      `<b style="color:var(--accent)">Your chart snapshot (from engine):</b> Sun ${sun ? sun.constellation+' '+sun.lon+'°' : '—'} · Moon ${moon ? moon.constellation+' '+moon.lon+'°' : '—'} · ${h2p.length} in House 2 (${h2p.join(', ')}) · 1989 Snake<br>
+      <b style="color:var(--gold)">Strongest matches:</b> Birth years 1983-1996 (same generation) · Fire/Air Sun signs<br>
       <b style="color:var(--dim)">Natal aspects:</b> ${n.aspects.slice(0,3).map(a=>a.p1+'-'+a.p2+' '+a.aspect).join(' · ')}`;
   }
-
-  document.getElementById('tab-relationships').innerHTML = html;
 }
 
 function checkBirthYear() {
@@ -1569,9 +1615,9 @@ function renderLocationResult(lat, lon, name) {
   <div class="card">
     <h2>Interpretation for ${name}</h2>
     <div style="font-size:11px;line-height:1.7">`;
-  const nav = (h) => HOUSE_NAMES[h] || '';
-  html += `<p><b>H${shift} (${nav(shift).split(',')[0]})</b> is your new Ascendant house — this life area becomes your personal front door. The way the world sees you shifts toward ${nav(shift)} matters.</p>`;
-  html += `<p><b>H${mcShift} (${nav(mcShift).split(',')[0]})</b> is at your Midheaven — your career and public reputation focus shifts to ${nav(mcShift)} themes.</p>`;
+  const navShort = (h) => HOUSE_NAMES[h].split(',')[0].trim();
+  html += `<p><b>H${shift} (${navShort(shift)})</b> is your front door here. Life in ${name} pushes this area to the surface.</p>`;
+  html += `<p><b>H${mcShift} (${navShort(mcShift)})</b> is your career spotlight here. Reputation work centers on this area in ${name}.</p>`;
   if (shift === 2 || mcShift === 2) html += `<p style="color:var(--gold)">Your H2 (wealth/values) is angular here — money matters are more visible and active in this location.</p>`;
   if (shift === 10 || mcShift === 10) html += `<p style="color:var(--accent)">Your H10 (career) is angular here — this location supports professional ambition and legacy.</p>`;
   if (shift === 7 || mcShift === 7) html += `<p style="color:#ff6b9d">Your H7 (partnerships) is angular here — relationships and collaborations thrive in this location.</p>`;
