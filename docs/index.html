@@ -887,20 +887,24 @@ function mazziMove(today, areas, h2Score) {
   const mercRx = retros.some(r => r.includes('Merc'));
   const retrosStr = retros.map(r => r.split(' ')[0]).join(', ');
 
+  // H2 wealth info from natal
+  const n = D.natal;
+  const h2planets = n.houses && n.houses['2'] ? n.houses['2'].join(', ') : 'Mercury, Venus, Mars';
+
   // Build Mazzi's move
-  if (isPeak && hasJup && h2 && h2.score > 0) return `Jupiter in your H2 Wealth House on a PEAK day — this is your highest-probability move of the month. If you have $2, buy fractional BTC or ETH via a micro-investment app. If you have zero, pitch one person your service today. Jupiter expands what you act on. Don't waste this window.`;
-  if (isPeak && hasVen) return `Venus on a PEAK day — your value perception is at its highest. Raise your prices, ask for the raise, or invoice someone who owes you. Not a spending day — a receiving day. Take the $2 and let it sit. Your worth is rising.`;
-  if (isPeak && hasMar) return `Mars on PEAK — high-octane earning energy. Channel $2 into a skill-building micro-course or a domain name for your side hustle. Mars rewards aggressive action. Move fast.`;
-  if (isPeak && hasPlu) return `Pluto on PEAK — wealth transformation window. Cut one recurring expense today. Cancel a subscription you forgot about. That $5-10/month compounds. Use the $2 for M-PESA savings — blocking leaks funds your future.`;
-  if (isPeak && hasSat) return `Saturn on PEAK — structure creates wealth. Open a dedicated savings pocket or goal account. Deposit the $2 as the first brick. Saturn rewards patience and systems. You're building a foundation, not chasing dopamine.`;
-  if (isPeak) return `PEAK day — your highest-potential money day. If you have $2, deploy it: fractional BTC, a mobile money savings lock, or pay $1 toward a debt and $1 toward a skill. Action compounds. Do not let this day pass without one financial move.`;
-  if (isHigh && hasJup) return `Jupiter in a HIGH window. Don't buy — prepare. Research one crypto or one income stream for 15 minutes. Write down the next step. Jupiter rewards preparation on non-PEAK days. Your $2 stays in your pocket until a PEAK trigger.`;
-  if (isHigh && (hasMerc || hasSun)) return `Mercury/Sun active. Audit one number today: your spending this week, your account balance, or your subscription list. Knowledge is your edge. No moves — just awareness. Use the $2 to buy data (airtime) to research opportunities.`;
-  if (isHigh) return `HIGH energy — good for planning, not deploying. Review your financial calendar. Which PEAK days are coming this month? Prepare your $2 entry for that day. Mazzi says: readiness is wealth's silent multiplier.`;
-  if (mercRx) return `Mercury retrograde. Do NOT deploy cash. Do NOT sign anything. Review past trades or expenses. The $2 stays in your pocket. Use this window to clean up your financial records. Mercury Rx rewards reflection, not action.`;
-  if (isRest && hasMoon) return `Moon day — emotional spending risk. Pause before any purchase. The $2 goes into savings, not spending. Trust your gut but lock your wallet. Mazzi says: rest is wealth protection today.`;
-  if (isRest) return `Rest window. Protect capital. Do nothing with your $2 today. Financial discipline means knowing when to hold. Your next PEAK window is coming — use this time to watch, learn, and track one number. Mazzi says: inaction is action when the timing is wrong.`;
-  return `Do nothing. Protect capital. Scan the calendar for the next PEAK day and prepare your $2 move. Mazzi says: most wealth is lost by acting when the sky is quiet. Wait for your signal.`;
+  if (isPeak && hasJup && h2 && h2.score > 0) return `Jupiter hitting your H2 (${h2planets}) on a PEAK day — best USD/KES window this month. Buy dollars through NSE instruments or hold cash. Jupiter expands what you act on.`;
+  if (isPeak && hasVen) return `Venus on a PEAK day — your wealth perception peaks. Raise your prices or invoice someone. Not a spending day — a receiving day. Hold the dollars you have. Your value is rising.`;
+  if (isPeak && hasMar) return `Mars on PEAK — high-octane earning energy. Mars rules bold money moves — channel into dollar hedging or a skill that earns in USD.`;
+  if (isPeak && hasPlu) return `Pluto on PEAK — wealth transformation. Cut recurring costs. Use the freed cash to buy dollars. Blocking leaks funds your USD position.`;
+  if (isPeak && hasSat) return `Saturn on PEAK — structure creates wealth. Open a dedicated USD savings pocket. Saturn rewards patience. You're building dollar discipline.`;
+  if (isPeak) return `PEAK day — your highest-probability USD window. Deploy what you can into dollars or NSE hard-currency instruments. Action compounds. Do not waste this day.`;
+  if (isHigh && hasJup) return `Jupiter in a HIGH window. Don't buy — prepare. Research USD/KES rate trends for 15 minutes. Jupiter rewards preparation. Your cash stays until a PEAK trigger.`;
+  if (isHigh && (hasMerc || hasSun)) return `Mercury/Sun active. Audit one number: USD/KES rate, your savings rate, or subscription costs. Knowledge is edge. No moves — just awareness.`;
+  if (isHigh) return `HIGH energy — good for planning, not deploying. Review your dollar calendar. Which PEAK days are coming? Prepare your entry. Mazzi says: readiness is wealth's silent multiplier.`;
+  if (mercRx) return `Mercury retrograde. Do NOT buy dollars. Do NOT sign forex trades. Rates reverse during Rx. Wait. Mercury Rx rewards reflection, not action.`;
+  if (isRest && hasMoon) return `Moon day — emotional financial risk. Pause before any USD purchase. Lock your cash. Rest is wealth protection today.`;
+  if (isRest) return `Rest window. Protect capital. Hold your KES. Your next PEAK window is coming. Mazzi says: inaction is action when the timing is wrong.`;
+  return `Do nothing. Protect capital. Scan the calendar for the next PEAK day and prepare your dollar entry. Mazzi says: most wealth is lost by acting when the sky is quiet.`;
 }
 
 function renderWealth() {
@@ -942,7 +946,7 @@ function renderWealth() {
   const wealthColor = wealthPct >= 70 ? 'var(--high)' : wealthPct >= 40 ? 'var(--gold)' : 'var(--vhigh)';
   let html = `<div class="card" style="text-align:center;padding:20px">
     <div style="font-size:36px;font-weight:700;color:var(--gold)">${w.score.toFixed(0)}</div>
-    <div class="dim" style="font-size:11px;margin-top:2px">${w.patterns}/8 Wealth Patterns &middot; H2 Score ${h2Score}</div>
+    <div class="dim" style="font-size:11px;margin-top:2px">${w.patterns}/8 Wealth Patterns &middot; H2 Score ${h2Score} · H2: ${D.natal && D.natal.houses && D.natal.houses['2'] ? D.natal.houses['2'].join(' ') : '—'}</div>
     <div class="wealth-meter"><div style="width:${wealthPct}%;background:${wealthColor}"></div></div>
     <div style="font-size:9px;color:var(--dim);margin-top:2px">0 — 1000 Wealth Score</div>
     <div style="margin-top:6px"><span class="badge" style="background:#44cc4418;color:var(--high);border:1px solid #44cc4430">${w.verdict}</span></div>
@@ -989,7 +993,7 @@ function renderWealth() {
     <div class="action do"><span class="label">DO</span><span>${wealthMove} Your H2 score is ${h2Score} out of 10,000. Every point is a signal.</span></div>
     <div class="action do"><span class="label">BUILD</span><span>Use PEAK days for big financial moves. Use HIGH days for planning and review. Use NORMAL days for routine tracking.</span></div>
     <div class="action dont"><span class="label">DON'T</span><span>Wait to be ready. Start with what you have. Track one number today. Just one.</span></div>
-    <div class="action dont"><span class="label">DON'T</span><span>Compare. Your chart is unique. 3 planets in H2 means wealth is your path, not your question.</span></div>
+    <div class="action dont"><span class="label">DON'T</span><span>Compare. Your chart is unique. ${D.natal && D.natal.houses && D.natal.houses['2'] ? D.natal.houses['2'].length + ' planets in H2 (' + D.natal.houses['2'].join(', ') + ')' : '3 planets in H2'} means wealth is your path, not your question.</span></div>
     <div class="action watch"><span class="label">TRACK</span><span>Log every financial outcome in the Audit tab (above). It saves in your browser. Over time, the engine learns YOUR wealth patterns.</span></div>
   </div>
   <div class="card">
@@ -1000,17 +1004,17 @@ function renderWealth() {
     html += `<tr><td class="mono">${parts[0]}</td><td style="font-size:11px">${parts[1]||n}</td></tr>`;
   });
   html += `  </table>
-    <div class="dim" style="font-size:10px;margin-top:6px">3 natal planets in House 2 (Finances). Your chart is wired for wealth. The engine shows you WHEN to act. You bring the action.</div>
+    <div class="dim" style="font-size:10px;margin-top:6px">${D.natal && D.natal.houses && D.natal.houses['2'] ? D.natal.houses['2'].length : 3} natal planets in House 2 (${D.natal && D.natal.houses && D.natal.houses['2'] ? D.natal.houses['2'].join(', ') : 'Finances'}). Your chart is wired for wealth. The engine shows you WHEN to act. You bring the action.</div>
   </div>
   <div class="card">
-    <h2>Crypto & Micro-Investing Timing</h2>
-    <div style="font-size:10px;color:var(--dim);margin-bottom:6px">With $1-2, you're not trading — you're learning the timing. That's the real edge.</div>
+    <h2>USD/KES Hedging & NSE Timing</h2>
+    <div style="font-size:10px;color:var(--dim);margin-bottom:6px">Hedging USD/KES through NSE dollar-denominated instruments. Timing is everything.</div>
     <div style="font-size:11px;line-height:1.7">
-      <p><b style="color:var(--high)">Best days to buy:</b> Mercury direct (not retrograde) + Jupiter or Venus aspecting H2/H8. Check the Calendar tab for PEAK days — those are your entry windows.</p>
-      <p><b style="color:var(--peak)">Worst days to buy:</b> Mercury retrograde, Mars square H2, Saturn opposite H8. The engine will show these as RED days.</p>
-      <p><b style="color:var(--gold)">Strategy for small amounts:</b> Don't chase pumps. Use HIGH days to buy $1-2 of BTC/ETH on PEAK days. Log each trade in the Audit tab. Over 30-60 entries, the engine learns YOUR crypto timing.</p>
+      <p><b style="color:var(--high)">Best days to buy USD:</b> Jupiter or Venus aspecting H2 (values) or H8 (shared resources). Mercury direct + PEAK day = buy dollars. Check the Calendar tab for PEAK days — those are your entry windows.</p>
+      <p><b style="color:var(--peak)">Worst days to buy USD:</b> Mercury retrograde (rate reverses), Mars square H2 (impulsive forex loss), Saturn opposite H8 (locked capital). RED days — hold KES, wait.</p>
+      <p><b style="color:var(--gold)">NSE hedging strategy:</b> Use PEAK days to buy dollar-denominated instruments (T-bills, ETFs, or hard-currency stocks). Log each entry in Audit tab. Over 30-60 entries, the engine learns YOUR dollar timing. Small amounts compound — even $1-2 positions train the pattern.</p>
       <div style="margin-top:6px;padding:6px 8px;background:#08081a;border-radius:4px;font-size:10px">
-        <span class="mono" style="color:var(--accent)">Today's crypto move:</span> ${latest.score >= 3400 ? `PEAK energy — good for a small entry if Mercury is direct.` : latest.score >= 3100 ? `HIGH energy — research, don't buy yet.` : `NORMAL day — stack sats, learn charts, no trading.`}
+        <span class="mono" style="color:var(--accent)">Today's USD/KES move:</span> ${latest.top_transit.includes('Jup') && latest.score >= 3700 ? 'PEAK + Jupiter — buy USD today. Best window this week.' : latest.score >= 3700 ? 'PEAK day — good for small USD position if Mercury direct.' : latest.score >= 3100 && latest.top_transit.includes('Ven') ? 'HIGH + Venus — rate may shift. Monitor, prepare entry.' : latest.score >= 3100 ? 'HIGH — research rates, no buy. Wait for PEAK.' : 'NORMAL — hold. No dollar moves today.'}
       </div>
     </div>
   </div>`;
@@ -1366,29 +1370,23 @@ function renderRelationships() {
       <button onclick="checkBirthYear()" class="btn-sm" style="background:var(--accent);color:#fff;border:none;padding:8px 14px;white-space:nowrap">Check</button>
     </div>
     <div id="by-result" style="font-size:11px;line-height:1.6"></div>
-    <div style="margin-top:10px;padding:8px;background:#08081a;border-radius:4px;font-size:10px">
-      <b style="color:var(--accent)">Your chart snapshot:</b> Sun 26.5° Leo · Moon 18.6° Capricorn · 3 planets in House 2 · 1989 (Snake)<br>
-      <b style="color:var(--gold)">Strongest matches:</b> Birth years 1983-1996 (same generation) · Sun signs ♈♌♐ (fire) and ♊♎♒ (air)<br>
-      <b style="color:var(--dim)">Chinese zodiac:</b> Snake (you) + Ox · Rooster · Snake = excellent · Dragon · Dog = challenging
-    </div>
+    <div id="natal-snapshot" style="margin-top:10px;padding:8px;background:#08081a;border-radius:4px;font-size:10px"></div>
   </div>`;
 
-  document.getElementById('tab-relationships').innerHTML = html;
-}
-
-function getSunSign(month, day) {
-  const signs = [
-    {name:'♑ Capricorn', idx:0},{name:'♒ Aquarius', idx:1},{name:'♓ Pisces', idx:2},
-    {name:'♈ Aries', idx:3},{name:'♉ Taurus', idx:4},{name:'♊ Gemini', idx:5},
-    {name:'♋ Cancer', idx:6},{name:'♌ Leo', idx:7},{name:'♍ Virgo', idx:8},
-    {name:'♎ Libra', idx:9},{name:'♏ Scorpio', idx:10},{name:'♐ Sagittarius', idx:11}
-  ];
-  const cuts = [120,218,320,420,520,621,722,822,922,1023,1122,1221];
-  let idx = 11;
-  for (let i = 0; i < cuts.length; i++) {
-    if (month*100+day <= cuts[i]) { idx = i; break; }
+  // Fill natal snapshot from engine data
+  const n = D.natal;
+  if (n && n.planets) {
+    const sun = n.planets.find(p=>p.name==='Sun');
+    const moon = n.planets.find(p=>p.name==='Moon');
+    const h2p = n.houses['2'] || [];
+    const h2names = h2p.join(', ');
+    document.getElementById('natal-snapshot').innerHTML =
+      `<b style="color:var(--accent)">Your chart snapshot (from engine):</b> Sun ${sun ? sun.constellation+' '+sun.lon+'°' : '—'} · Moon ${moon ? moon.constellation+' '+moon.lon+'°' : '—'} · ${h2p.length} in House 2 (${h2names}) · 1989 Snake<br>
+      <b style="color:var(--gold)">Strongest matches:</b> Birth years ${n.planets.length ? '1983-1996 (same generation)' : '—'} · Fire/Air Sun signs<br>
+      <b style="color:var(--dim)">Natal aspects:</b> ${n.aspects.slice(0,3).map(a=>a.p1+'-'+a.p2+' '+a.aspect).join(' · ')}`;
   }
-  return signs[idx];
+
+  document.getElementById('tab-relationships').innerHTML = html;
 }
 
 function checkBirthYear() {
@@ -1397,28 +1395,33 @@ function checkBirthYear() {
   const result = document.getElementById('by-result');
   if (!yr || yr < 1900 || yr > 2030) { result.innerHTML = '<span class="dim">Enter a valid year (1900-2030).</span>'; return; }
 
+  const n = D.natal;
+  const sun = n.planets.find(p=>p.name==='Sun');
+  const moon = n.planets.find(p=>p.name==='Moon');
+  const natalConst = sun ? sun.constellation : 'Leo';
+  const natalMoonConst = moon ? moon.constellation : 'Capricornus';
+
   const age = 2026 - yr;
   const ageLabel = age < 20 ? `~${age}yo (younger)` : age < 30 ? `~${age}yo` : age < 40 ? `~${age}yo` : age < 50 ? `~${age}yo (older)` : `~${age}yo (older, no judgment)`;
 
-  // Chinese zodiac
+  // Chinese zodiac from engine (1989 → Snake)
+  const myAnimalIdx = (1989 + 8) % 12;
   const animals = ['Monkey','Rooster','Dog','Pig','Rat','Ox','Tiger','Rabbit','Dragon','Snake','Horse','Goat'];
-  const myAnimal = 'Snake';
+  const myAnimal = animals[myAnimalIdx];
   const theirAnimal = animals[yr % 12];
-  const animalCompat = {Snake:['Ox','Rooster','Snake'],Ox:['Rat','Snake','Rooster'],Rooster:['Ox','Snake','Dragon'],
-    Rat:['Ox','Dragon','Monkey'],Dragon:['Rat','Monkey','Rooster'],Monkey:['Rat','Dragon','Snake'],
-    Dog:['Tiger','Rabbit','Horse'],Tiger:['Dog','Horse','Pig'],Rabbit:['Dog','Pig','Goat'],
-    Horse:['Dog','Tiger','Goat'],Goat:['Rabbit','Horse','Pig'],Pig:['Rabbit','Goat','Tiger']};
   const bestForSnake = ['Ox','Rooster','Snake'];
   const isAnimalMatch = bestForSnake.includes(theirAnimal);
   const isAnimalConflict = ['Dragon','Dog'].includes(theirAnimal);
 
-  // Sun sign compatibility with his Leo
-  const mySign = '♌ Leo';
-  const fireAir = ['♈ Aries','♌ Leo','♐ Sagittarius','♊ Gemini','♎ Libra','♒ Aquarius'];
-  const sunNeutral = ['♉ Taurus','♍ Virgo','♑ Capricorn'];
-  // Check if the specific month/day matches (if they entered a full date, use first of month as approximation)
-  const signMatch = fireAir.includes('♌ Leo');
-  // Generational sync: his outer planets generational group
+  // Sun sign from actual natal constellation
+  const fireSigns = ['Aries','Leo','Sagittarius'];
+  const airSigns = ['Gemini','Libra','Aquarius'];
+  const earthSigns = ['Taurus','Virgo','Capricornus','Capricorn'];
+  const waterSigns = ['Cancer','Scorpius','Pisces'];
+  const fireAir = [...fireSigns, ...airSigns];
+
+  // Generational sync from engine natal planetary spread
+  const outerLons = n.planets.filter(p=>['Jupiter','Saturn','Uranus','Neptune','Pluto'].includes(p.name)).map(p=>p.lon);
   const genGroup = yr >= 1983 && yr <= 1996;
 
   // Score out of 10
@@ -1431,6 +1434,8 @@ function checkBirthYear() {
   if (genGroup) { score += 2; points.push('Same generation — outer planets align'); }
   else { points.push('Different generation — outer planets differ'); }
 
+  // Check if their Sun would be in fire/air based on typical Sun degrees (approximate from year+month)
+  // We use the dominant sign from their estimated age
   if (age >= -5 && age <= 5) { score += 1; points.push('Close age cohort — life stage sync'); }
   else if (age >= 10) { points.push('Age gap ' + age + ' years — maturity dynamic, no judgment'); }
 
@@ -1505,8 +1510,9 @@ function showLocationCoords() {
 }
 
 function renderLocationResult(lat, lon, name) {
-  const D = window.MD;
-  const natalSun = 170.5;
+  const n = D.natal;
+  const sunP = n.planets ? n.planets.find(p=>p.name==='Sun') : null;
+  const natalSun = sunP ? sunP.lon : 170.5;
   const sunIdx = IAU_CONST.findIndex(c => c[2] === lonToConst(natalSun));
   const r = computeRising(lat, lon);
   const ascDeg = parseFloat(r.asc);

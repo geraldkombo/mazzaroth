@@ -22,6 +22,50 @@ if not EPHE_PATH.exists():
     load(str(EPHE_PATH))
     logging.info("Downloaded.")
 
+# === Natal chart data for all pages ===
+def compute_natal_chart():
+    planets = []
+    for name, nd in mz.NATAL.items():
+        lon = nd["lon"]
+        const = mz._constellation(lon)
+        house = mz._house_num(lon)
+        planets.append({
+            "name": name,
+            "lon": round(lon, 2),
+            "lat": round(nd.get("lat", 0), 2),
+            "decl": round(nd.get("decl", 0), 2),
+            "constellation": const,
+            "house": house,
+            "speed": round(mz.MEAN_SPD.get(name, 0), 4),
+        })
+    aspects = []
+    for i, p1 in enumerate(planets):
+        for j, p2 in enumerate(planets):
+            if j <= i: continue
+            diff = abs(p1["lon"] - p2["lon"]) % 360
+            if diff > 180: diff = 360 - diff
+            for angle, orb, base, aname in mz.ASPECTS:
+                delta = abs(diff - angle)
+                if delta <= orb:
+                    aspects.append({
+                        "p1": p1["name"], "p2": p2["name"],
+                        "aspect": aname, "orb": round(delta, 2),
+                    })
+                    break
+    houses = {}
+    for p in planets:
+        hk = str(p["house"])
+        if hk not in houses: houses[hk] = []
+        houses[hk].append(p["name"])
+    sorted_houses = {}
+    for k in sorted(houses.keys(), key=int):
+        sorted_houses[k] = houses[k]
+    return {"planets": planets, "aspects": aspects, "houses": sorted_houses}
+
+natal_chart = compute_natal_chart()
+logging.info("Natal chart: %d planets, %d aspects, %d houses occupied",
+             len(natal_chart["planets"]), len(natal_chart["aspects"]), len(natal_chart["houses"]))
+
 # === Hourly data for today ===
 now = datetime.now(timezone.utc).replace(tzinfo=None)
 today = now.replace(hour=0, minute=0, second=0, microsecond=0)
@@ -143,5 +187,22 @@ if audit_path.exists():
 with open(DATA_DIR / 'audit.json', 'w') as f:
     json.dump(audit_entries, f, indent=2)
 logging.info("Audit: %d entries written", len(audit_entries))
+
+# === Combine all data into daily.js (single-line for fast loading) ===
+combined = {
+    "today_hourly": {
+        "date": today.strftime('%Y-%m-%d'),
+        "hourly": hourly,
+    },
+    "database": database_json,
+    "wealth": wo_data,
+    "areas": areas_data,
+    "audit": audit_entries,
+    "natal": natal_chart,
+}
+js_path = DATA_DIR / 'daily.js'
+with open(js_path, 'w') as f:
+    f.write("window.MD=" + json.dumps(combined, separators=(',',':')))
+logging.info("daily.js written (%.1f KB) with natal data", os.path.getsize(js_path) / 1024)
 
 logging.info("All data files generated in docs/data/")
