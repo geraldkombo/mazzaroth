@@ -883,7 +883,7 @@ function mazziMove(today, areas, h2Score) {
   const hasUra = transit.includes('ura');
   const hasSun = transit.includes('sun');
   const hasMoon = transit.includes('moo');
-  const retros = (today.retrograde_planets || []).filter(r => !r.includes('Node'));
+  const retros = (t.retrograde_planets || []).filter(r => !r.includes('Node'));
   const mercRx = retros.some(r => r.includes('Merc'));
   const retrosStr = retros.map(r => r.split(' ')[0]).join(', ');
 
@@ -1015,6 +1015,18 @@ function renderWealth() {
       <p><b style="color:var(--gold)">NSE hedging strategy:</b> Use PEAK days to buy dollar-denominated instruments (T-bills, ETFs, or hard-currency stocks). Log each entry in Audit tab. Over 30-60 entries, the engine learns YOUR dollar timing. Small amounts compound — even $1-2 positions train the pattern.</p>
       <div style="margin-top:6px;padding:6px 8px;background:#08081a;border-radius:4px;font-size:10px">
         <span class="mono" style="color:var(--accent)">Today's USD/KES move:</span> ${latest.top_transit.includes('Jup') && latest.score >= 3700 ? 'PEAK + Jupiter — buy USD today. Best window this week.' : latest.score >= 3700 ? 'PEAK day — good for small USD position if Mercury direct.' : latest.score >= 3100 && latest.top_transit.includes('Ven') ? 'HIGH + Venus — rate may shift. Monitor, prepare entry.' : latest.score >= 3100 ? 'HIGH — research rates, no buy. Wait for PEAK.' : 'NORMAL — hold. No dollar moves today.'}
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>Crypto Timing</h2>
+    <div style="font-size:10px;color:var(--dim);margin-bottom:6px">Fractional BTC/ETH entries — timing over size.</div>
+    <div style="font-size:11px;line-height:1.7">
+      <p><b style="color:var(--high)">Best days to buy:</b> Mercury direct + PEAK day, especially with Jupiter or Venus aspecting H2/H8. Check Calendar tab for PEAK windows.</p>
+      <p><b style="color:var(--peak)">Worst days to buy:</b> Mercury retrograde, Mars square H2 (impulse buys), Saturn opposite H8 (locked losses).</p>
+      <p><b style="color:var(--gold)">Strategy:</b> Use PEAK days only. Buy fractional on dips within PEAK windows. Log entries in Audit tab — over 30+ trades the engine learns YOUR crypto timing.</p>
+      <div style="margin-top:6px;padding:6px 8px;background:#08081a;border-radius:4px;font-size:10px">
+        <span class="mono" style="color:var(--accent)">Today's crypto move:</span> ${latest.score >= 3700 && !(latest.retrograde_planets||[]).some(r=>r.includes('Merc')) ? 'PEAK day — small fractional entry OK if Mercury direct.' : latest.score >= 3100 ? 'HIGH — research, no buy. Prepare for next PEAK.' : 'NORMAL — no trades. Wait for PEAK signal.'}
       </div>
     </div>
   </div>`;
