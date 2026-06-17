@@ -1016,6 +1016,25 @@ function renderWealth() {
       <div style="margin-top:6px;padding:6px 8px;background:#08081a;border-radius:4px;font-size:10px">
         <span class="mono" style="color:var(--accent)">Today's USD/KES move:</span> ${latest.top_transit.includes('Jup') && latest.score >= 3700 ? 'PEAK + Jupiter — buy USD today. Best window this week.' : latest.score >= 3700 ? 'PEAK day — good for small USD position if Mercury direct.' : latest.score >= 3100 && latest.top_transit.includes('Ven') ? 'HIGH + Venus — rate may shift. Monitor, prepare entry.' : latest.score >= 3100 ? 'HIGH — research rates, no buy. Wait for PEAK.' : 'NORMAL — hold. No dollar moves today.'}
       </div>
+      <div style="margin-top:8px;font-size:10px"><b>NSE Tickers</b> <span class="dim">— transit-based signals</span></div>
+      ${[
+        {t:'SCOM', n:'Safaricom', h:'H11 (Network)'},
+        {t:'KCB', n:'KCB Group', h:'H2 (Banking)'},
+        {t:'ABSA', n:'Absa Kenya', h:'H2 (Banking)'},
+      ].map(s => {
+        const hasJup = latest.top_transit.includes('Jup');
+        const hasVen = latest.top_transit.includes('Ven');
+        const mercRx = (latest.retrograde_planets||[]).some(r=>r.includes('Merc'));
+        let sig, sigC;
+        if (latest.score >= 3700 && (hasJup||hasVen)) { sig = 'BUY'; sigC = 'var(--high)'; }
+        else if (mercRx || latest.score < 3100) { sig = 'HOLD'; sigC = 'var(--dim)'; }
+        else if (latest.score >= 3100) { sig = 'WATCH'; sigC = 'var(--gold)'; }
+        else { sig = 'HOLD'; sigC = 'var(--dim)'; }
+        return `<div style="display:flex;justify-content:space-between;align-items:center;padding:4px 6px;margin:2px 0;background:#08081a;border-radius:3px;font-size:10px">
+          <span><b>${s.t}</b> <span class="dim">${s.n}</span> <span class="dim">${s.h}</span></span>
+          <span style="color:${sigC};font-weight:600;font-size:9px">${sig}</span>
+        </div>`;
+      }).join('')}
     </div>
   </div>
   <div class="card">
