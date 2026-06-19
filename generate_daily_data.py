@@ -94,6 +94,35 @@ with open(DATA_DIR / 'today_hourly.json', 'w') as f:
     json.dump({'date': today.strftime('%Y-%m-%d'), 'hourly': hourly}, f, indent=2)
 logging.info("Hourly data: %d hours written (retrogrades included)", len(hourly))
 
+# === Moon phase & agriculture timing ===
+moon_phase = {}
+try:
+    mz._ensure_loaded()
+    t = mz._ts.utc(now.year, now.month, now.day, 12)
+    sun_lon = mz._earth.at(t).observe(mz._planets['sun']).apparent().ecliptic_latlon()[1].degrees % 360
+    moon_lon = mz._earth.at(t).observe(mz._planets['moon']).apparent().ecliptic_latlon()[1].degrees % 360
+    phase_angle = (moon_lon - sun_lon) % 360
+    phases = [
+        (22.5, 'New Moon', 'Plant leafy greens, start seeds. Prep soil.'),
+        (67.5, 'Waxing Crescent', 'Plant above-ground crops. Good for transplanting.'),
+        (112.5, 'First Quarter', 'Plant fruiting crops. Strong growth energy. Fertilize.'),
+        (157.5, 'Waxing Gibbous', 'Prune, train vines. Good for grafting.'),
+        (202.5, 'Full Moon', 'Harvest. Ripeness peaks. Good for picking and selling.'),
+        (247.5, 'Waning Gibbous', 'Plant root crops. Good for weeding, composting.'),
+        (292.5, 'Last Quarter', 'Prune, clear land. Build fences, infrastructure.'),
+        (337.5, 'Waning Crescent', 'Rest soil. Weed, pest control. Avoid planting.'),
+    ]
+    for deg, name, advice in phases:
+        if phase_angle <= deg:
+            moon_phase = {'name': name, 'advice': advice, 'angle': round(phase_angle, 1)}
+            break
+    if not moon_phase:
+        moon_phase = {'name': 'New Moon', 'advice': 'Plant leafy greens, start seeds. Prep soil.', 'angle': round(phase_angle, 1)}
+    logging.info("Moon phase: %s (%.1f°)", moon_phase['name'], phase_angle)
+except Exception as e:
+    logging.warning("Moon phase failed: %s", e)
+    moon_phase = {'name': '—', 'advice': 'Moon data unavailable.', 'angle': 0}
+
 # === Daily database ===
 db = mz.load_event_db()
 daily = {}
@@ -194,6 +223,7 @@ combined = {
         "date": today.strftime('%Y-%m-%d'),
         "hourly": hourly,
     },
+    "moon_phase": moon_phase,
     "database": database_json,
     "wealth": wo_data,
     "areas": areas_data,

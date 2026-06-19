@@ -1,14 +1,14 @@
 {
-  "date": "2026-06-17",
+  "date": "2026-06-19",
   "hourly": [
     {
       "hour": 0,
       "time": "00:00",
-      "score": 6058.0,
+      "score": 6142.0,
       "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.953deg)",
+      "top_transit": "Pluto // natal Neptune decl (0.966deg)",
       "top_score": 252.0,
-      "hit_count": 79,
+      "hit_count": 80,
       "retrograde_planets": [
         "Pluto",
         "N.Node"
@@ -17,9 +17,9 @@
     {
       "hour": 1,
       "time": "01:00",
-      "score": 6221.1,
+      "score": 6142.0,
       "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.953deg)",
+      "top_transit": "Pluto // natal Neptune decl (0.967deg)",
       "top_score": 252.0,
       "hit_count": 80,
       "retrograde_planets": [
@@ -30,9 +30,9 @@
     {
       "hour": 2,
       "time": "02:00",
-      "score": 6293.1,
+      "score": 6187.0,
       "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.953deg)",
+      "top_transit": "Pluto // natal Neptune decl (0.967deg)",
       "top_score": 252.0,
       "hit_count": 80,
       "retrograde_planets": [
@@ -43,9 +43,9 @@
     {
       "hour": 3,
       "time": "03:00",
-      "score": 6320.1,
+      "score": 6064.5,
       "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.953deg)",
+      "top_transit": "Pluto // natal Neptune decl (0.967deg)",
       "top_score": 252.0,
       "hit_count": 80,
       "retrograde_planets": [
@@ -56,11 +56,11 @@
     {
       "hour": 4,
       "time": "04:00",
-      "score": 6320.1,
+      "score": 6199.5,
       "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.954deg)",
+      "top_transit": "Pluto // natal Neptune decl (0.967deg)",
       "top_score": 252.0,
-      "hit_count": 80,
+      "hit_count": 81,
       "retrograde_planets": [
         "Pluto",
         "N.Node"
@@ -69,11 +69,11 @@
     {
       "hour": 5,
       "time": "05:00",
-      "score": 6170.1,
+      "score": 6361.5,
       "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.954deg)",
-      "top_score": 252.0,
-      "hit_count": 79,
+      "top_transit": "Moon Opp natal N.Node (0.340deg)",
+      "top_score": 288.0,
+      "hit_count": 82,
       "retrograde_planets": [
         "Pluto",
         "N.Node"
@@ -82,11 +82,11 @@
     {
       "hour": 6,
       "time": "06:00",
-      "score": 6260.1,
+      "score": 6461.5,
       "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.954deg)",
-      "top_score": 252.0,
-      "hit_count": 79,
+      "top_transit": "Moon Opp natal N.Node (0.241deg)",
+      "top_score": 288.0,
+      "hit_count": 82,
       "retrograde_planets": [
         "Pluto",
         "N.Node"
@@ -95,11 +95,11 @@
     {
       "hour": 7,
       "time": "07:00",
-      "score": 6170.1,
+      "score": 6336.5,
       "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.955deg)",
+      "top_transit": "Pluto // natal Neptune decl (0.968deg)",
       "top_score": 252.0,
-      "hit_count": 79,
+      "hit_count": 82,
       "retrograde_planets": [
         "Pluto",
         "N.Node"
@@ -108,11 +108,11 @@
     {
       "hour": 8,
       "time": "08:00",
-      "score": 6233.1,
+      "score": 6301.5,
       "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.955deg)",
+      "top_transit": "Pluto // natal Neptune decl (0.969deg)",
       "top_score": 252.0,
-      "hit_count": 80,
+      "hit_count": 82,
       "retrograde_planets": [
         "Pluto",
         "N.Node"
@@ -121,11 +121,11 @@
     {
       "hour": 9,
       "time": "09:00",
-      "score": 6035.1,
+      "score": 6319.5,
       "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.955deg)",
+      "top_transit": "Pluto // natal Neptune decl (0.969deg)",
       "top_score": 252.0,
-      "hit_count": 78,
+      "hit_count": 83,
       "retrograde_planets": [
         "Pluto",
         "N.Node"
@@ -134,11 +134,11 @@
     {
       "hour": 10,
       "time": "10:00",
-      "score": 5940.6,
+      "score": 6331.3,
       "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.955deg)",
+      "top_transit": "Pluto // natal Neptune decl (0.969deg)",
       "top_score": 252.0,
-      "hit_count": 77,
+      "hit_count": 81,
       "retrograde_planets": [
         "Pluto",
         "N.Node"
@@ -147,11 +147,11 @@
     {
       "hour": 11,
       "time": "11:00",
-      "score": 6103.7,
+      "score": 6331.3,
       "level": "PEAK",
-      "top_transit": "Sun Sq natal Mars (0.068deg)",
-      "top_score": 354.4,
-      "hit_count": 78,
+      "top_transit": "Pluto // natal Neptune decl (0.969deg)",
+      "top_score": 252.0,
+      "hit_count": 81,
       "retrograde_planets": [
         "Pluto",
         "N.Node"
@@ -160,11 +160,11 @@
     {
       "hour": 12,
       "time": "12:00",
-      "score": 6145.7,
+      "score": 6234.5,
       "level": "PEAK",
-      "top_transit": "Sun Sq natal Mars (0.029deg)",
-      "top_score": 354.4,
-      "hit_count": 78,
+      "top_transit": "Pluto // natal Neptune decl (0.970deg)",
+      "top_score": 252.0,
+      "hit_count": 80,
       "retrograde_planets": [
         "Pluto",
         "N.Node"
@@ -173,11 +173,11 @@
     {
       "hour": 13,
       "time": "13:00",
-      "score": 6157.7,
+      "score": 6183.5,
       "level": "PEAK",
-      "top_transit": "Sun Sq natal Mars (0.011deg)",
-      "top_score": 354.4,
-      "hit_count": 78,
+      "top_transit": "Pluto // natal Neptune decl (0.970deg)",
+      "top_score": 252.0,
+      "hit_count": 80,
       "retrograde_planets": [
         "Pluto",
         "N.Node"
@@ -186,11 +186,11 @@
     {
       "hour": 14,
       "time": "14:00",
-      "score": 6222.5,
+      "score": 6223.5,
       "level": "PEAK",
-      "top_transit": "Sun Sq natal Mars (0.051deg)",
-      "top_score": 354.4,
-      "hit_count": 76,
+      "top_transit": "Pluto // natal Neptune decl (0.970deg)",
+      "top_score": 252.0,
+      "hit_count": 81,
       "retrograde_planets": [
         "Pluto",
         "N.Node"
@@ -199,11 +199,11 @@
     {
       "hour": 15,
       "time": "15:00",
-      "score": 6242.8,
+      "score": 6286.5,
       "level": "PEAK",
-      "top_transit": "Sun Sq natal Mars (0.091deg)",
-      "top_score": 354.4,
-      "hit_count": 77,
+      "top_transit": "Pluto // natal Neptune decl (0.971deg)",
+      "top_score": 252.0,
+      "hit_count": 82,
       "retrograde_planets": [
         "Pluto",
         "N.Node"
@@ -212,11 +212,11 @@
     {
       "hour": 16,
       "time": "16:00",
-      "score": 5980.7,
+      "score": 6250.5,
       "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.957deg)",
+      "top_transit": "Pluto // natal Neptune decl (0.971deg)",
       "top_score": 252.0,
-      "hit_count": 76,
+      "hit_count": 81,
       "retrograde_planets": [
         "Pluto",
         "N.Node"
@@ -225,11 +225,11 @@
     {
       "hour": 17,
       "time": "17:00",
-      "score": 5935.7,
+      "score": 6455.5,
       "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.957deg)",
+      "top_transit": "Pluto // natal Neptune decl (0.971deg)",
       "top_score": 252.0,
-      "hit_count": 75,
+      "hit_count": 82,
       "retrograde_planets": [
         "Pluto",
         "N.Node"
@@ -238,11 +238,11 @@
     {
       "hour": 18,
       "time": "18:00",
-      "score": 5803.7,
+      "score": 6509.5,
       "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.958deg)",
-      "top_score": 252.0,
-      "hit_count": 74,
+      "top_transit": "Moon Tri natal Uranus (0.081deg)",
+      "top_score": 270.0,
+      "hit_count": 82,
       "retrograde_planets": [
         "Pluto",
         "N.Node"
@@ -251,11 +251,11 @@
     {
       "hour": 19,
       "time": "19:00",
-      "score": 5833.7,
+      "score": 6327.3,
       "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.958deg)",
+      "top_transit": "Pluto // natal Neptune decl (0.972deg)",
       "top_score": 252.0,
-      "hit_count": 75,
+      "hit_count": 81,
       "retrograde_planets": [
         "Pluto",
         "N.Node"
@@ -264,11 +264,11 @@
     {
       "hour": 20,
       "time": "20:00",
-      "score": 5874.9,
+      "score": 6243.3,
       "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.958deg)",
+      "top_transit": "Pluto // natal Neptune decl (0.972deg)",
       "top_score": 252.0,
-      "hit_count": 76,
+      "hit_count": 80,
       "retrograde_planets": [
         "Pluto",
         "N.Node"
@@ -277,11 +277,11 @@
     {
       "hour": 21,
       "time": "21:00",
-      "score": 5859.9,
+      "score": 6348.3,
       "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.959deg)",
+      "top_transit": "Pluto // natal Neptune decl (0.972deg)",
       "top_score": 252.0,
-      "hit_count": 75,
+      "hit_count": 81,
       "retrograde_planets": [
         "Pluto",
         "N.Node"
@@ -290,11 +290,11 @@
     {
       "hour": 22,
       "time": "22:00",
-      "score": 5925.9,
+      "score": 6402.3,
       "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.959deg)",
+      "top_transit": "Pluto // natal Neptune decl (0.973deg)",
       "top_score": 252.0,
-      "hit_count": 77,
+      "hit_count": 82,
       "retrograde_planets": [
         "Pluto",
         "N.Node"
@@ -303,11 +303,11 @@
     {
       "hour": 23,
       "time": "23:00",
-      "score": 6035.9,
+      "score": 6323.6,
       "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.959deg)",
+      "top_transit": "Pluto // natal Neptune decl (0.973deg)",
       "top_score": 252.0,
-      "hit_count": 78,
+      "hit_count": 81,
       "retrograde_planets": [
         "Pluto",
         "N.Node"

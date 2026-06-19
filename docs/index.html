@@ -100,6 +100,7 @@ select, input[type=number]{font-family:'Inter',sans-serif}
   <a onclick="showTab('stats')">Stats</a>
   <a onclick="showTab('location')">Location</a>
   <a onclick="showTab('relationships')">Relationships</a>
+  <a onclick="showTab('farm')">Farm</a>
 </div>
 
 <details style="margin-bottom:12px;padding:6px 8px;background:var(--card);border:1px solid var(--border);border-radius:6px;font-size:10px;color:var(--dim)">
@@ -123,6 +124,7 @@ select, input[type=number]{font-family:'Inter',sans-serif}
 <div id="tab-stats" class="tab" style="display:none"></div>
 <div id="tab-location" class="tab" style="display:none"></div>
 <div id="tab-relationships" class="tab" style="display:none"></div>
+<div id="tab-farm" class="tab" style="display:none"></div>
 
 <div class="footer">
   Daily readings
@@ -180,6 +182,7 @@ function renderTab(id) {
   else if (id==='stats') renderStats();
   else if (id==='location') renderLocation();
   else if (id==='relationships') renderRelationships();
+  else if (id==='farm') renderFarm();
 }
 
 function badge(lvl) {
@@ -1530,6 +1533,87 @@ function checkBirthYear() {
     </ul>
     <div style="margin-top:4px;font-size:10px">${score >= 8 ? '✅ Strong resonance. Worth exploring.' : score >= 5 ? '🔸 Mixed signals. Depends on full chart.' : '⚠️ Some friction. Would need strong moon/rising sync.'}</div>
   </div>`;
+}
+
+function renderFarm() {
+  const moon = D.moon_phase || {};
+  const areas = D.areas || [];
+  const latest = D.today_hourly.hourly.filter(x=>x.score>0).pop() || D.today_hourly.hourly[0];
+  const h4 = areas.find(a => a.house === 4);
+  const h6 = areas.find(a => a.house === 6);
+  const h2 = areas.find(a => a.house === 2);
+
+  const isPeak = latest.score >= 3700;
+  const isHigh = latest.score >= 3100;
+  const t = latest.top_transit || '';
+  const hasJup = t.includes('Jup');
+  const hasSat = t.includes('Sat');
+  const hasVen = t.includes('Ven');
+  const hasMar = t.includes('Mar');
+  const hasMoo = t.includes('Moo');
+  const mercRx = (latest.retrograde_planets||[]).some(r=>r.includes('Merc'));
+
+  const phaseAdvice = {
+    'New Moon': ['Plant leafy greens','Start seeds indoors','Prep soil beds','Good for: cabbage, spinach, lettuce'],
+    'Waxing Crescent': ['Plant above-ground crops','Transplant seedlings','Good for: tomatoes, maize, beans'],
+    'First Quarter': ['Plant fruiting crops','Fertilize','Strong growth energy','Good for: peppers, squash, passion fruit'],
+    'Waxing Gibbous': ['Prune and train vines','Grafting window','Good for: coffee, tea, fruit trees'],
+    'Full Moon': ['Harvest ready crops','Ripeness peaks','Best time to sell produce','Good for: all harvesting'],
+    'Waning Gibbous': ['Plant root crops','Weed and compost','Good for: carrots, potatoes, onions'],
+    'Last Quarter': ['Clear land','Build fences, structures','Prune perennials','Good for: farm infrastructure'],
+    'Waning Crescent': ['Rest soil','Pest control','Avoid planting','Good for: clearing, burning'],
+  };
+  const pa = phaseAdvice[moon.name] || ['Observe and prepare.'];
+
+  let html = `<div class="card">
+    <h2>🌱 Agriculture Timing — ${D.today_hourly.date}</h2>
+    <div style="font-size:10px;color:var(--dim);margin-bottom:6px">Plant, harvest, and farm work timed to your transits and moon phase.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+      <div class="stat" style="border-color:#44cc4430">
+        <div class="n" style="color:var(--high);font-size:14px">${moon.name || '—'}</div>
+        <div class="l">🌙 Moon Phase</div>
+      </div>
+      <div class="stat" style="border-color:${h4 && h4.score >= 3100 ? 'var(--high)' : '#ff880030'}">
+        <div class="n" style="font-size:14px">${h4 ? h4.score.toFixed(0) : '—'}</div>
+        <div class="l">🏡 H4 Land Score</div>
+      </div>
+    </div>
+    <div style="padding:8px;background:#08081a;border-radius:4px;font-size:11px;line-height:1.6;margin-bottom:8px">
+      <b style="color:var(--gold)">Moon guidance:</b> ${moon.advice || '—'}<br>
+      <div style="margin-top:4px;font-size:10px;color:var(--dim)">${pa.map(a => '→ ' + a).join('<br>')}</div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>Transit-Based Farm Work</h2>
+    <div style="font-size:11px;line-height:1.7">
+      <div class="action do"><span class="label">PLANT</span><span>${isPeak && hasJup ? 'Jupiter on PEAK — best planting day. Seeds sown now grow strong.' : isPeak && hasVen ? 'Venus on PEAK — good for planting fruit and flower crops.' : isHigh && (hasJup||hasVen) ? 'HIGH energy — prepare beds, start seeds indoors.' : 'NORMAL — wait for stronger transit to plant.'}</span></div>
+      <div class="action do"><span class="label">HARVEST</span><span>${isPeak && (hasVen||hasMoo) ? 'Venus/Moon on PEAK — harvest today. Peak ripeness and market price.' : isPeak ? 'PEAK day — harvest if crops are ready.' : 'Not ideal harvest timing. Let crops mature.'}</span></div>
+      <div class="action watch"><span class="label">SOIL</span><span>${isHigh && hasSat ? 'Saturn active — good for soil prep, fencing, permanent infrastructure.' : hasSat ? 'Saturn day — build farm structures, compost, long-term prep.' : 'Regular soil maintenance.'}</span></div>
+      <div class="action dont"><span class="label">DON'T</span><span>${mercRx ? 'Mercury retrograde — avoid buying seeds, equipment, or signing farm contracts.' : isPeak && hasMar ? 'Mars on PEAK — aggressive energy. Good for clearing land but risk of burning out.' : 'No major warnings for today.'}</span></div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>Upcoming Farm Windows</h2>
+    <div style="font-size:10px;color:var(--dim);margin-bottom:6px">Next 7 days with strong H4 (Land) or H2 (Resources) activity.</div>`;
+  const db = D.database || [];
+  const td = D.today_hourly.date;
+  const farmDays = db.filter(d => d.date > td && d.date <= daysFrom(td, 7))
+    .filter(d => d.events.some(e => ['2','4','6'].includes(e.house)))
+    .sort((a,b) => a.date.localeCompare(b.date));
+  if (farmDays.length) {
+    farmDays.forEach(d => {
+      const ev = d.events.filter(e => ['2','4','6'].includes(e.house));
+      html += `<div style="display:flex;justify-content:space-between;align-items:center;padding:4px 6px;margin:2px 0;background:#08081a;border-radius:3px;font-size:10px">
+        <span class="mono">${d.date}</span>
+        <span>${ev.map(e => 'H'+e.house+' '+e.transit.split(' ')[0]).join(' · ')}</span>
+        <span>${badge(d.max_level)}</span>
+      </div>`;
+    });
+  } else {
+    html += `<div class="dim" style="font-size:10px;padding:4px 0">No strong farm transits in the next 7 days.</div>`;
+  }
+  html += `</div>`;
+  document.getElementById('tab-farm').innerHTML = html;
 }
 
 function renderLocation() {
