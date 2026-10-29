@@ -6,6 +6,7 @@ import sys, os, json, logging
 from pathlib import Path
 sys.path.insert(0, os.path.dirname(__file__))
 import mazzaroth as mz
+import mazzaroth_personal as pers
 from datetime import datetime, timedelta, timezone
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -69,7 +70,7 @@ logging.info("Natal chart: %d planets, %d aspects, %d houses occupied",
 # === Hourly data for today ===
 now = datetime.now(timezone.utc).replace(tzinfo=None)
 today = now.replace(hour=0, minute=0, second=0, microsecond=0)
-thresh = {'peak': 3100, 'vhigh': 2800, 'high': 2400}
+thresh = mz.load_thresholds()
 
 hourly = []
 for h in range(24):
@@ -88,7 +89,11 @@ for h in range(24):
         'top_score': round(top_hit[0], 1) if top_hit else 0,
         'hit_count': len(hits),
         'retrograde_planets': retro_planets,
+        'personal': pers.personal_for_hour(top_hit[1] if top_hit else '', level, score),
     })
+
+reading = pers.build_reading(hourly) or {}
+logging.info("Personal reading built: %s", reading.get('headline', '')[:60])
 
 with open(DATA_DIR / 'today_hourly.json', 'w') as f:
     json.dump({'date': today.strftime('%Y-%m-%d'), 'hourly': hourly}, f, indent=2)
@@ -118,6 +123,19 @@ try:
             break
     if not moon_phase:
         moon_phase = {'name': 'New Moon', 'advice': 'Plant leafy greens, start seeds. Prep soil.', 'angle': round(phase_angle, 1)}
+    # Fiorenza lunar layers: sidereal mansion (nakshatra) + phase action guide.
+    try:
+        import mazzaroth_lunar as ml
+        ay = ml.ayanamsa(now.year + (now.timetuple().tm_yday / 366.0))
+        mansion = ml.lunar_mansion(moon_lon, ay=ay)
+        guide = ml.phase_guide(phase_angle)
+        moon_phase['sidereal'] = mansion['sidereal']
+        moon_phase['ayanamsa'] = round(ay, 2)
+        moon_phase['mansion'] = mansion
+        moon_phase['guide'] = guide['guide']
+        moon_phase['illumination'] = round(ml.illumination(phase_angle), 1)
+    except Exception as le:
+        logging.warning("Lunar mansion failed: %s", le)
     logging.info("Moon phase: %s (%.1f°)", moon_phase['name'], phase_angle)
 except Exception as e:
     logging.warning("Moon phase failed: %s", e)
@@ -162,13 +180,26 @@ with open(DATA_DIR / 'database.json', 'w') as f:
     json.dump(database_json, f, indent=2)
 logging.info("Database: %d days written", len(database_json))
 
-# === Wealth data for today ===
+# === Wealth data for today (real engine output, personalized) ===
 import wealth_optimizer
 try:
     ws = wealth_optimizer.wealth_score()
     ws_val = ws[0] if isinstance(ws, (list, tuple)) else ws
-    wo_data = {'score': round(float(ws_val), 1), 'patterns': 7, 'verdict': 'FAVORABLE',
-               'natal': ['Mercury-H3 Deal Maker', 'Venus-Jupiter Amplifier', 'Mars-H2 Money Warrior']}
+    ws_factors = ws[1] if isinstance(ws, (list, tuple)) and len(ws) > 1 else []
+    pat_names = [p['pattern'] for p in wealth_optimizer.billionaire_patterns()]
+    verdicts = wealth_optimizer.investment_window()
+    prio = {'AVOID': 0, 'WARNING': 1, 'HIGH IMPACT': 2, 'FAVORABLE': 3, 'NEUTRAL': 4}
+    verdicts.sort(key=lambda v: prio.get(v[0], 5))
+    verdict_txt = (verdicts[0][1] if verdicts and verdicts[0][0] != 'NEUTRAL'
+                   else 'Neutral financial day. Build systems and execute.')
+    natal_wp = wealth_optimizer.natal_wealth_profile()
+    wo_data = {'score': round(float(ws_val), 1),
+               'patterns': len(pat_names),
+               'pattern_names': pat_names,
+               'verdict': verdict_txt,
+               'verdicts': [{'tag': v[0], 'note': v[1]} for v in verdicts[:3]],
+               'factors': ws_factors[:6],
+               'natal': natal_wp}
 except Exception as e:
     logging.error("Wealth score failed: %s", e)
     wo_data = {'score': 0, 'patterns': 0, 'verdict': 'UNAVAILABLE', 'natal': []}
@@ -192,6 +223,14 @@ try:
 except Exception as e:
     logging.error("Life areas failed: %s", e)
     areas_data = []
+
+# === Personal blueprint (deterministic from natal + profection + today) ===
+import mazzaroth_personal as pers
+try:
+    blueprint = pers.build_blueprint()
+except Exception as e:
+    logging.error("Blueprint failed: %s", e)
+    blueprint = None
 with open(DATA_DIR / 'areas.json', 'w') as f:
     json.dump(areas_data, f, indent=2)
 logging.info("Life areas: %d houses written", len(areas_data))
@@ -229,6 +268,14 @@ combined = {
     "areas": areas_data,
     "audit": audit_entries,
     "natal": natal_chart,
+    "thresholds": thresh,
+    "reading": reading,
+    "profection": {
+        "house": mz.PROF_HOUSE,
+        "age": mz._age_now(),
+        "name": natal_chart["houses"].get(str(mz.PROF_HOUSE), []),
+    },
+    "blueprint": blueprint,
 }
 js_path = DATA_DIR / 'daily.js'
 with open(js_path, 'w') as f:

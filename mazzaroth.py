@@ -20,7 +20,7 @@ def _ensure_loaded():
         _planets = load(_ephe_path)
         _earth = _planets["earth"]
 
-# === NATAL CHART (Gerald Kombo, 1989-09-13 03:50 UTC, Nairobi) ===
+# === NATAL CHART (Gerald Kombo, 1989-09-13 03:50 UTC, Aga Khan Parklands Hospital, Nairobi) ===
 NATAL = {
     "Sun":    {"lon": 170.4843, "lat":  0.0000, "decl":  3.7704},
     "Moon":   {"lon": 318.5855, "lat": -0.6646, "decl":-15.8878},
@@ -48,7 +48,31 @@ ASPECTS = [(0,8,10,"Conj"),(180,8,8,"Opp"),(90,7,7,"Sq"),(120,7,6,"Tri"),
            (72,2,2,"Qnt"),(144,2,2,"BQnt")]
 HOUSE_WT = {1:2.0,4:2.0,7:2.0,10:2.0,2:1.5,5:1.5,8:1.5,11:1.5,
             3:1.0,6:1.0,9:1.0,12:1.0,13:1.0}
-PROF_HOUSE = ((36 % 13) + 1)  # Age 36 => H11
+
+# === PROFECTION / PERSONALIZATION (Gerald Kombo, born 1989-09-13 03:50 UTC) ===
+BIRTH = datetime(1989, 9, 13, 3, 50)
+
+def _age_now(on=None):
+    if on is None:
+        on = datetime.now(timezone.utc).replace(tzinfo=None)
+    age = on.year - BIRTH.year
+    if (on.month, on.day) < (BIRTH.month, BIRTH.day):
+        age -= 1
+    return max(age, 0)
+
+def profection_house(on=None):
+    # Mazzaroth technique: 13-sign year wheel. Year 0 starts in H1, advances
+    # one house per birthday. Day-of-year = profection (time-lord) house.
+    return ((_age_now(on) % 13) + 1)
+
+PROF_HOUSE = profection_house()
+
+# The time-lord (profection) house rules this full year — aspects inside it
+# carry extra weight, and its life area is where the year resolves.
+PROF_MULT = 1.5
+
+# Transits striking the natal lights carry the strongest personal resonance.
+NATAL_BOOST = {"Sun": 1.4, "Moon": 1.2}
 
 IAU = [(0.0,27.0,"Pisces"),(27.0,53.5,"Aries"),(53.5,90.4,"Taurus"),
        (90.4,118.1,"Gemini"),(118.1,138.2,"Cancer"),(138.2,174.0,"Leo"),
@@ -70,6 +94,28 @@ INTEL_MAP = {
     ("Jupiter","10"):("Career explosion window.",["Apply for big opportunity","Step into public leadership","Make bold career announcement"]),
     ("Pluto","8"):("Deep pivot. Transformational decisions.",["Apply for funding","Major investment decision","Pursue merger"]),
     ("Pluto","4"):("Foundation-building for decades.",["Secure base systems","Build infrastructure","Address instability"]),
+    # Gerald-personalized strategy: Kenya, KES/USD, NSE, land, network, brand
+    ("Jupiter","2"):("Wealth expansion window. Money amplifies.",["Raise prices or ask for more","Invest in growth (land, USD, NSE)","Generosity returns 10x"]),
+    ("Saturn","2"):("Financial structure pays.",["Open a dedicated savings pocket","Automate KES-to-USD sweep","Budget before spending"]),
+    ("Pluto","2"):("Money transformation. Old model dies.",["Restructure debt","Kill a draining revenue stream","Rebuild pricing from zero"]),
+    ("Venus","2"):("Value is visible. Monetize relationships.",["Raise your worth publicly","Convert a contact into a client","Invest in what you love"]),
+    ("Mars","2"):("Aggressive earning energy.",["Launch a sales push","Chase the invoice, close the deal","Start a new income stream today"]),
+    ("Neptune","2"):("Brand-led money. Sell the dream.",["Tell your story to sell","Build the narrative around value","Verify numbers twice before acting"]),
+    ("Uranus","2"):("Financial disruption = opportunity.",["Try an unconventional income stream","Exit a stuck asset","Adopt cutting-edge money tool"]),
+    ("Sun","2"):("Self-worth = net worth. Own it.",["Charge what you are worth","Lead with your ambition","Public financial goal"]),
+    ("Jupiter","4"):("Land & property expansion. Build on home ground.",["Invest in land or property","Improve home base assets","Host the family/community"]),
+    ("Saturn","4"):("Secure the foundation. Land deals solidify.",["Buy or register land now","Structure home systems","Long-term family asset"]),
+    ("Uranus","11"):("Network disruption. Platform moment.",["Launch on a new platform","Design the viral move","Mobilize the community"]),
+    ("Jupiter","11"):("Network abundance. Expansion through people.",["Pitch your inner circle","Grow LinkedIn/Twitter reach","Collaborate with 3 people"]),
+    ("Sun","11"):("Brand spotlight in the community.",["Publish your personal brand","Go public with your mission","Own your authority online"]),
+    ("Venus","11"):("Attention converts. Charm the network.",["Turn followers into clients","Collaborate with aligned brands","Post value daily"]),
+    ("Saturn","10"):("Career structure. Authority builds.",["Negotiate the promotion","Formalize the business","Build the legacy system"]),
+    ("Mars","7"):("Partnership friction fuels action.",["Negotiate the contract","Face the partnership honestly","Sign after you fight for terms"]),
+    ("Jupiter","9"):("Expansion abroad. Bigger stage.",["Publish or teach globally","Import/export opportunity","Study the foreign market"]),
+    ("Mercury","9"):("Message goes far. Document everything.",["Write the book or course","Publish the update","Share the framework"]),
+    ("Pluto","6"):("Health & work regeneration.",["Overhaul daily routine","Heal the root cause","Rebuild work systems"]),
+    ("Mars","6"):("Execution engine. Work deeply.",["Grind the work list","Train the body","Ship the deliverable"]),
+    ("Jupiter","6"):("Work expands. Systems upgrade.",["Automate the workflow","Outsource or delegate","Optimize health routine"]),
 }
 FALLBACK_INTEL = ("Bold decisions now.", ["Make the major move","Act on what you delayed","Build something that lasts"])
 
@@ -177,24 +223,28 @@ def score_transit(transit_data):
             nw = WEIGHTS.get(nname, 1.0)
             h = _house_num(nd["lon"])
             hw = HOUSE_WT.get(h, 1.0)
+            # Personalization: profection (time-lord) house boost + natal-light resonance
+            nb = NATAL_BOOST.get(nname, 1.0)
+            prof = PROF_MULT if h == PROF_HOUSE else 1.0
+            pers = nb * prof
             diff = abs(td["lon"] - nd["lon"]) % 360
             if diff > 180: diff = 360 - diff
             for angle, orb, base, aname in ASPECTS:
                 delta = abs(diff - angle)
                 if delta <= orb:
                     prec = 3.0 if delta<0.1 else (2.0 if delta<0.5 else 1.0)
-                    s = base * tw * nw * hw * tmm * prec * retro_wt
+                    s = base * tw * nw * hw * tmm * prec * retro_wt * pers
                     total += s
                     hits.append((s, f"{tname} {aname} natal {nname} ({delta:.3f}deg)", aname))
             ddiff = abs(td["decl"] - nd["decl"])
             if ddiff <= 1.0:
-                s = 6 * tw * nw * hw * tmm * (2.0 if ddiff<0.1 else 1.0) * retro_wt
+                s = 6 * tw * nw * hw * tmm * (2.0 if ddiff<0.1 else 1.0) * retro_wt * pers
                 total += s
                 hits.append((s, f"{tname} // natal {nname} decl ({ddiff:.3f}deg)", "PAR"))
             anti_diff = abs(td["lon"] - _antiscion(nd["lon"])) % 360
             if anti_diff > 180: anti_diff = 360 - anti_diff
             if anti_diff <= 1.5:
-                s = 5 * tw * nw * hw * tmm * retro_wt
+                s = 5 * tw * nw * hw * tmm * retro_wt * pers
                 total += s
                 hits.append((s, f"{tname} anti-{nname} ({anti_diff:.3f}deg)", "ANTI"))
     hits.sort(reverse=True)
@@ -222,7 +272,7 @@ def get_thresholds():
 
 def get_level(score, thresholds=None):
     if thresholds is None:
-        thresholds = {"peak": 3100, "vhigh": 2800, "high": 2400}
+        thresholds = DEFAULT_THRESHOLDS
     if score >= thresholds["peak"]: return "PEAK"
     if score >= thresholds["vhigh"]: return "VERY HIGH"
     if score >= thresholds["high"]: return "HIGH"
@@ -313,7 +363,7 @@ def blue(t): return c("94", t)
 def magenta(t): return c("95", t)
 def cyan(t): return c("96", t)
 
-DEFAULT_THRESHOLDS = {"peak": 3100, "vhigh": 2800, "high": 2400, "n": 3950}
+DEFAULT_THRESHOLDS = {"peak": 10960, "vhigh": 9939, "high": 8740, "n": 564}
 
 def load_thresholds():
     if os.path.exists(THRESH_CACHE):

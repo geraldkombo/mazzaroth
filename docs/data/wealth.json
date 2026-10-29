@@ -1,10 +1,101 @@
 {
-  "score": 653.7,
-  "patterns": 7,
-  "verdict": "FAVORABLE",
-  "natal": [
-    "Mercury-H3 Deal Maker",
+  "score": 1437.3,
+  "patterns": 8,
+  "pattern_names": [
+    "Jupiter-Saturn Bridge",
+    "Pluto Wealth Transformer",
     "Venus-Jupiter Amplifier",
-    "Mars-H2 Money Warrior"
+    "Saturn H10 Career Emperor",
+    "Uranus H11 Network Disruptor",
+    "Mars-H2 Money Warrior",
+    "Neptune Brand Visionary",
+    "Mercury-H3 Deal Maker"
+  ],
+  "verdict": "Neutral financial day. Build systems and execute.",
+  "verdicts": [
+    {
+      "tag": "NEUTRAL",
+      "note": "No strong financial signals today. Focus on execution and systems."
+    }
+  ],
+  "factors": [
+    {
+      "transit": "Pluto",
+      "natal": "Mars",
+      "aspect": "Tri",
+      "house": 2,
+      "contrib": 168.8,
+      "delta": 6.73
+    },
+    {
+      "transit": "Pluto",
+      "natal": "Chiron",
+      "aspect": "Tri",
+      "house": 11,
+      "contrib": 168.8,
+      "delta": 5.436
+    },
+    {
+      "transit": "Pluto",
+      "natal": "Venus",
+      "aspect": "Sq",
+      "house": 2,
+      "contrib": 157.5,
+      "delta": 1.818
+    },
+    {
+      "transit": "Venus",
+      "natal": "Venus",
+      "aspect": "Conj",
+      "house": 2,
+      "contrib": 135.0,
+      "delta": 6.893
+    },
+    {
+      "transit": "Saturn",
+      "natal": "Mercury",
+      "aspect": "Opp",
+      "house": 2,
+      "contrib": 129.6,
+      "delta": 0.085
+    },
+    {
+      "transit": "Uranus",
+      "natal": "Chiron",
+      "aspect": "Conj",
+      "house": 11,
+      "contrib": 90.0,
+      "delta": 7.753
+    }
+  ],
+  "natal": [
+    {
+      "planet": "Mercury",
+      "house": 2,
+      "house_label": "Finances",
+      "lon": 190.6,
+      "pattern": "Mercury-H3 Deal Maker"
+    },
+    {
+      "planet": "Venus",
+      "house": 2,
+      "house_label": "Finances",
+      "lon": 210.9,
+      "pattern": "Venus-Jupiter Amplifier"
+    },
+    {
+      "planet": "Mars",
+      "house": 2,
+      "house_label": "Finances",
+      "lon": 176.0,
+      "pattern": "Mars-H2 Money Warrior"
+    },
+    {
+      "planet": "Chiron",
+      "house": 11,
+      "house_label": "Network & Business",
+      "lon": 57.3,
+      "pattern": ""
+    }
   ]
 }

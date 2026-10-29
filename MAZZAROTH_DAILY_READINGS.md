@@ -10,7 +10,7 @@
 ## Today's Transit — 2026-06-14
 
 ```
-Score:  5909  |  Level: PEAK  |  Thresholds: PEAK>3100  VH>2800  HIGH>2400
+Score:  5909  |  Level: NORMAL  |  Thresholds: PEAK>11675  VH>10806  HIGH>9480
 Tone:   SUPPORTIVE
 ```
 
@@ -253,7 +253,7 @@ All 13 houses always register because house cusp activation ensures scoring even
 | Declination | Parallel / Contraparallel detection |
 | Antiscia | Symmetrical degree mirroring (WA) |
 | Scoring | Base x Orb Precision x Planet Weight x House Weight |
-| Thresholds | PEAK>3100, VH>2800, HIGH>2400 |
+| Thresholds | PEAK>11675, VH>10806, HIGH>9480 |
 | Wealth Model | 8 billionaire patterns, Beta-Bernoulli update |
 | Optimizer | Stand-by (needs 10+ audit entries) |
 | Audit | 1 entry logged (2026-06-12 PEAK, rated 4/5) |

@@ -18,8 +18,8 @@ import mazzaroth as mz
 
 THRESH_CACHE = os.path.join(os.path.dirname(__file__), "ephe", "thresholds.json")
 
-# Wealth houses
-WEALTH_HOUSES = [2, 8, 10]  # H2=money, H8=shared resources, H10=career
+# Wealth houses: H2=money, H4=land/property, H8=shared resources, H10=career, H11=network/business
+WEALTH_HOUSES = [2, 4, 8, 10, 11]
 BUSINESS_HOUSES = [6, 10, 11]  # H6=work, H10=reputation, H11=network
 
 # Financial planet archetypes
@@ -67,18 +67,22 @@ def wealth_score(transit_data=None):
     for tname, td in transit_data.items():
         tw = FINANCE_PLANETS.get(tname, {}).get("weight", 1.0)
         tmm = td["motion_mult"]
+        retro_wt = 1.5 if td.get("retrograde") else 1.0
         for nname, nd in mz.NATAL.items():
             h = mz._house_num(nd["lon"])
             if h not in WEALTH_HOUSES:
                 continue
             nw = mz.WEIGHTS.get(nname, 1.0)
+            nb = mz.NATAL_BOOST.get(nname, 1.0)
+            prof = mz.PROF_MULT if h == mz.PROF_HOUSE else 1.0
+            pers = nb * prof
             diff = abs(td["lon"] - nd["lon"]) % 360
             if diff > 180: diff = 360 - diff
             for angle, orb, base, aname in mz.ASPECTS:
                 delta = abs(diff - angle)
                 if delta <= orb:
                     prec = 3.0 if delta < 0.1 else (2.0 if delta < 0.5 else 1.0)
-                    s = base * tw * nw * tmm * prec
+                    s = base * tw * nw * tmm * prec * retro_wt * pers
                     score += s
                     factors.append({
                         "transit": tname, "natal": nname, "aspect": aname,
@@ -200,7 +204,7 @@ def natal_wealth_profile():
     profile = []
     for name, nd in mz.NATAL.items():
         h = mz._house_num(nd["lon"])
-        house_label = {2:"Finances",8:"Shared Resources",10:"Career"}.get(h, f"H{h}")
+        house_label = {2:"Finances",4:"Land & Property",8:"Shared Resources",10:"Career",11:"Network & Business"}.get(h, f"H{h}")
         if h in WEALTH_HOUSES:
             pattern = ""
             for p in BILLIONAIRE_PATTERNS:

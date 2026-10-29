@@ -5,6 +5,17 @@ Mazzaroth_Engine_Data/watchdog.log
 watchdog.pid
 Zepp_Exports/
 
+.dev.vars
+node_modules/
+.wrangler/
+regen_master_log.out
+regen_master_log.err
+
+# scratch / analysis files (not part of the engine)
+mazzaroth_noretro.py
+compare.py
+build_thresholds.py
+
 majiwatch-kenya-laravel-gateway/
 kenya-ai-rights-observatory/
 nairobi-health-equity-map/

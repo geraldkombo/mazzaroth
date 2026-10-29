@@ -65,7 +65,7 @@ def blue(t): return c("94", t)
 def magenta(t): return c("95", t)
 def cyan(t): return c("96", t)
 
-DEFAULT_THRESHOLDS = {"peak": 3100, "vhigh": 2800, "high": 2400, "n": 3950}
+DEFAULT_THRESHOLDS = {"peak": 10960, "vhigh": 9939, "high": 8740, "n": 564}
 
 def load_thresholds():
     if os.path.exists(THRESH_CACHE):
@@ -304,7 +304,7 @@ def _scan_day(dt):
     from datetime import time
     midday = datetime.combine(dt.date(), time(12, 0), tzinfo=timezone.utc).replace(tzinfo=None)
     transit = mz.get_transit_data(midday)
-    thresh = load_thresholds() if os.path.exists(THRESH_CACHE) else {"peak": 3100, "vhigh": 2800, "high": 2400}
+    thresh = load_thresholds()
     events = []
     for tname, td in transit.items():
         tw = mz.WEIGHTS.get(tname, 1.0)
@@ -388,6 +388,12 @@ def help():
     print("    python mazz.py ics deploy FOLDER # Deploy ICS to sync folder")
     print("    python mazz.py zepp status       # Zepp import history")
     print("    python mazz.py zepp run FILE     # Import Zepp CSV manually")
+    print("  Quinarian (Shem Angel / Goetia):")
+    print("    python mazz.py quinarian          # Current quinarian status")
+    print("    python mazz.py quinarian now      # Same as above")
+    print("    python mazz.py quinarian daemon   # Daemon mode (10-min checks)")
+    print("    python mazz.py quinarian ics      # Generate ICS calendar")
+    print("    python mazz.py quinarian deploy FOLDER  # Deploy ICS")
     print("  Optimization:")
     print("    python mazz.py optimize          # Bayesian weight optimization from audit log")
     print("  Flags:")
@@ -482,6 +488,18 @@ if __name__ == "__main__":
     elif cmd == "optimize":
         import optimizer
         optimizer.run_optimization()
+    elif cmd == "quinarian":
+        import quinarian_engine
+        if len(sys.argv) < 3:
+            quinarian_engine.cmd_now()
+        elif sys.argv[2] == "now":
+            quinarian_engine.cmd_now()
+        elif sys.argv[2] == "daemon":
+            quinarian_engine.cmd_daemon()
+        elif sys.argv[2] == "ics":
+            quinarian_engine.generate_ics()
+        elif sys.argv[2] == "deploy" and len(sys.argv) >= 4:
+            quinarian_engine.deploy(sys.argv[3])
     elif cmd in ("help", "--help", "-h"): help()
     else:
         print(f"Unknown command: {cmd}")

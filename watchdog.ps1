@@ -119,3 +119,19 @@ while ($true) {
 
     Start-Sleep -Seconds $IntervalSeconds
 }
+
+# === QUINARIAN ENGINE CHECK ===
+$quinProc = Get-Process -Name "python" -ErrorAction SilentlyContinue |
+    Where-Object { $_.CommandLine -match "quinarian_engine.py daemon" } |
+    Select-Object -First 1
+if (-not $quinProc) {
+    Log "QUINARIAN DAEMON MISSING - restarting"
+    $psi = New-Object System.Diagnostics.ProcessStartInfo
+    $psi.FileName = "python"
+    $psi.Arguments = "quinarian_engine.py daemon"
+    $psi.WorkingDirectory = "$MazzPath"
+    $psi.UseShellExecute = $true
+    $psi.WindowStyle = [System.Diagnostics.ProcessWindowStyle]::Minimized
+    [System.Diagnostics.Process]::Start($psi) | Out-Null
+    Log "QUINARIAN DAEMON RESTARTED"
+}

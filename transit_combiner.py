@@ -77,7 +77,7 @@ def synthesize_brief(transit_data=None, date_label=None):
         now = datetime.now(timezone.utc).replace(tzinfo=None)
         transit_data = mz.get_transit_data(now)
 
-    thresh = {"peak":3100,"vhigh":2800,"high":2400}
+    thresh = mz.load_thresholds()
     if os.path.exists(THRESH_CACHE):
         with open(THRESH_CACHE) as f: thresh = json.load(f)
 

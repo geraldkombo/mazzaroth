@@ -68,7 +68,7 @@ def cmd_today():
             h = mz._house_num(nd["lon"]) if nd else 11
             interp, _ = mz.get_interpretation(tname if tname else "Sun", h)
             lines = [
-                f"MAZZAROTH | {'PEAK' if score > 3100 else 'ACTIVE'}",
+                f"MAZZAROTH | {'PEAK' if score > mz.load_thresholds()['peak'] else 'ACTIVE'}",
                 f"Score:{score:.0f} H{h} | {top[:35] if hits else 'No aspects'}",
                 f"{interp[:60]}",
             ]

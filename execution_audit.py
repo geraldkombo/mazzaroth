@@ -73,7 +73,7 @@ def record_todays_prediction():
     predictions = _load_predictions()
     if any(r["date"] == today for r in predictions):
         return
-    thresh = {"peak":3100,"vhigh":2800,"high":2400}
+    thresh = mz.load_thresholds()
     if os.path.exists(THRESH_CACHE):
         with open(THRESH_CACHE) as f: thresh = json.load(f)
     transit = mz.get_transit_data(datetime.now(timezone.utc).replace(tzinfo=None))

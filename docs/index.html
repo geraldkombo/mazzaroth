@@ -3,6 +3,7 @@
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Mazzaroth — Daily Oracle</title>
 <script src="data/daily.js"></script>
+<script src="data/quinaries.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#06060c;--card:#0c0c18;--border:#1a1a2e;--text:#c8c8d4;--dim:#666680;--accent:#7c5cfc;--peak:#ff4444;--vhigh:#ff8800;--high:#44cc44;--gold:#ffd700}
@@ -80,6 +81,25 @@ details ul{list-style:none;padding:4px 0 0 12px;font-size:10px;color:var(--dim);
 .footer a{color:var(--accent);text-decoration:none}
 @media(max-width:600px){.g2,.g3{grid-template-columns:1fr}}
 select, input[type=number]{font-family:'Inter',sans-serif}
+.ai-chat{display:flex;flex-direction:column;height:calc(100vh - 160px);min-height:420px}
+.ai-scroll{flex:1;overflow-y:auto;padding:12px 4px;display:flex;flex-direction:column;gap:10px}
+.ai-msg{max-width:88%;padding:10px 12px;border-radius:10px;font-size:12.5px;line-height:1.6;white-space:pre-wrap;word-break:break-word}
+.ai-user{align-self:flex-end;background:#7c5cfc22;border:1px solid #7c5cfc44;color:#e6e0ff}
+.ai-bot{align-self:flex-start;background:#0d0d1c;border:1px solid var(--border);color:var(--text)}
+.ai-bot b{color:#fff}
+.ai-bot ul{margin:6px 0 6px 16px;padding:0}
+.ai-bot li{margin:3px 0}
+.ai-row{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.ai-chip{background:#08081a;border:1px solid var(--border);color:var(--dim);font-size:10px;padding:5px 10px;border-radius:14px;cursor:pointer}
+.ai-chip:hover{color:#fff;border-color:var(--accent);background:#7c5cfc10}
+.ai-input-row{display:flex;gap:8px;margin-top:10px}
+.ai-input-row textarea{flex:1;background:#08081a;border:1px solid var(--border);color:#fff;padding:10px;border-radius:8px;font-size:12px;font-family:'Inter',sans-serif;resize:none;height:48px}
+.ai-input-row button{background:var(--accent);color:#fff;border:none;padding:0 18px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap}
+.ai-input-row button:hover{opacity:.88}
+.ai-input-row button:disabled{opacity:.4;cursor:default}
+.ai-typing{color:var(--dim);font-size:11px;padding:4px 2px}
+.ai-ghost{color:#555;font-size:23px;text-align:center;padding:30px 10px;line-height:1.5}
+.ai-ghost .m{color:var(--accent);font-weight:600}
 </style>
 </head>
 <body>
@@ -90,6 +110,8 @@ select, input[type=number]{font-family:'Inter',sans-serif}
 
 <div class="bar" id="top-nav">
   <a class="on" onclick="showTab('today')">Today</a>
+  <a onclick="showTab('blueprint')">My Blueprint</a>
+  <a onclick="showTab('readings')">Readings</a>
   <a onclick="showTab('hourly')">Hourly</a>
   <a onclick="showTab('calendar')">Calendar</a>
   <a onclick="showTab('database')">Database</a>
@@ -101,19 +123,16 @@ select, input[type=number]{font-family:'Inter',sans-serif}
   <a onclick="showTab('location')">Location</a>
   <a onclick="showTab('relationships')">Relationships</a>
   <a onclick="showTab('farm')">Farm</a>
+  <a onclick="showTab('ai')">Ask Mazzi</a>
 </div>
 
 <details style="margin-bottom:12px;padding:6px 8px;background:var(--card);border:1px solid var(--border);border-radius:6px;font-size:10px;color:var(--dim)">
   <summary>How scoring works (tap to expand)</summary>
-  <div style="margin-top:4px">Each day scored 0-10,000 based on planetary positions, aspect tightness, and the life area (house) triggered.</div>
-  <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:4px">
-    <span><span class="badge peak">PEAK</span> 3700-6500+ — Rare, decisions compound for years.</span>
-    <span><span class="badge vhigh">V.HIGH</span> 3400-3700 — Strong developments likely.</span>
-    <span><span class="badge high">HIGH</span> 3100-3400 — Above-baseline energy.</span>
-    <span><span class="badge normal">NORMAL</span> 0-3100 — Regular operational day.</span>
-  </div>
+  <div id="legend-body" style="margin-top:4px"></div>
 </details>
 <div id="tab-today" class="tab"></div>
+<div id="tab-blueprint" class="tab" style="display:none"></div>
+<div id="tab-readings" class="tab" style="display:none"></div>
 <div id="tab-hourly" class="tab" style="display:none"></div>
 <div id="tab-calendar" class="tab" style="display:none"></div>
 <div id="tab-database" class="tab" style="display:none"></div>
@@ -125,16 +144,38 @@ select, input[type=number]{font-family:'Inter',sans-serif}
 <div id="tab-location" class="tab" style="display:none"></div>
 <div id="tab-relationships" class="tab" style="display:none"></div>
 <div id="tab-farm" class="tab" style="display:none"></div>
+<div id="tab-ai" class="tab" style="display:none"></div>
 
 <div class="footer">
-  Daily readings
+  Daily readings &middot; <a href="#" onclick="mazziLogout();return false" style="cursor:pointer">Sign out</a>
 </div>
 
 </div>
 
 <script>
 const D = window.MD;
+const TH = (D.thresholds && D.thresholds.peak) ? D.thresholds : { peak:11675, vhigh:10806, high:9480 };
+(function(){
+  const el = document.getElementById('legend-body');
+  if (!el) return;
+  const max = Math.max(20000, TH.peak * 1.4);
+  el.innerHTML =
+    `<div>The engine scores every hour 0&ndash;${max.toLocaleString()} from planetary positions, aspect tightness (precision of orb), and the life area (house) triggered &mdash; retrograde intensity &times;1.5, your time-lord (profection) house &times;1.5, natal Sun/Moon resonance &times;1.4/&times;1.2.</div>` +
+    `<div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:4px">` +
+    `<span><span class="badge peak" style="color:#fff">PEAK</span> ${TH.peak.toLocaleString()}+ &mdash; Rare, decisions compound for years.</span>` +
+    `<span><span class="badge vhigh" style="color:#fff">V.HIGH</span> ${TH.vhigh.toLocaleString()}&ndash;${(TH.peak-1).toLocaleString()} &mdash; Strong developments likely.</span>` +
+    `<span><span class="badge high" style="color:#fff">HIGH</span> ${TH.high.toLocaleString()}&ndash;${(TH.vhigh-1).toLocaleString()} &mdash; Above-baseline energy.</span>` +
+    `<span><span class="badge normal" style="color:#fff">NORMAL</span> &lt;${TH.high.toLocaleString()} &mdash; Regular operational day.</span></div>`;
+})();
 const LV = { PEAK:'peak', 'VERY HIGH':'vhigh', HIGH:'high', NORMAL:'normal' };
+const AXIS_COLORS = {
+  'Money: Deals':'var(--gold)', 'Money: Value':'var(--gold)', 'Money: Action':'var(--gold)',
+  'Partnerships':'#ff8fd0', 'Partnership Growth':'#ff8fd0',
+  'Work: Systems':'#66e07a', 'Work: Breakthrough':'#66e07a', 'Work: Vision':'#66e07a',
+  'Community & Brand':'#ffaa66',
+  'Identity':'#66ccff', 'Communication':'#66ddcc',
+  'Year Priority':'var(--accent)'
+};
 const HOUSE_NAMES = {
   1:'Identity, Self-Image, Personal Brand', 2:'Finances, Values, Self-Worth',
   3:'Communication, Siblings, Writing', 4:'Home, Family, Roots',
@@ -148,7 +189,7 @@ const CUSPS = {1:'Leo 138.2',2:'Virgo 174.0',3:'Libra 218.0',4:'Scorpius 241.0',
    6:'Sagittarius 266.5',7:'Capricornus 300.0',8:'Aquarius 327.5',9:'Pisces 0.0',
    10:'Aries 27.0',11:'Taurus 53.5',12:'Gemini 90.4',13:'Cancer 118.1'};
 const BIRTH_YEAR = 1989;
-const PROF_HOUSE = ((new Date().getFullYear() - BIRTH_YEAR) % 13) + 1;
+const PROF_HOUSE = (D.profection && D.profection.house) || ((new Date().getFullYear() - BIRTH_YEAR) % 13) + 1;
 const FOCUS_KEY = 'mazz_focus';
 function getFocus() { try { return parseInt(localStorage.getItem(FOCUS_KEY)) || 0; } catch(e) { return 0; } }
 function setFocus(h) { localStorage.setItem(FOCUS_KEY, h); renderAreas(); }
@@ -172,6 +213,8 @@ function showTab(id) {
 
 function renderTab(id) {
   if (id==='today') renderToday();
+  else if (id==='blueprint') renderBlueprint();
+  else if (id==='readings') renderReadings();
   else if (id==='hourly') renderHourly();
   else if (id==='calendar') renderCalendar();
   else if (id==='database') renderDatabase();
@@ -183,6 +226,7 @@ function renderTab(id) {
   else if (id==='location') renderLocation();
   else if (id==='relationships') renderRelationships();
   else if (id==='farm') renderFarm();
+  else if (id==='ai') renderAI();
 }
 
 function badge(lvl) {
@@ -333,10 +377,9 @@ function computeRising(lat, lon) {
 }
 
 function hourAction(x) {
-  const s = x.score;
-  if (s >= 3700) return 'ACT';
-  if (s >= 3400) return 'ACT';
-  if (s >= 3100) return 'PLAN';
+  const L = x.level;
+  if (L === 'PEAK' || L === 'VERY HIGH') return 'ACT';
+  if (L === 'HIGH') return 'PLAN';
   return 'REST';
 }
 
@@ -357,25 +400,25 @@ function renderToday() {
   const planHours = h.hourly.filter(x => hourAction(x)==='PLAN');
   const restHours = h.hourly.filter(x => hourAction(x)==='REST' && x.score>0);
 
-  const maxScore = 10000;
+  const maxScore = Math.max(11000, (D.database || []).reduce((m,d)=>Math.max(m, d.max_score||0), 0) * 1.2, TH.peak * 1.3);
   const pct = Math.min(latest.score / maxScore * 100, 100);
   const lc = latest.level === 'PEAK' ? 'var(--peak)' : latest.level === 'VERY HIGH' ? 'var(--vhigh)' : latest.level === 'HIGH' ? 'var(--high)' : 'var(--dim)';
-  const scd = latest.score >= 5000 ? 'Extremely rare. Multiple major planets in tight orb. Life-defining energy.' :
-              latest.score >= 3700 ? 'PEAK intensity. Major transit active. What you decide now compounds for years.' :
-              latest.score >= 3400 ? 'Strong energy. Important developments in motion.' :
-              latest.score >= 3100 ? 'Above-baseline. Pay attention to the triggered house.' :
-              'Baseline energy. Regular operational day.';
+  const scd = latest.level === 'PEAK' || latest.score >= TH.peak ? 'Extremely rare. Multiple major planets in tight orb. Life-defining energy.' :
+              latest.level === 'VERY HIGH' || latest.score >= TH.vhigh ? 'PEAK intensity. Major transit active. What you decide now compounds for years.' :
+              latest.level === 'HIGH' || latest.score >= TH.high ? 'Strong energy. Important developments in motion.' :
+              'Above-baseline. Pay attention to the triggered house.' + (latest.score >= TH.high ? '' : ' Baseline energy. Regular operational day.');
   const guide = getGuide(latest.top_transit, latest.house||1, latest.level);
   const isPeakDay = peakCount > 0;
 
   let html = (isPeakDay ? `<div class="banner-peak">⚠ PEAK DAY — ${peakCount} hours at peak intensity. Every decision compounds.</div>` : '') + `<div class="card" style="text-align:center;padding:24px 16px 20px">
     <div class="dim" style="font-size:9px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">${h.date}</div>
+    ${dataAgeHTML()}
     <div style="font-size:40px;font-weight:700;letter-spacing:-1px;color:${lc}">${latest.score.toFixed(0)}</div>
     <div style="margin-top:4px">${badge(latest.level)}</div>
     <div style="margin:8px auto 0;max-width:300px;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
       <div style="height:100%;width:${pct}%;background:${lc};border-radius:2px"></div>
     </div>
-    <div style="font-size:10px;color:var(--dim);margin-top:4px">0 &mdash; 10,000 &middot; Score</div>
+    <div style="font-size:10px;color:var(--dim);margin-top:4px">0 &mdash; ${(maxScore/1000).toFixed(0)},000 &middot; Score</div>
     <div style="font-size:11px;color:var(--text);margin-top:8px;line-height:1.5">${scd}</div>
     ${latest.top_transit ? `<div style="font-size:12px;color:var(--accent);font-weight:500;margin-top:8px">${latest.top_transit}</div>` : ''}
     ${h.retrograde_planets && h.retrograde_planets.length ? `<div style="margin-top:6px;padding:3px 8px;background:#7c5cfc10;border-radius:4px;font-size:9px;color:var(--dim);display:inline-block">Retrograde: ${h.retrograde_planets.join(', ')} (1.5x intensity)</div>` : ''}
@@ -419,6 +462,16 @@ function renderToday() {
       <div class="dim" style="font-size:10px">Recharge, do routine work, reflect. Avoid major decisions.</div>
     </div>` : ''}
   </div>
+  ${D.reading && D.reading.headline ? `<div class="card" style="border-color:#7c5cfc44">
+    <h2>Why This Day Matters — Engine Reading</h2>
+    <div style="font-size:12px;font-weight:600;color:var(--accent);line-height:1.5">${D.reading.headline}</div>
+    <div style="font-size:11px;line-height:1.6;margin-top:6px;color:var(--text)">${D.reading.story}</div>
+    <div style="margin-top:8px;display:flex;flex-direction:column;gap:4px">
+      ${(D.reading.moves || []).map(m=>`<div style="font-size:11px;padding:4px 6px;background:#08081a;border-radius:4px;line-height:1.5">${m}</div>`).join('')}
+    </div>
+    ${D.reading.watch && D.reading.watch.length ? `<div style="margin-top:8px;font-size:10px;color:var(--dim)">Watch: ${D.reading.watch.map(w=>`<b style="color:var(--accent)">${w.time}</b> (${w.axis}, ${w.score})`).join(' &middot; ')}</div>` : ''}
+  </div>` : ''}
+  ${(()=>{const i=activeQuinNow(),q=getQ(i);return q?`<div class="card" style="padding:8px 12px"><div style="font-size:9px;color:var(--gold);text-transform:uppercase;letter-spacing:1px">Quinarian hour</div><div style="font-size:11px;margin-top:3px"><b style="color:var(--gold)">${primaryName(q.angel)}</b> &middot; ${qHour(i)} &middot; read <i>${q.psalmRef.replace(/\s*\(KJV\)\s*$/,'')}</i></div></div>`:'';})()}
   <div class="card">
     <h2>Today's Guide</h2>
     <div>${guide}</div>
@@ -432,10 +485,12 @@ function renderToday() {
     </div>
   </div>
   <div class="card">
-    <h2>Your Year — Profection H${PROF_HOUSE}</h2>
+    <h2>Your Year — Profection H${PROF_HOUSE} <span class="badge" style="background:#7c5cfc22;color:var(--accent);border:1px solid #7c5cfc66">Time-lord: ${(D.blueprint && D.blueprint.year && D.blueprint.year.time_lord) || '—'}</span></h2>
     <div style="font-size:11px;line-height:1.6">
-      <span style="color:var(--accent);font-weight:600">Age ${new Date().getFullYear() - BIRTH_YEAR}:</span> H${PROF_HOUSE} — ${HOUSE_NAMES[PROF_HOUSE].split(',')[0]}. This is your time-lord year. Events related to this house carry extra weight — what you build here compounds for the next 12 years.
-      <div style="margin-top:6px;padding:4px 6px;background:#08081a;border-radius:4px;font-size:10px;color:var(--dim)">Pin a focus house in the <b style="cursor:pointer;color:var(--accent)" onclick="showTab('areas')">Life Areas</b> tab to track a priority.</div>
+      <span style="color:var(--accent);font-weight:600">Age ${(D.profection && D.profection.age) || (new Date().getFullYear() - BIRTH_YEAR)}:</span> H${PROF_HOUSE} — ${HOUSE_NAMES[PROF_HOUSE].split(',')[0]}. This is your time-lord year; events in this house carry extra weight (&times;1.5) and what you build here compounds.
+      ${D.profection && D.profection.occupants && D.profection.occupants.length ? `<div style="margin-top:6px;font-size:10px">Natal in H${PROF_HOUSE}: <b style="color:var(--gold)">${D.profection.occupants.join(', ')}</b></div>` : ''}
+      ${D.blueprint && D.blueprint.year && D.blueprint.year.meaning ? `<div style="margin-top:6px;font-size:10px;color:var(--text)">${D.blueprint.year.meaning}</div>` : ''}
+      <div style="margin-top:6px;font-size:10px"><b style="cursor:pointer;color:var(--accent)" onclick="showTab('blueprint')">Open your Blueprint</b> for wiring, weekly rhythm &amp; the 3-year arc.</div>
     </div>
   </div>`;
 
@@ -475,6 +530,218 @@ function renderToday() {
   document.getElementById('tab-today').innerHTML = html;
 }
 
+function renderBlueprint() {
+  const b = D.blueprint;
+  if (!b) { document.getElementById('tab-blueprint').innerHTML = '<div class="card"><div class="dim">Blueprint not generated.</div></div>'; return; }
+  const c = b.constitution;
+  const y = b.year;
+  const wiring = [
+    { t:'Money Wiring', r:c.money_wiring.read, k:c.money_wiring.technique, extra:c.money_wiring.tension },
+    { t:'Partnerships & Contracts', r:c.relationship_wiring.read, k:c.relationship_wiring.technique },
+    { t:'Work & Health Engine', r:c.work_wiring.read, k:c.work_wiring.technique },
+    { t:'Community & Brand (Chiron)', r:c.network.read, k:c.network.technique },
+  ];
+  let html = `<div class="card"><h2>Your Blueprint</h2>
+    <div style="font-size:12px;line-height:1.6;color:var(--text)">${c.headline}</div>
+    ${c.expansion_tension ? `<div style="margin-top:6px;font-size:11px;color:var(--dim)">${c.expansion_tension}</div>` : ''}
+    ${c.visualizer_hint ? `<div style="margin-top:6px;font-size:11px;color:var(--dim)">${c.visualizer_hint}</div>` : ''}
+  </div>`;
+  html += `<div class="card" style="border-color:#7c5cfc44">
+    <h2>Your Year — H${y.house} ${y.name} <span class="badge" style="background:#7c5cfc22;color:var(--accent);border:1px solid #7c5cfc66">Time-lord: ${y.time_lord}</span></h2>
+    <div style="font-size:11px;line-height:1.6">${y.meaning}</div>
+    <div style="margin-top:8px;padding:6px 8px;background:#08081a;border-radius:4px;font-size:11px"><b>Weekly rhythm:</b> ${y.weekly}</div>
+    <div style="margin-top:8px;font-size:10px;color:var(--dim)">Three-year arc (profection technique):</div>
+    ${y.arc.map(a => `<div style="display:flex;gap:8px;align-items:baseline;margin-top:2px;font-size:10px"><span style="color:var(--accent);width:34px;font-weight:600">${a.year}</span><span style="color:var(--text);width:118px">${a.title}</span><span style="color:var(--dim)">${a.action}</span></div>`).join('')}
+  </div>`;
+  html += `<div class="g2 grid">
+    ${wiring.map(w => `<div class="card" style="margin:0"><h2>${w.t}</h2>
+      <div style="font-size:11px;line-height:1.6;color:var(--text)">${w.r}</div>
+      ${w.extra ? `<div style="margin-top:6px;font-size:10px;color:#ff8855">${w.extra}</div>` : ''}
+      <div style="margin-top:6px;padding:5px 7px;background:#08081a;border-radius:4px;font-size:10px;color:var(--high)"><b>Technique:</b> ${w.k}</div>
+    </div>`).join('')}
+  </div>`;
+  if (c.money_wiring.natal_patterns && c.money_wiring.natal_patterns.length) {
+    html += `<div class="card"><h2>Natal Wealth Wiring</h2>
+      <div style="display:flex;gap:4px;flex-wrap:wrap">${c.money_wiring.natal_patterns.map(p=>`<span class="badge" style="background:#ffd70015;color:var(--gold);border:1px solid #ffd70033">${p}</span>`).join('')}</div>
+      <div style="margin-top:6px;font-size:10px;color:var(--dim)">These make money flow when you actively communicate value, price confidently, and act. Favor arrives through people &amp; contracts — not passive markets.</div>
+    </div>`;
+  }
+  const helps = b.helps_now.map(h=>`<div style="font-size:11px;padding:3px 0"><span style="color:var(--high)">&#10003;</span> ${h}</div>`).join('');
+  const avoids = b.avoid_now.map(h=>`<div style="font-size:11px;padding:3px 0"><span style="color:#ff8855">&#10007;</span> ${h}</div>`).join('');
+  html += `<div class="g2 grid">
+    <div class="card" style="margin:0"><h2>Helps Right Now</h2>${helps || '<div class="dim">Focus.</div>'}</div>
+    <div class="card" style="margin:0"><h2>Avoid Right Now</h2>${avoids || '<div class="dim">Nothing heavy.</div>'}</div>
+  </div>`;
+  const today = b.today_top ? `Today's top signal: <b>${b.today_top}</b>` : '';
+  const area = b.top_life_area ? `&middot; Lead life area: <b>H${b.top_life_area.house} (${b.top_life_area.name})</b>` : '';
+  html += `<div class="card"><div style="font-size:10px;color:var(--dim)">${today} ${area}<br>Derived deterministically from your computed chart + profection technique &mdash; refreshed with each data pull.</div></div>`;
+  document.getElementById('tab-blueprint').innerHTML = html;
+}
+
+// ===== Readings: plain language + quinarian + past readings =====
+const HOUSE_SHORT = {1:'how you come across',2:'money and worth',3:'talking and writing',4:'home and family',
+  5:'creating and romance',6:'daily work and health',7:'partners and contracts',8:'shared money and change',
+  9:'study, travel, publishing',10:'career and reputation',11:'friends and networks',12:'rest and inner life',13:'healing and service'};
+const ASPECT_PLAIN = {Conj:{n:'sitting exactly on it',t:'neutral'},Sq:{n:'at a hard right angle',t:'hard'},
+  Opp:{n:'directly across from it',t:'hard'},Tri:{n:'at an easy angle',t:'easy'},Sxt:{n:'at a helpful angle',t:'easy'},
+  Qnx:{n:'at an awkward angle',t:'hard'},PAR:{n:'at the same height in the sky',t:'neutral'}};
+function areaShort(h){ return HOUSE_SHORT[h] || 'an unlisted area'; }
+function transitTarget(t){ return String(t||'').split('->')[1] || ''; }
+function plainRow(e){ const a = ASPECT_PLAIN[e.aspect] || {n:e.aspect,t:'neutral'}; return `${e.transit.replace('->',' touching your ')} ${a.n}, landing in ${areaShort(e.house)}.`; }
+
+function qOf(lon){ return Math.floor((((lon%360)+360)%360)/5)+1; }
+function getQ(i){ const a=window.Q72||[]; const idx=((Math.round(i)-1)%72+72)%72; return a[idx]||null; }
+function primaryName(n){ return String(n).split(/,| or /i)[0].trim().split(' ').map(w=>w.charAt(0)+w.slice(1).toLowerCase()).join(' '); }
+function qStart(i){ return (360+(((i-1)%72)+72)%72*20)%1440; }
+function clockLabel(m){ m=((m%1440)+1440)%1440; const h=Math.floor(m/60),mm=m%60,h12=h%12===0?12:h%12; return `${h12}:${String(mm).padStart(2,'0')} ${h<12?'a.m.':'p.m.'}`; }
+function qHour(i){ const s=qStart(i); return `${clockLabel(s)} to ${clockLabel(s+19)}`; }
+function activeQuinNow(){ const d=new Date(); const s=(d.getUTCHours()*60+d.getUTCMinutes()+180-360+1440)%1440; return Math.floor(s/20)+1; }
+function verseForTarget(target){ const p=(D.natal&&D.natal.planets||[]).find(x=>x.name===target); const i=p?qOf(p.lon):36; const q=getQ(i); return q?{index:i,angel:primaryName(q.angel),ref:String(q.psalmRef).replace(/\s*\(KJV\)\s*$/,''),text:q.psalmText,hour:qHour(i)}:null; }
+function quinarianHourCard(){
+  const i=activeQuinNow(), q=getQ(i); if(!q) return '';
+  return `<div class="card" style="border-color:#ffd70040">
+    <h2 style="color:var(--gold)">The Quinarian Hour · now</h2>
+    <div style="font-size:12px;color:var(--text)"><b style="color:var(--gold)">${primaryName(q.angel)}</b>, ${qHour(i)} &middot; ${q.range}</div>
+    <div style="font-size:11px;margin-top:6px;font-style:italic">"${q.psalmText}" <span class="dim">(${q.psalmRef.replace(/\s*\(KJV\)\s*$/,'')})</span></div>
+    <div class="dim" style="font-size:10px;margin-top:6px">This hour favours: ${(q.angelAttributes||[]).slice(0,6).join(', ')}.</div>
+  </div>`;
+}
+function miniMd(md){
+  const esc = md.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return esc
+    .replace(/^### (.*)$/gm,'<h3 style="color:var(--text);margin:10px 0 4px;font-size:13px">$1</h3>')
+    .replace(/^## (.*)$/gm,'<h2 style="color:var(--gold);margin:12px 0 4px;font-size:14px">$1</h2>')
+    .replace(/^# (.*)$/gm,'<h1 style="color:#fff;margin:8px 0;font-size:16px">$1</h1>')
+    .replace(/^\s*>\s?(.*)$/gm,'<blockquote style="border-left:2px solid var(--gold);padding-left:8px;margin:4px 0;color:var(--dim)">$1</blockquote>')
+    .replace(/\*\*(.+?)\*\*/g,'<b style="color:#fff">$1</b>')
+    .replace(/\*(.+?)\*/g,'<i>$1</i>')
+    .replace(/^---$/gm,'<hr style="border:none;border-top:1px solid var(--border);margin:10px 0">');
+}
+const BRIEF_KEY='mazz_briefs';
+function loadBriefs(){ try{ return JSON.parse(localStorage.getItem(BRIEF_KEY))||{}; }catch(e){ return {}; } }
+function saveBrief(date,text){ const b=loadBriefs(); b[date]=text; const keys=Object.keys(b).sort(); if(keys.length>120) delete b[keys[0]]; localStorage.setItem(BRIEF_KEY, JSON.stringify(b)); }
+
+function renderReadings(){
+  const today = D.today_hourly.date;
+  if(!window._rd) window._rd = { date: today };
+  const planets = (D.natal&&D.natal.planets)||[];
+  let nat = '';
+  planets.forEach(p=>{ const i=qOf(p.lon), q=getQ(i); if(!q) return;
+    nat += `<div style="display:flex;gap:8px;align-items:baseline;padding:3px 0;font-size:11px;border-bottom:1px solid #14142a">
+      <span style="min-width:74px;color:var(--text)">${p.name}</span>
+      <span class="dim" style="min-width:78px">${p.lon.toFixed(1)}&deg; ${p.constellation||''}</span>
+      <span style="color:var(--gold);min-width:96px">${primaryName(q.angel)}</span>
+      <span class="dim">${q.psalmRef.replace(/\s*\(KJV\)\s*$/,'')} &middot; ${qHour(i)}</span>
+    </div>`; });
+  const briefs = loadBriefs();
+  const saved = Object.keys(briefs).sort().reverse();
+  let html = quinarianHourCard();
+  html += `<div class="card">
+    <h2>Readings — open any date</h2>
+    <div style="font-size:10px;color:var(--dim);margin-bottom:6px">Your engine saved every window from March 2026 to December 2036. Pick a date to pull its reading back up.</div>
+    <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+      <button class="btn-sm" onclick="rdStep(-1)">&larr; Prev</button>
+      <input type="date" id="rd-date" value="${window._rd.date}" min="${dbRange()[0]}" max="${dbRange()[1]}" onchange="openReading(this.value)" style="background:#08081a;border:1px solid var(--border);color:#fff;padding:6px;border-radius:4px">
+      <button class="btn-sm" onclick="rdStep(1)">Next &rarr;</button>
+      <button class="btn-sm" onclick="openReading('${today}')">Today</button>
+    </div>
+    <div id="rd-view" style="margin-top:10px"></div>
+  </div>
+  <div class="card">
+    <h2>7-Day Outlook <span class="dim" style="font-size:10px;font-weight:400">— written from your engine windows</span></h2>
+    <div style="display:flex;gap:6px;align-items:center;margin-bottom:6px;flex-wrap:wrap">
+      <button class="btn-sm" onclick="genWeek()" style="background:var(--accent);color:#fff;border:none">Write outlook</button>
+      <button class="btn-sm" onclick="genWeek(true)">Force refresh</button>
+      <span id="wk-status" class="dim" style="font-size:10px"></span>
+    </div>
+    <div id="wk-view"></div>
+    <div id="wk-saved" style="margin-top:6px"></div>
+  </div>
+  <div class="card">
+    <h2>Your Natal Angels <span class="dim" style="font-size:10px;font-weight:400">— the quinary each natal point sits in</span></h2>
+    <div style="font-size:10px;color:var(--dim);margin-bottom:6px">Rising quinary (Ascendant 26.08&deg; Virgo): <b style="color:var(--gold)">Menadel</b>, 5:40 to 5:59 p.m., Psalm 26:8. Saturn and Neptune share <b style="color:var(--gold)">Poiel</b>, your daily work and health.</div>
+    ${nat}
+  </div>
+  <div class="card">
+    <h2>Saved Readings <span class="dim" style="font-size:10px;font-weight:400">— briefs you generated</span></h2>
+    <div id="rd-saved">${saved.length? saved.map(d=>`<button class="btn-sm" style="margin:2px" onclick="openReading('${d}')">${d}</button>`).join('') : '<span class="dim" style="font-size:11px">None yet. Open a date and generate its plan.</span>'}</div>
+  </div>
+  <details style="margin-bottom:12px;padding:8px;background:var(--card);border:1px solid var(--border);border-radius:6px">
+    <summary style="cursor:pointer;font-size:11px;color:var(--gold)">Full natal quinarian reading (angel of the nativity, every planet's angel)</summary>
+    <div id="rd-natal-full" style="margin-top:8px;font-size:11px;line-height:1.6;color:var(--text)">Loading…</div>
+  </details>`;
+  document.getElementById('tab-readings').innerHTML = html;
+  openReading(window._rd.date);
+  showWeek();
+  if(!window._rd.loadedMd){ fetch('data/gerald_reading.md').then(r=>r.ok?r.text():Promise.reject(r.status)).then(t=>{ document.getElementById('rd-natal-full').innerHTML=miniMd(t); window._rd.loadedMd=true; }).catch(()=>{ document.getElementById('rd-natal-full').innerHTML='<span class="dim">Could not load the full reading.</span>'; }); }
+}
+function rdStep(n){ const d=new Date(window._rd.date); d.setDate(d.getDate()+n); const r=dbRange(); let s=d.toISOString().slice(0,10); if(s<r[0]) s=r[0]; if(s>r[1]) s=r[1]; openReading(s); }
+function dataAgeHTML(){
+  const gen=D.today_hourly.date, today=new Date().toISOString().slice(0,10);
+  const age=Math.round((Date.parse(today)-Date.parse(gen))/86400000);
+  if(age<=1) return `<div class="dim" style="font-size:9px">Data as of ${gen}</div>`;
+  return `<div style="font-size:9px;color:var(--vhigh,#ffb347)">Data as of ${gen} &middot; ${age} days old — run refresh_data.py to recalc</div>`;
+}
+function openReading(date){
+  window._rd.date = date;
+  const inp = document.getElementById('rd-date'); if(inp) inp.value = date;
+  const day = (D.database||[]).find(d=>d.date===date);
+  const briefs = loadBriefs();
+  let html = '';
+  if(!day || !day.events || !day.events.length){
+    html += `<div style="font-size:11px;color:var(--dim)">No engine windows on this date — background weather. Nothing needs deciding.</div>`;
+  } else {
+    html += `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:12px;color:var(--text)">${date}</span>${badge(day.max_level)}<span class="dim" style="font-size:10px">peak score ${Math.round(day.max_score)}</span></div>`;
+    html += day.events.slice(0,8).map(e=>{
+      const v = verseForTarget(transitTarget(e.transit));
+      return `<div style="padding:5px 7px;margin-bottom:3px;background:#08081a;border-left:2px solid var(--border);border-radius:4px;font-size:11px">
+        <div>${plainRow(e)}</div>
+        ${v?`<div class="dim" style="font-size:10px;margin-top:2px">Read ${v.ref} at ${v.hour.split(' to ')[0]} &middot; hour of ${v.angel}</div>`:''}
+      </div>`;
+    }).join('');
+  }
+  html += `<div style="margin-top:8px;display:flex;gap:6px;align-items:center">
+    <button class="btn-sm" onclick="genBrief('${date}')" style="background:var(--accent);color:#fff;border:none">Generate plan</button>
+    <span id="rd-status" class="dim" style="font-size:10px"></span></div>
+    <div id="rd-brief" style="margin-top:8px"></div>`;
+  document.getElementById('rd-view').innerHTML = html;
+  if(briefs[date]) document.getElementById('rd-brief').innerHTML = `<div style="padding:8px 10px;background:#08080a;border:1px solid #7c5cfc33;border-radius:4px;font-size:11px;line-height:1.7;white-space:pre-wrap">${briefs[date]}</div>`;
+}
+async function genBrief(date, force){
+  const st = document.getElementById('rd-status'); st.textContent = 'Writing…';
+  const day = (D.database||[]).find(d=>d.date===date);
+  const events = (day?day.events:[]).slice(0,10).map(e=>({transit:e.transit,aspect:e.aspect,house:Number(e.house),level:e.level,score:e.score,meaning:(e.meaning||''),actions:[]}));
+  const upcoming = (D.database||[]).filter(d=>d.date>date&&d.event_count>0).sort((a,b)=>a.date.localeCompare(b.date)).slice(0,8)
+    .map(d=>({date:d.date,transit:(d.events[0]||{}).transit,aspect:(d.events[0]||{}).aspect,house:Number((d.events[0]||{}).house),level:d.max_level,score:d.max_score,meaning:'',actions:[]}));
+  try{
+    const res = await fetch('/api/brief',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({date,events,upcoming,activeQuinary:activeQuinNow(),force:!!force})});
+    const data = await res.json();
+    if(data.text){ saveBrief(date,data.text); document.getElementById('rd-brief').innerHTML = `<div style="padding:8px 10px;background:#08080a;border:1px solid #7c5cfc33;border-radius:4px;font-size:11px;line-height:1.7;white-space:pre-wrap">${data.text}</div>`; st.textContent = data.cached?'cached':'fresh'; renderSaved(); }
+    else st.textContent = data.error || 'No response';
+  }catch(e){ st.textContent = 'Failed: '+e.message; }
+}
+function renderSaved(){ const briefs=loadBriefs(); const saved=Object.keys(briefs).sort().reverse(); const el=document.getElementById('rd-saved'); if(el) el.innerHTML = saved.length? saved.map(d=>`<button class="btn-sm" style="margin:2px" onclick="openReading('${d}')">${d}</button>`).join('') : '<span class="dim" style="font-size:11px">None yet.</span>'; }
+
+const WEEK_KEY='mazz_weeks';
+function loadWeeks(){ try{ return JSON.parse(localStorage.getItem(WEEK_KEY))||{}; }catch(e){ return {}; } }
+function saveWeek(start,text){ const w=loadWeeks(); w[start]=text; const k=Object.keys(w).sort(); if(k.length>24) delete w[k[0]]; localStorage.setItem(WEEK_KEY, JSON.stringify(w)); }
+function dbRange(){ const d=D.database||[]; if(!d.length) return ['2026-05-10','2036-12-31']; const s=d.map(x=>x.date).sort(); return [s[0], s[s.length-1]]; }
+function weekBox(text){ return `<div style="padding:8px 10px;background:#08080a;border:1px solid #ffd70033;border-radius:4px;font-size:11px;line-height:1.7;white-space:pre-wrap">${text}</div>`; }
+function weekEvents(start){ const end=daysFrom(start,10); return (D.database||[]).filter(d=>d.date>=start&&d.date<=end&&d.event_count>0).sort((a,b)=>a.date.localeCompare(b.date)).map(d=>{ const e=d.events[0]||{}; return {date:d.date,transit:e.transit,aspect:e.aspect,house:Number(e.house),level:d.max_level,score:Math.round(d.max_score),meaning:''}; }); }
+function renderWeekSaved(){ const w=loadWeeks(); const keys=Object.keys(w).sort().reverse(); const s=document.getElementById('wk-saved'); if(s) s.innerHTML = keys.length? '<span class="dim" style="font-size:9px">saved:</span> '+keys.map(k=>`<button class="btn-sm" style="margin:2px" onclick="showWeekFor('${k}')">${k}</button>`).join('') : ''; return keys; }
+function showWeek(){ const keys=renderWeekSaved(); const w=loadWeeks(); const el=document.getElementById('wk-view'); if(el&&keys.length){ el.innerHTML=weekBox(w[keys[0]]); const st=document.getElementById('wk-status'); if(st) st.textContent='latest of '+keys.length+' saved'; } }
+function showWeekFor(start){ const w=loadWeeks(); const el=document.getElementById('wk-view'); if(w[start]&&el) el.innerHTML=weekBox(w[start]); const st=document.getElementById('wk-status'); if(st) st.textContent='saved '+start; }
+async function genWeek(force){
+  const start=(window._rd&&window._rd.date)||D.today_hourly.date;
+  const st=document.getElementById('wk-status'); if(st) st.textContent='Writing…';
+  try{
+    const res=await fetch('/api/week',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({startDate:start,events:weekEvents(start),force:!!force})});
+    const data=await res.json();
+    if(data.text){ saveWeek(start,data.text); const el=document.getElementById('wk-view'); if(el) el.innerHTML=weekBox(data.text); if(st) st.textContent=(data.cached?'cached':'fresh')+' · from '+start; renderWeekSaved(); }
+    else if(st) st.textContent=data.error||'No response';
+  }catch(e){ if(st) st.textContent='Failed: '+e.message; }
+}
+
 function getPrep(transit, house) {
   const h = {
     1:'Get clear on who you need to be. Set intentions for how you will show up.',
@@ -507,21 +774,29 @@ function renderHourly() {
   const rest = h.hourly.filter(x => hourAction(x)==='REST' && x.score>0);
   const zero = h.hourly.filter(x => x.score===0);
   let html = `<div class="card">
-    <h2>Your Hour-by-Hour Action Plan — ${h.date}</h2>`;
+    <h2>Your Hour-by-Hour Action Plan — ${h.date}</h2>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 10px;font-size:9px">
+      ${[['Money','var(--gold)'],['Partnerships','#ff8fd0'],['Work','#66e07a'],['Community & Brand','#ffaa66'],['Identity','#66ccff'],['Communication','#66ddcc'],['Year Priority','var(--accent)']].map(([k,c])=>`<span style="color:${c}">&#9632; ${k}</span>`).join('')}
+      <span class="dim">&mdash; each hour shows the life axis the engine has loaded.</span>
+    </div>`;
   h.hourly.forEach(x => {
     const cat = hourAction(x);
     const c = cat==='ACT' ? 'var(--high)' : cat==='PLAN' ? 'var(--accent)' : 'var(--dim)';
     const bg = cat==='ACT' ? '#44cc4408' : cat==='PLAN' ? '#7c5cfc08' : '#66668008';
     const border = cat==='ACT' ? 'var(--high)' : cat==='PLAN' ? 'var(--accent)' : 'var(--dim)';
-    const action = x.score >= 3700 ? 'Make bold moves. Decide. Pitch. Start something.' :
-                   x.score >= 3400 ? 'Push forward. Have the conversation. Take the step.' :
-                   x.score >= 3100 ? 'Prepare. Plan. Research. Organize your next move.' :
-                   x.score > 0 ? 'Rest. Do routine work. Reflect. Avoid major decisions.' :
-                   'No active transits. Quiet hour. Use for rest or deep work.';
+const action = x.level === 'PEAK' || x.level === 'VERY HIGH' ? 'Make bold moves. Decide. Pitch. Start something.' :
+               x.level === 'HIGH' ? 'Push forward. Have the conversation. Take the step.' :
+               x.score > 0 ? 'Rest. Do routine work. Reflect. Avoid major decisions.' :
+               'No active transits. Quiet hour. Use for rest or deep work.';
+    const p = x.personal || {};
+    const actText = p.text || action;
+    const axCol = AXIS_COLORS[p.axis] || 'var(--dim)';
+    const axisChip = p.axis && p.axis !== 'Natal' ? `<span style="font-size:9px;font-weight:600;color:${axCol};min-width:44px;text-transform:uppercase;letter-spacing:0.3px">${p.axis.split(':')[0]}</span>` : '';
     html += `<div style="display:flex;align-items:center;gap:8px;padding:5px 8px;margin-bottom:3px;background:${bg};border-left:2px solid ${border};border-radius:4px">
       <span class="mono" style="font-size:10px;color:var(--dim);min-width:50px">${to12h(x.time)}</span>
       <span style="font-size:10px;color:${c};font-weight:600;min-width:32px">${cat}</span>
-      <span style="font-size:10px;color:var(--text);flex:1">${action}</span>
+      ${axisChip}
+      <span style="font-size:10px;color:var(--text);flex:1">${actText}</span>
       ${x.top_transit ? `<span style="font-size:9px;color:var(--accent)">${x.top_transit}</span>` : ''}
     </div>`;
   });
@@ -870,8 +1145,8 @@ function renderAreas() {
 function mazziMove(today, areas, h2Score) {
   const t = today.hourly.filter(x => x.score > 0).pop() || today.hourly[0];
   const transit = (t.top_transit || '').toLowerCase();
-  const isPeak = t.score >= 3700;
-  const isHigh = t.score >= 3100;
+  const isPeak = t.level === 'PEAK';
+  const isHigh = t.level === 'VERY HIGH' || t.level === 'HIGH';
   const isRest = !isPeak && !isHigh;
   const h2 = areas.find(a => a.house === 2);
 
@@ -894,20 +1169,20 @@ function mazziMove(today, areas, h2Score) {
   const n = D.natal;
   const h2planets = n.houses && n.houses['2'] ? n.houses['2'].join(', ') : 'Mercury, Venus, Mars';
 
-  // Build Mazzi's move
-  if (isPeak && hasJup && h2 && h2.score > 0) return `Jupiter hitting your H2 (${h2planets}) on a PEAK day — best USD/KES window this month. Buy dollars through NSE instruments or hold cash. Jupiter expands what you act on.`;
-  if (isPeak && hasVen) return `Venus on a PEAK day — your wealth perception peaks. Raise your prices or invoice someone. Not a spending day — a receiving day. Hold the dollars you have. Your value is rising.`;
-  if (isPeak && hasMar) return `Mars on PEAK — high-octane earning energy. Mars rules bold money moves — channel into dollar hedging or a skill that earns in USD.`;
-  if (isPeak && hasPlu) return `Pluto on PEAK — wealth transformation. Cut recurring costs. Use the freed cash to buy dollars. Blocking leaks funds your USD position.`;
-  if (isPeak && hasSat) return `Saturn on PEAK — structure creates wealth. Open a dedicated USD savings pocket. Saturn rewards patience. You're building dollar discipline.`;
-  if (isPeak) return `PEAK day — your highest-probability USD window. Deploy what you can into dollars or NSE hard-currency instruments. Action compounds. Do not waste this day.`;
-  if (isHigh && hasJup) return `Jupiter in a HIGH window. Don't buy — prepare. Research USD/KES rate trends for 15 minutes. Jupiter rewards preparation. Your cash stays until a PEAK trigger.`;
-  if (isHigh && (hasMerc || hasSun)) return `Mercury/Sun active. Audit one number: USD/KES rate, your savings rate, or subscription costs. Knowledge is edge. No moves — just awareness.`;
-  if (isHigh) return `HIGH energy — good for planning, not deploying. Review your dollar calendar. Which PEAK days are coming? Prepare your entry. Mazzi says: readiness is wealth's silent multiplier.`;
-  if (mercRx) return `Mercury retrograde. Do NOT buy dollars. Do NOT sign forex trades. Rates reverse during Rx. Wait. Mercury Rx rewards reflection, not action.`;
-  if (isRest && hasMoon) return `Moon day — emotional financial risk. Pause before any USD purchase. Lock your cash. Rest is wealth protection today.`;
-  if (isRest) return `Rest window. Protect capital. Hold your KES. Your next PEAK window is coming. Mazzi says: inaction is action when the timing is wrong.`;
-  return `Do nothing. Protect capital. Scan the calendar for the next PEAK day and prepare your dollar entry. Mazzi says: most wealth is lost by acting when the sky is quiet.`;
+  // Build Mazzi's move — wiring-first (H2 deals/value, H7 contracts), planet-nuanced
+  if (isPeak && hasJup && h2 && h2.score > 0) return `Jupiter lighting your H2 (${h2planets}) on a PEAK day — your best window to ASK: raise the price, send the proposal, name the number. Jupiter expands whatever you say out loud.`;
+  if (isPeak && hasVen) return `Venus on a PEAK day — your value is visible. Charge properly, convert a relationship into revenue, or collect what you're owed. This is a receiving day, not a spending day.`;
+  if (isPeak && hasMar) return `Mars on PEAK — bold earning energy. Make the ask, chase the invoice, close the deal. One target, full force.`;
+  if (isPeak && hasPlu) return `Pluto on PEAK — restructure the money model. Cut a draining stream or reprice from zero. Deep change, clean result.`;
+  if (isPeak && hasSat) return `Saturn on PEAK — structure creates wealth. Cement one agreement or system that pays for years. Patience compounds.`;
+  if (isPeak) return `PEAK day — your strongest action window. Make the money ask you've been rehearsing. Decisions here compound.`;
+  if (isHigh && hasJup) return `Jupiter in a HIGH window — prepare the ask, don't fire it yet. Draft the pricing/proposal now so you can move on the PEAK.`;
+  if (isHigh && (hasMerc || hasSun)) return `Mercury/Sun active — sharpen the message and the number. One conversation prepared now pays later.`;
+  if (isHigh) return `HIGH energy — good for building, not closing. Prep your pitch, refine the offer, line up the person you will ask.`;
+  if (mercRx) return `Mercury retrograde — revisit, don't launch. Fix an old deal's terms or renegotiate a price. Wait to sign the new one.`;
+  if (isRest && hasMoon) return `Moon day — emotional money risk. Pause purchases; decide nothing about money from mood.`;
+  if (isRest) return `Rest window — protect capital, build the list not the spend. Your next action window is coming.`;
+  return `Quiet sky — no money moves needed. Track one number and prepare the next ask.`;
 }
 
 function renderWealth() {
@@ -954,6 +1229,13 @@ function renderWealth() {
     <div style="font-size:9px;color:var(--dim);margin-top:2px">0 — 1000 Wealth Score</div>
     <div style="margin-top:6px"><span class="badge" style="background:#44cc4418;color:var(--high);border:1px solid #44cc4430">${w.verdict}</span></div>
   </div>
+  ${D.blueprint && D.blueprint.constitution && D.blueprint.constitution.money_wiring ? `<div class="card" style="border-color:#ffd70040">
+    <h2 style="color:var(--gold)">Your Money Engine — from your chart</h2>
+    <div style="font-size:11px;line-height:1.6">${D.blueprint.constitution.money_wiring.read}</div>
+    ${D.blueprint.constitution.money_wiring.tension ? `<div style="margin-top:6px;font-size:10px;color:#ff8855">${D.blueprint.constitution.money_wiring.tension}</div>` : ''}
+    ${D.blueprint.constitution.money_wiring.natal_patterns && D.blueprint.constitution.money_wiring.natal_patterns.length ? `<div style="margin-top:6px;display:flex;gap:4px;flex-wrap:wrap">${D.blueprint.constitution.money_wiring.natal_patterns.map(p=>`<span class="badge" style="background:#ffd70015;color:var(--gold);border:1px solid #ffd70033">${p}</span>`).join('')}</div>` : ''}
+    <div style="margin-top:6px;padding:5px 7px;background:#08081a;border-radius:4px;font-size:10px;color:var(--high)"><b>Technique:</b> ${D.blueprint.constitution.money_wiring.technique}</div>
+  </div>` : ''}
   <div class="card">
     <h2>Your Wealth-Building System</h2>
     <div style="margin-bottom:6px;padding:6px 8px;background:var(--gold);color:#000;border-radius:4px;font-size:11px;font-weight:600;text-align:center">TODAY'S MONEY MOVE: ${wealthMove}</div>
@@ -993,7 +1275,7 @@ function renderWealth() {
   </div>
   <div class="card">
     <h2>Your Next Step Based on Transits</h2>
-    <div class="action do"><span class="label">DO</span><span>${wealthMove} Your H2 score is ${h2Score} out of 10,000. Every point is a signal.</span></div>
+    <div class="action do"><span class="label">DO</span><span>${wealthMove} Your H2 (money house) strength today: ${h2Score}.</span></div>
     <div class="action do"><span class="label">BUILD</span><span>Use PEAK days for big financial moves. Use HIGH days for planning and review. Use NORMAL days for routine tracking.</span></div>
     <div class="action dont"><span class="label">DON'T</span><span>Wait to be ready. Start with what you have. Track one number today. Just one.</span></div>
     <div class="action dont"><span class="label">DON'T</span><span>Compare. Your chart is unique. ${D.natal && D.natal.houses && D.natal.houses['2'] ? D.natal.houses['2'].length + ' planets in H2 (' + D.natal.houses['2'].join(', ') + ')' : '3 planets in H2'} means wealth is your path, not your question.</span></div>
@@ -1002,22 +1284,26 @@ function renderWealth() {
   <div class="card">
     <h2>Natal Wealth Blueprint</h2>
     <table><tr><th>Planet</th><th>Role</th></tr>`;
-  w.natal.forEach(n => {
-    const parts = n.split(' — ');
-    html += `<tr><td class="mono">${parts[0]}</td><td style="font-size:11px">${parts[1]||n}</td></tr>`;
+  (w.natal || []).forEach(n => {
+    if (typeof n === 'string') {
+      const parts = n.split(' — ');
+      html += `<tr><td class="mono">${parts[0]}</td><td style="font-size:11px">${parts[1]||n}</td></tr>`;
+      return;
+    }
+    html += `<tr><td class="mono">${n.planet} &middot; H${n.house}</td><td style="font-size:11px">${n.house_label || ''}${n.pattern ? ' &middot; ' + n.pattern : ''}</td></tr>`;
   });
   html += `  </table>
     <div class="dim" style="font-size:10px;margin-top:6px">${D.natal && D.natal.houses && D.natal.houses['2'] ? D.natal.houses['2'].length : 3} natal planets in House 2 (${D.natal && D.natal.houses && D.natal.houses['2'] ? D.natal.houses['2'].join(', ') : 'Finances'}). Your chart is wired for wealth. The engine shows you WHEN to act. You bring the action.</div>
   </div>
   <div class="card">
-    <h2>USD/KES Hedging & NSE Timing</h2>
-    <div style="font-size:10px;color:var(--dim);margin-bottom:6px">Hedging USD/KES through NSE dollar-denominated instruments. Timing is everything.</div>
+    <h2>Currency &amp; Market Timing <span class="dim" style="font-size:10px;font-weight:400">— secondary tool</span></h2>
+    <div style="font-size:10px;color:var(--dim);margin-bottom:6px">Optional. Your primary wealth engine is H2 deals &amp; pricing and H7 contracts — this is where you park surplus, not where you earn. Timing rules below; the money moves above come first.</div>
     <div style="font-size:11px;line-height:1.7">
       <p><b style="color:var(--high)">Best days to buy USD:</b> Jupiter or Venus aspecting H2 (values) or H8 (shared resources). Mercury direct + PEAK day = buy dollars. Check the Calendar tab for PEAK days — those are your entry windows.</p>
       <p><b style="color:var(--peak)">Worst days to buy USD:</b> Mercury retrograde (rate reverses), Mars square H2 (impulsive forex loss), Saturn opposite H8 (locked capital). RED days — hold KES, wait.</p>
       <p><b style="color:var(--gold)">NSE hedging strategy:</b> Use PEAK days to buy dollar-denominated instruments (T-bills, ETFs, or hard-currency stocks). Log each entry in Audit tab. Over 30-60 entries, the engine learns YOUR dollar timing. Small amounts compound — even $1-2 positions train the pattern.</p>
       <div style="margin-top:6px;padding:6px 8px;background:#08081a;border-radius:4px;font-size:10px">
-        <span class="mono" style="color:var(--accent)">Today's USD/KES move:</span> ${latest.top_transit.includes('Jup') && latest.score >= 3700 ? 'PEAK + Jupiter — buy USD today. Best window this week.' : latest.score >= 3700 ? 'PEAK day — good for small USD position if Mercury direct.' : latest.score >= 3100 && latest.top_transit.includes('Ven') ? 'HIGH + Venus — rate may shift. Monitor, prepare entry.' : latest.score >= 3100 ? 'HIGH — research rates, no buy. Wait for PEAK.' : 'NORMAL — hold. No dollar moves today.'}
+        <span class="mono" style="color:var(--accent)">Today's USD/KES move:</span> ${latest.level==='PEAK' && latest.top_transit.includes('Jup') ? 'PEAK + Jupiter — buy USD today. Best window this week.' : latest.level==='PEAK' ? 'PEAK day — good for small USD position if Mercury direct.' : (latest.level==='VERY HIGH'||latest.level==='HIGH') && latest.top_transit.includes('Ven') ? 'HIGH + Venus — rate may shift. Monitor, prepare entry.' : latest.level==='VERY HIGH'||latest.level==='HIGH' ? 'HIGH — research rates, no buy. Wait for PEAK.' : 'NORMAL — hold. No dollar moves today.'}
       </div>
       <div style="margin-top:8px;font-size:10px"><b>NSE Tickers</b> <span class="dim">— transit-based signals</span></div>
       ${[
@@ -1029,10 +1315,9 @@ function renderWealth() {
         const hasVen = latest.top_transit.includes('Ven');
         const mercRx = (latest.retrograde_planets||[]).some(r=>r.includes('Merc'));
         let sig, sigC;
-        if (latest.score >= 3700 && (hasJup||hasVen)) { sig = 'BUY'; sigC = 'var(--high)'; }
-        else if (mercRx || latest.score < 3100) { sig = 'HOLD'; sigC = 'var(--dim)'; }
-        else if (latest.score >= 3100) { sig = 'WATCH'; sigC = 'var(--gold)'; }
-        else { sig = 'HOLD'; sigC = 'var(--dim)'; }
+        if ((latest.level==='PEAK'||latest.level==='VERY HIGH') && (hasJup||hasVen)) { sig = 'BUY'; sigC = 'var(--high)'; }
+        else if (mercRx || latest.level==='NORMAL') { sig = 'HOLD'; sigC = 'var(--dim)'; }
+        else { sig = 'WATCH'; sigC = 'var(--gold)'; }
         return `<div style="display:flex;justify-content:space-between;align-items:center;padding:4px 6px;margin:2px 0;background:#08081a;border-radius:3px;font-size:10px">
           <span><b>${s.t}</b> <span class="dim">${s.n}</span> <span class="dim">${s.h}</span></span>
           <span style="color:${sigC};font-weight:600;font-size:9px">${sig}</span>
@@ -1058,7 +1343,7 @@ function renderWealth() {
       <p><b style="color:var(--peak)">Worst days to buy:</b> Mercury retrograde, Mars square H2 (impulse buys), Saturn opposite H8 (locked losses).</p>
       <p><b style="color:var(--gold)">Strategy:</b> Use PEAK days only. Buy fractional on dips within PEAK windows. Log entries in Audit tab — over 30+ trades the engine learns YOUR crypto timing.</p>
       <div style="margin-top:6px;padding:6px 8px;background:#08081a;border-radius:4px;font-size:10px">
-        <span class="mono" style="color:var(--accent)">Today's crypto move:</span> ${latest.score >= 3700 && !(latest.retrograde_planets||[]).some(r=>r.includes('Merc')) ? 'PEAK day — small fractional entry OK if Mercury direct.' : latest.score >= 3100 ? 'HIGH — research, no buy. Prepare for next PEAK.' : 'NORMAL — no trades. Wait for PEAK signal.'}
+        <span class="mono" style="color:var(--accent)">Today's crypto move:</span> ${(latest.level==='PEAK'||latest.level==='VERY HIGH') && !(latest.retrograde_planets||[]).some(r=>r.includes('Merc')) ? 'PEAK day — small fractional entry OK if Mercury direct.' : latest.level==='HIGH' ? 'HIGH — research, no buy. Prepare for next PEAK.' : 'NORMAL — no trades. Wait for PEAK signal.'}
       </div>
     </div>
   </div>`;
@@ -1249,10 +1534,10 @@ function renderStats() {
   const max = Math.max(...scores);
   const min = Math.min(...scores);
 
-  const buckets = [0,3100,3400,3700,4000,4500,5000,6000,10000];
+  const buckets = [0,TH.high,TH.vhigh,TH.peak,20000];
   const dist = buckets.map((b,i) => {
     if (i === buckets.length-1) return null;
-    const label = b === 0 ? '<3100' : `${b}-${buckets[i+1]}`;
+    const label = i === 0 ? '<'+TH.high : i === 1 ? `${TH.high}-${TH.vhigh}` : i === 2 ? `${TH.vhigh}-${TH.peak}` : TH.peak+'+';
     const cnt = db.filter(d => d.max_score >= b && d.max_score < buckets[i+1]).length;
     return { label, count: cnt, pct: (cnt/total*100).toFixed(1) };
   }).filter(Boolean);
@@ -1302,9 +1587,9 @@ function renderStats() {
   </div>
   <div class="card"><h2>Score Distribution</h2>
     <div style="display:flex;gap:4px;align-items:end;height:80px;padding:4px 0">
-      ${dist.map(b => `<div style="flex:1;display:flex;flex-direction:column;align-items:center;height:80px;justify-content:end">
+      ${dist.map((b,bi) => `<div style="flex:1;display:flex;flex-direction:column;align-items:center;height:80px;justify-content:end">
         <div style="font-size:8px;color:var(--dim);margin-bottom:2px">${b.count}</div>
-        <div style="width:100%;background:${b.label.includes('3700')||b.label.includes('4000')||b.label.includes('4500')||b.label.includes('5000')||b.label.includes('6000')?'var(--peak)':b.label.includes('3400')?'var(--vhigh)':b.label.includes('3100')?'var(--high)':'var(--border)'};height:${Math.max(b.pct*1.5,2)}px;border-radius:2px"></div>
+        <div style="width:100%;background:${bi>=3?'var(--peak)':bi===2?'var(--vhigh)':bi===1?'var(--high)':'var(--border)'};height:${Math.max(b.pct*1.5,2)}px;border-radius:2px"></div>
         <div style="font-size:7px;color:var(--dim);margin-top:2px">${b.label}</div>
       </div>`).join('')}
     </div>
@@ -1321,7 +1606,7 @@ function renderStats() {
     <div style="display:flex;gap:3px;align-items:end;height:60px;padding:4px 0;overflow-x:auto">
       ${months.map(m => `<div style="flex:0 0 40px;display:flex;flex-direction:column;align-items:center;height:60px;justify-content:end">
         <div style="font-size:7px;color:var(--dim);margin-bottom:2px">${m.avg.toFixed(0)}</div>
-        <div style="width:100%;background:${m.avg>=3700?'var(--peak)':m.avg>=3400?'var(--vhigh)':m.avg>=3100?'var(--high)':'var(--border)'};height:${Math.max((m.avg-3000)*0.15,2)}px;border-radius:2px"></div>
+        <div style="width:100%;background:${m.avg>=TH.peak?'var(--peak)':m.avg>=TH.vhigh?'var(--vhigh)':m.avg>=TH.high?'var(--high)':'var(--border)'};height:${Math.max((m.avg-TH.high)*0.5,2)}px;border-radius:2px"></div>
         <div style="font-size:7px;color:var(--dim);margin-top:2px">${m.month.slice(5)}</div>
       </div>`).join('')}
     </div>
@@ -1412,7 +1697,7 @@ function renderRelationships() {
     if (t.includes('Ura')) html += `<p>⚡ Uranus bringing surprises. Expect the unexpected in relationships. Freedom matters.</p>`;
     if (t.includes('Merc')) html += `<p>💬 Mercury active. Talk about everything. Communication heals and connects.</p>`;
   }
-  html += `<p style="margin-top:6px">Your H7 (Partnerships) score is ${h7 ? h7.score.toFixed(0) : '--'}. ${h7 && h7.score >= 3100 ? 'Strong partnership energy today.' : 'Neutral day for partnerships. Good for maintenance, not major moves.'}</p>`;
+  html += `<p style="margin-top:6px">Your H7 (Partnerships) score is ${h7 ? h7.score.toFixed(0) : '--'}. ${h7 && h7.score >= TH.high ? 'Strong partnership energy today.' : 'Neutral day for partnerships. Good for maintenance, not major moves.'}</p>`;
   html += `</div></div>`;
 
   // Upcoming relationship transits in the next 30 days
@@ -1543,8 +1828,8 @@ function renderFarm() {
   const h6 = areas.find(a => a.house === 6);
   const h2 = areas.find(a => a.house === 2);
 
-  const isPeak = latest.score >= 3700;
-  const isHigh = latest.score >= 3100;
+  const isPeak = latest.level === 'PEAK';
+  const isHigh = latest.level === 'VERY HIGH' || latest.level === 'HIGH';
   const t = latest.top_transit || '';
   const hasJup = t.includes('Jup');
   const hasSat = t.includes('Sat');
@@ -1573,7 +1858,7 @@ function renderFarm() {
         <div class="n" style="color:var(--high);font-size:14px">${moon.name || '—'}</div>
         <div class="l">🌙 Moon Phase</div>
       </div>
-      <div class="stat" style="border-color:${h4 && h4.score >= 3100 ? 'var(--high)' : '#ff880030'}">
+      <div class="stat" style="border-color:${h4 && h4.score >= TH.high ? 'var(--high)' : '#ff880030'}">
         <div class="n" style="font-size:14px">${h4 ? h4.score.toFixed(0) : '—'}</div>
         <div class="l">🏡 H4 Land Score</div>
       </div>
@@ -1582,6 +1867,15 @@ function renderFarm() {
       <b style="color:var(--gold)">Moon guidance:</b> ${moon.advice || '—'}<br>
       <div style="margin-top:4px;font-size:10px;color:var(--dim)">${pa.map(a => '→ ' + a).join('<br>')}</div>
     </div>
+    ${moon.mansion ? `<div style="padding:8px;background:#08081a;border-radius:4px;font-size:11px;line-height:1.6;margin-bottom:8px;border-left:2px solid #7c5cfc">
+      <b style="color:var(--accent)">Lunar mansion</b> <span class="dim" style="font-size:10px">— sidereal ${moon.mansion.sidereal}° (ayanamsa ${moon.ayanamsa}°)</span><br>
+      <span style="color:#fff">${moon.mansion.name}</span> <span class="dim">(pada ${moon.mansion.pada})</span> · ${moon.mansion.symbol} · deity ${moon.mansion.deity}<br>
+      <span style="color:var(--text)">${moon.mansion.meaning}</span>
+    </div>` : ''}
+    ${moon.guide ? `<div style="padding:8px;background:#08081a;border-radius:4px;font-size:11px;line-height:1.6;margin-bottom:8px;border-left:2px solid #ffd700">
+      <b style="color:var(--gold)">Phase action</b> <span class="dim" style="font-size:10px">(Fiorenza)</span><br>
+      <span style="color:var(--text)">${moon.guide}</span>
+    </div>` : ''}
   </div>
   <div class="card">
     <h2>Transit-Based Farm Work</h2>
@@ -1727,6 +2021,223 @@ function renderLocationResult(lat, lon, name) {
   html += `</div>
   </div>`;
   document.getElementById('loc-result').innerHTML = html;
+}
+
+// ===================== Ask Mazzi — AI Reading Coach =====================
+window._mazzi = { history: [], rendered: false };
+const MAZZI_KEY = 'mazzi_chat';
+
+function mazziLoadHistory() {
+  try { const s = JSON.parse(localStorage.getItem(MAZZI_KEY)); if (Array.isArray(s)) return s.slice(-20); } catch(e) {}
+  return [];
+}
+
+function mazziPersist() {
+  try { localStorage.setItem(MAZZI_KEY, JSON.stringify(window._mazzi.history.slice(-20))); } catch(e) {}
+}
+
+function mazziScrollBottom() {
+  const s = document.getElementById('mazzi-scroll');
+  if (s) s.scrollTop = s.scrollHeight;
+}
+
+function mazziMarkdown(txt) {
+  const esc = String(txt || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const lines = esc.split('\n');
+  let html = '', inList = false;
+  for (const raw of lines) {
+    const line = raw.trim();
+    if (!line) { if (inList) { html += '</ul>'; inList = false; } continue; }
+    const h = line.match(/^#{1,3}\s+(.*)$/);
+    if (h) { if (inList) { html += '</ul>'; inList = false; } html += '<b>' + h[1] + '</b>'; continue; }
+    const li = line.match(/^[-*]\s+(.*)$/);
+    if (li) {
+      if (!inList) { html += '<ul>'; inList = true; }
+      html += '<li>' + li[1].replace(/\*\*(.+?)\*\*/g, '<b>$1</b>') + '</li>';
+      continue;
+    }
+    const num = line.match(/^(\d+)[.)]\s+(.*)$/);
+    if (num) {
+      if (inList) { html += '</ul>'; inList = false; }
+      html += '<br><b>' + num[1] + '.</b> ' + num[2].replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+      continue;
+    }
+    if (inList) { html += '</ul>'; inList = false; }
+    const cooked = line.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+    html += '<div style="margin-top:4px">' + cooked + '</div>';
+  }
+  if (inList) html += '</ul>';
+  return html;
+}
+
+function mazziBubble(m) {
+  const cls = m.role === 'user' ? 'ai-user' : 'ai-bot';
+  const content = m.role === 'user'
+    ? String(m.content || '').replace(/</g, '&lt;')
+    : mazziMarkdown(m.content);
+  return '<div class="ai-msg ' + cls + '">' + content + '</div>';
+}
+
+function mazziGhost() {
+  return '<div class="ai-ghost"><div style="font-size:30px;margin-bottom:8px">🔮</div>' +
+    '<span class="m">Mazzi</span> reads your Mazzaroth engine data and explains it in plain language — ' +
+    'what is happening today, what to do, when, and what to avoid.<br>' +
+    '<span class="dim">Ask anything about your reading, a house, a transit, or timing.</span></div>';
+}
+
+function mazziContext() {
+  const h = D.today_hourly || { date: '', hourly: [] };
+  const today = h.date;
+  const db = D.database || [];
+  const areas = D.areas || [];
+  const w = D.wealth || {};
+  const n = D.natal || {};
+  const latest = h.hourly.filter(x => x.score > 0).pop() || h.hourly[h.hourly.length - 1] || {};
+  const actTimes = h.hourly.filter(x => hourAction(x) === 'ACT').map(x => to12h(x.time));
+  const eventsToday = [];
+  db.filter(d => d.date === today).forEach(d => (d.events || []).forEach(e =>
+    eventsToday.push({ transit: e.transit, house: e.house, level: e.level, aspect: e.aspect, meaning: e.meaning, actions: e.actions })));
+  const dayHouse = eventsToday.length ? eventsToday[0].house : null;
+  const upcoming = db.filter(d => d.date > today && d.event_count > 0)
+    .sort((a, b) => a.date.localeCompare(b.date)).slice(0, 6)
+    .map(d => ({ date: d.date, level: d.max_level, score: Math.round(d.max_score), transit: (d.events[0] || {}).transit, house: (d.events[0] || {}).house }));
+  const topAreas = [...areas].sort((a, b) => b.score - a.score).slice(0, 3)
+    .map(a => ({ house: a.house, name: a.name, score: Math.round(a.score), aspects: (a.aspects || []).slice(0, 3) }));
+  return {
+    date: today,
+    score: latest.score ? Math.round(latest.score) : null,
+    level: latest.level || null,
+    top_transit: latest.top_transit || null,
+    house: latest.house || dayHouse || null,
+    thresholds: { peak: TH.peak, vhigh: TH.vhigh, high: TH.high },
+    profection: {
+      house: PROF_HOUSE,
+      name: (HOUSE_NAMES[PROF_HOUSE] || '').split(',')[0],
+      age: (D.profection && D.profection.age) || new Date().getFullYear() - BIRTH_YEAR,
+      occupants: (D.profection && D.profection.name) || [],
+    },
+    retrogrades: latest.retrograde_planets || [],
+    act_hours: actTimes,
+    events_today: eventsToday,
+    upcoming,
+    top_areas: topAreas,
+    reading: D.reading ? {
+      headline: D.reading.headline, story: D.reading.story,
+      moves: D.reading.moves, watch: D.reading.watch,
+      axis_focus: D.reading.axis_focus,
+    } : null,
+    wealth: w.score ? { score: Math.round(w.score), verdict: w.verdict, patterns: w.patterns, pattern_names: w.pattern_names || [] } : null,
+    blueprint: D.blueprint ? {
+      headline: D.blueprint.constitution && D.blueprint.constitution.headline,
+      year: D.blueprint.year && D.blueprint.year.meaning,
+      weekly: D.blueprint.year && D.blueprint.year.weekly,
+      helps: D.blueprint.helps_now || [],
+      avoid: D.blueprint.avoid_now || [],
+      money: D.blueprint.constitution && D.blueprint.constitution.money_wiring.read,
+      relation: D.blueprint.constitution && D.blueprint.constitution.relationship_wiring.read,
+      work: D.blueprint.constitution && D.blueprint.constitution.work_wiring.read,
+    } : null,
+    natal: n.planets ? {
+      sun: (n.planets.find(p => p.name === 'Sun') || {}).constellation,
+      moon: (n.planets.find(p => p.name === 'Moon') || {}).constellation,
+      h2: (n.houses && n.houses['2']) || [],
+      houses: n.houses || {},
+    } : null,
+  };
+}
+
+function renderAI() {
+  const st = window._mazzi;
+  if (!st.rendered) { st.rendered = true; st.history = mazziLoadHistory(); }
+  document.getElementById('tab-ai').innerHTML =
+    '<div class="card" style="padding:0;display:flex;flex-direction:column;height:calc(100vh - 215px);min-height:440px">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid var(--border)">' +
+        '<div><span style="color:var(--accent);font-weight:700;font-size:13px">Ask Mazzi</span>' +
+        '<span class="dim" style="font-size:10px;margin-left:8px">AI coach · grounded in today\u2019s engine data</span></div>' +
+        '<button class="btn-sm" onclick="mazziClear()">Clear</button>' +
+      '</div>' +
+      '<div class="ai-scroll" id="mazzi-scroll">' + (st.history.length ? st.history.map(mazziBubble).join('') : mazziGhost()) + '</div>' +
+      '<div style="padding:10px 12px;border-top:1px solid var(--border)">' +
+        '<div class="ai-row">' +
+          ['Explain today\u2019s reading', 'What should I focus on today?', 'Wealth move today?', 'What about relationships?'].map(q =>
+            '<span class="ai-chip" data-q="' + q.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;') + '">' + q + '</span>'
+          ).join('') +
+        '</div>' +
+        '<div class="ai-input-row">' +
+          '<textarea id="mazzi-input" placeholder="Ask about today\u2019s reading, a house, a transit, timing..." onkeydown="if(event.key===\'Enter\'&&!event.shiftKey){event.preventDefault();mazziSendAuto()}"></textarea>' +
+          '<button id="mazzi-send" onclick="mazziSendAuto()">Send</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  document.querySelectorAll('.ai-chip').forEach(c => c.addEventListener('click', () => mazziSend(c.getAttribute('data-q'))));
+  mazziScrollBottom();
+  const inp = document.getElementById('mazzi-input');
+  if (inp) inp.focus();
+}
+
+function mazziClear() {
+  if (!window._mazzi.history.length) return;
+  if (!confirm('Clear this conversation?')) return;
+  window._mazzi.history = [];
+  mazziPersist();
+  rerenderChat();
+}
+
+function rerenderChat() {
+  const scroll = document.getElementById('mazzi-scroll');
+  if (!scroll) return;
+  const st = window._mazzi;
+  scroll.innerHTML = st.history.length ? st.history.map(mazziBubble).join('') : mazziGhost();
+  mazziScrollBottom();
+}
+
+function mazziSendAuto() {
+  const inp = document.getElementById('mazzi-input');
+  mazziSend(inp ? inp.value : '');
+}
+
+async function mazziSend(text) {
+  const inp = document.getElementById('mazzi-input');
+  const question = String(text === undefined ? (inp ? inp.value : '') : text).trim();
+  if (!question) return;
+  if (inp) inp.value = '';
+  const st = window._mazzi;
+  st.history.push({ role: 'user', content: question });
+  mazziPersist();
+  rerenderChat();
+
+  const scroll = document.getElementById('mazzi-scroll');
+  const typing = document.createElement('div');
+  typing.className = 'ai-msg ai-bot ai-typing';
+  typing.textContent = 'Mazzi is reading your chart…';
+  if (scroll) { scroll.appendChild(typing); mazziScrollBottom(); }
+
+  const sendBtn = document.getElementById('mazzi-send');
+  if (sendBtn) sendBtn.disabled = true;
+
+  const historyForApi = st.history.slice(-8).map(m => ({ role: m.role === 'user' ? 'user' : 'assistant', content: m.content }));
+
+  let reply = '⚠️ Something went wrong.';
+  try {
+    const r = await fetch('/api/ask', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ question, context: mazziContext(), history: historyForApi }),
+    });
+    if (r.status === 401) { location.href = '/'; return; }
+    const d = await r.json().catch(() => ({}));
+    reply = (r.ok && d.text) ? d.text : ('⚠️ ' + (d.error || ('Request failed (' + r.status + ')')));
+  } catch (e) {
+    reply = '⚠️ Network error. Check your connection and try again.';
+  }
+  if (sendBtn) sendBtn.disabled = false;
+  st.history.push({ role: 'bot', content: reply });
+  mazziPersist();
+  rerenderChat();
+}
+
+function mazziLogout() {
+  fetch('/api/logout', { method: 'POST' }).then(() => { location.href = '/'; });
 }
 
 // Initial render

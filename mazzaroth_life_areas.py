@@ -173,7 +173,7 @@ def life_areas_report(transit_data=None, level_filter=None):
         now = datetime.now(timezone.utc).replace(tzinfo=None)
         transit_data = mz.get_transit_data(now)
 
-    thresh = {"peak": 3100, "vhigh": 2800, "high": 2400}
+    thresh = mz.load_thresholds()
     cache_path = os.path.join(os.path.dirname(__file__), "ephe", "thresholds.json")
     if os.path.exists(cache_path):
         import json
@@ -186,17 +186,21 @@ def life_areas_report(transit_data=None, level_filter=None):
     for tname, td in transit_data.items():
         tw = mz.WEIGHTS.get(tname, 1.0)
         tmm = td["motion_mult"]
+        retro_wt = 1.5 if td.get("retrograde") else 1.0
         for nname, nd in mz.NATAL.items():
             h = mz._house_num(nd["lon"])
             nw = mz.WEIGHTS.get(nname, 1.0)
             hw = mz.HOUSE_WT.get(h, 1.0)
+            nb = mz.NATAL_BOOST.get(nname, 1.0)
+            prof = mz.PROF_MULT if h == mz.PROF_HOUSE else 1.0
+            pers = nb * prof
             diff = abs(td["lon"] - nd["lon"]) % 360
             if diff > 180: diff = 360 - diff
             for angle, orb, base, aname in mz.ASPECTS:
                 delta = abs(diff - angle)
                 if delta <= orb:
                     prec = 3.0 if delta < 0.1 else (2.0 if delta < 0.5 else 1.0)
-                    s = base * tw * nw * hw * tmm * prec
+                    s = base * tw * nw * hw * tmm * prec * retro_wt * pers
                     area_scores[h] += s
                     area_hits[h].append(f"{tname} {aname} {nname} ({delta:.2f}deg)")
 
@@ -206,15 +210,17 @@ def life_areas_report(transit_data=None, level_filter=None):
     for tname, td in transit_data.items():
         tw = weights_by_name.get(tname, 1.0)
         tmm = td["motion_mult"]
+        retro_wt = 1.5 if td.get("retrograde") else 1.0
         for h, cusp in HOUSE_CUSPS.items():
             hw = mz.HOUSE_WT.get(h, 1.0)
+            prof = mz.PROF_MULT if h == mz.PROF_HOUSE else 1.0
             diff = abs(td["lon"] - cusp["lon"]) % 360
             if diff > 180: diff = 360 - diff
             for angle, orb, base, aname in mz.ASPECTS:
                 delta = abs(diff - angle)
                 if delta <= orb:
                     prec = 3.0 if delta < 0.1 else (2.0 if delta < 0.5 else 1.0)
-                    s = base * tw * hw * tmm * prec
+                    s = base * tw * hw * tmm * prec * retro_wt * prof
                     area_scores[h] += s
                     area_hits[h].append(f"{tname} {aname} H{h} cusp ({delta:.2f}deg)")
 

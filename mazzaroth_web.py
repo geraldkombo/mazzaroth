@@ -20,7 +20,7 @@ import mazzaroth_life_areas as la
 PORT = 8080
 DATA_DIR = os.path.join(os.path.dirname(__file__), "Mazzaroth_Engine_Data")
 THRESH_CACHE = os.path.join(os.path.dirname(__file__), "ephe", "thresholds.json")
-DEFAULT_THRESH = {"peak": 3100, "vhigh": 2800, "high": 2400}
+DEFAULT_THRESH = {"peak": 10960, "vhigh": 9939, "high": 8740}
 
 def load_thresh():
     if os.path.exists(THRESH_CACHE):

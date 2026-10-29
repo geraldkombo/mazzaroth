@@ -1,317 +1,557 @@
 {
-  "date": "2026-06-19",
+  "date": "2026-10-07",
   "hourly": [
     {
       "hour": 0,
       "time": "00:00",
-      "score": 6142.0,
-      "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.966deg)",
-      "top_score": 252.0,
-      "hit_count": 80,
+      "score": 10339.7,
+      "level": "HIGH",
+      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
+      "top_score": 1080.0,
+      "hit_count": 71,
       "retrograde_planets": [
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
         "Pluto",
         "N.Node"
-      ]
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
     },
     {
       "hour": 1,
       "time": "01:00",
-      "score": 6142.0,
-      "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.967deg)",
-      "top_score": 252.0,
-      "hit_count": 80,
+      "score": 10231.7,
+      "level": "HIGH",
+      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
+      "top_score": 1080.0,
+      "hit_count": 71,
       "retrograde_planets": [
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
         "Pluto",
         "N.Node"
-      ]
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
     },
     {
       "hour": 2,
       "time": "02:00",
-      "score": 6187.0,
-      "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.967deg)",
-      "top_score": 252.0,
-      "hit_count": 80,
+      "score": 10294.7,
+      "level": "HIGH",
+      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
+      "top_score": 1080.0,
+      "hit_count": 72,
       "retrograde_planets": [
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
         "Pluto",
         "N.Node"
-      ]
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
     },
     {
       "hour": 3,
       "time": "03:00",
-      "score": 6064.5,
-      "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.967deg)",
-      "top_score": 252.0,
-      "hit_count": 80,
+      "score": 10274.7,
+      "level": "HIGH",
+      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
+      "top_score": 1080.0,
+      "hit_count": 73,
       "retrograde_planets": [
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
         "Pluto",
         "N.Node"
-      ]
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
     },
     {
       "hour": 4,
       "time": "04:00",
-      "score": 6199.5,
-      "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.967deg)",
-      "top_score": 252.0,
-      "hit_count": 81,
+      "score": 10274.7,
+      "level": "HIGH",
+      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
+      "top_score": 1080.0,
+      "hit_count": 73,
       "retrograde_planets": [
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
         "Pluto",
         "N.Node"
-      ]
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
     },
     {
       "hour": 5,
       "time": "05:00",
-      "score": 6361.5,
-      "level": "PEAK",
-      "top_transit": "Moon Opp natal N.Node (0.340deg)",
-      "top_score": 288.0,
-      "hit_count": 82,
+      "score": 10461.7,
+      "level": "HIGH",
+      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
+      "top_score": 1080.0,
+      "hit_count": 74,
       "retrograde_planets": [
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
         "Pluto",
         "N.Node"
-      ]
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
     },
     {
       "hour": 6,
       "time": "06:00",
-      "score": 6461.5,
-      "level": "PEAK",
-      "top_transit": "Moon Opp natal N.Node (0.241deg)",
-      "top_score": 288.0,
-      "hit_count": 82,
+      "score": 10677.7,
+      "level": "HIGH",
+      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
+      "top_score": 1080.0,
+      "hit_count": 74,
       "retrograde_planets": [
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
         "Pluto",
         "N.Node"
-      ]
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
     },
     {
       "hour": 7,
       "time": "07:00",
-      "score": 6336.5,
-      "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.968deg)",
-      "top_score": 252.0,
-      "hit_count": 82,
+      "score": 10547.7,
+      "level": "HIGH",
+      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
+      "top_score": 1080.0,
+      "hit_count": 74,
       "retrograde_planets": [
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
         "Pluto",
         "N.Node"
-      ]
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
     },
     {
       "hour": 8,
       "time": "08:00",
-      "score": 6301.5,
-      "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.969deg)",
-      "top_score": 252.0,
-      "hit_count": 82,
+      "score": 10313.7,
+      "level": "HIGH",
+      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
+      "top_score": 1080.0,
+      "hit_count": 73,
       "retrograde_planets": [
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
         "Pluto",
         "N.Node"
-      ]
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
     },
     {
       "hour": 9,
       "time": "09:00",
-      "score": 6319.5,
-      "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.969deg)",
-      "top_score": 252.0,
-      "hit_count": 83,
+      "score": 10541.7,
+      "level": "HIGH",
+      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
+      "top_score": 1080.0,
+      "hit_count": 75,
       "retrograde_planets": [
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
         "Pluto",
         "N.Node"
-      ]
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
     },
     {
       "hour": 10,
       "time": "10:00",
-      "score": 6331.3,
-      "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.969deg)",
-      "top_score": 252.0,
-      "hit_count": 81,
+      "score": 10393.7,
+      "level": "HIGH",
+      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
+      "top_score": 1080.0,
+      "hit_count": 74,
       "retrograde_planets": [
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
         "Pluto",
         "N.Node"
-      ]
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
     },
     {
       "hour": 11,
       "time": "11:00",
-      "score": 6331.3,
-      "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.969deg)",
-      "top_score": 252.0,
-      "hit_count": 81,
+      "score": 10393.7,
+      "level": "HIGH",
+      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
+      "top_score": 1080.0,
+      "hit_count": 74,
       "retrograde_planets": [
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
         "Pluto",
         "N.Node"
-      ]
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
     },
     {
       "hour": 12,
       "time": "12:00",
-      "score": 6234.5,
-      "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.970deg)",
-      "top_score": 252.0,
-      "hit_count": 80,
+      "score": 10314.9,
+      "level": "HIGH",
+      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
+      "top_score": 1080.0,
+      "hit_count": 73,
       "retrograde_planets": [
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
         "Pluto",
         "N.Node"
-      ]
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
     },
     {
       "hour": 13,
       "time": "13:00",
-      "score": 6183.5,
-      "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.970deg)",
-      "top_score": 252.0,
-      "hit_count": 80,
+      "score": 10314.9,
+      "level": "HIGH",
+      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
+      "top_score": 1080.0,
+      "hit_count": 73,
       "retrograde_planets": [
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
         "Pluto",
         "N.Node"
-      ]
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
     },
     {
       "hour": 14,
       "time": "14:00",
-      "score": 6223.5,
-      "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.970deg)",
-      "top_score": 252.0,
-      "hit_count": 81,
+      "score": 10278.9,
+      "level": "HIGH",
+      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
+      "top_score": 1080.0,
+      "hit_count": 72,
       "retrograde_planets": [
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
         "Pluto",
         "N.Node"
-      ]
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
     },
     {
       "hour": 15,
       "time": "15:00",
-      "score": 6286.5,
-      "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.971deg)",
-      "top_score": 252.0,
-      "hit_count": 82,
+      "score": 10278.9,
+      "level": "HIGH",
+      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
+      "top_score": 1080.0,
+      "hit_count": 72,
       "retrograde_planets": [
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
         "Pluto",
         "N.Node"
-      ]
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
     },
     {
       "hour": 16,
       "time": "16:00",
-      "score": 6250.5,
-      "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.971deg)",
-      "top_score": 252.0,
-      "hit_count": 81,
+      "score": 10353.9,
+      "level": "HIGH",
+      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
+      "top_score": 1080.0,
+      "hit_count": 72,
       "retrograde_planets": [
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
         "Pluto",
         "N.Node"
-      ]
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
     },
     {
       "hour": 17,
       "time": "17:00",
-      "score": 6455.5,
-      "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.971deg)",
-      "top_score": 252.0,
-      "hit_count": 82,
+      "score": 10413.9,
+      "level": "HIGH",
+      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
+      "top_score": 1080.0,
+      "hit_count": 72,
       "retrograde_planets": [
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
         "Pluto",
         "N.Node"
-      ]
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
     },
     {
       "hour": 18,
       "time": "18:00",
-      "score": 6509.5,
-      "level": "PEAK",
-      "top_transit": "Moon Tri natal Uranus (0.081deg)",
-      "top_score": 270.0,
-      "hit_count": 82,
+      "score": 10338.9,
+      "level": "HIGH",
+      "top_transit": "Pluto // natal Uranus decl (0.022deg)",
+      "top_score": 1080.0,
+      "hit_count": 72,
       "retrograde_planets": [
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
         "Pluto",
         "N.Node"
-      ]
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
     },
     {
       "hour": 19,
       "time": "19:00",
-      "score": 6327.3,
-      "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.972deg)",
-      "top_score": 252.0,
-      "hit_count": 81,
+      "score": 10268.9,
+      "level": "HIGH",
+      "top_transit": "Pluto // natal Uranus decl (0.022deg)",
+      "top_score": 1080.0,
+      "hit_count": 72,
       "retrograde_planets": [
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
         "Pluto",
         "N.Node"
-      ]
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
     },
     {
       "hour": 20,
       "time": "20:00",
-      "score": 6243.3,
-      "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.972deg)",
-      "top_score": 252.0,
-      "hit_count": 80,
+      "score": 10373.9,
+      "level": "HIGH",
+      "top_transit": "Pluto // natal Uranus decl (0.022deg)",
+      "top_score": 1080.0,
+      "hit_count": 72,
       "retrograde_planets": [
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
         "Pluto",
         "N.Node"
-      ]
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
     },
     {
       "hour": 21,
       "time": "21:00",
-      "score": 6348.3,
-      "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.972deg)",
-      "top_score": 252.0,
-      "hit_count": 81,
+      "score": 10373.9,
+      "level": "HIGH",
+      "top_transit": "Pluto // natal Uranus decl (0.022deg)",
+      "top_score": 1080.0,
+      "hit_count": 72,
       "retrograde_planets": [
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
         "Pluto",
         "N.Node"
-      ]
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
     },
     {
       "hour": 22,
       "time": "22:00",
-      "score": 6402.3,
-      "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.973deg)",
-      "top_score": 252.0,
-      "hit_count": 82,
+      "score": 10127.2,
+      "level": "HIGH",
+      "top_transit": "Pluto // natal Uranus decl (0.022deg)",
+      "top_score": 1080.0,
+      "hit_count": 70,
       "retrograde_planets": [
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
         "Pluto",
         "N.Node"
-      ]
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
     },
     {
       "hour": 23,
       "time": "23:00",
-      "score": 6323.6,
-      "level": "PEAK",
-      "top_transit": "Pluto // natal Neptune decl (0.973deg)",
-      "top_score": 252.0,
-      "hit_count": 81,
+      "score": 10127.2,
+      "level": "HIGH",
+      "top_transit": "Pluto // natal Uranus decl (0.022deg)",
+      "top_score": 1080.0,
+      "hit_count": 70,
       "retrograde_planets": [
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
         "Pluto",
         "N.Node"
-      ]
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
     }
   ]
 }

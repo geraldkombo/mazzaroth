@@ -1,0 +1,27 @@
+name: Deploy Mazzaroth to Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Refresh daily data (best effort)
+        run: |
+          pip install -q skyfield numpy jplephem || true
+          python refresh_data.py || echo "::warning::Ephemeris not in CI — deployed committed docs/data as-is"
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy docs --project-name mazzaroth

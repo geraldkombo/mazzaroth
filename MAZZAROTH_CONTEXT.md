@@ -11,8 +11,9 @@ Production-grade astrological transit engine using Skyfield + JPL DE421 ephemeri
 - 12 bodies: Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto, N.Node, Chiron
 - Chiron via Kepler orbit (heliocentric->geocentric), mean lunar node formula
 - Aspect detection: longitude (10 aspects) + declination (parallel) + antiscia
-- Scoring: base weight * planet_weight * natal_weight * house_weight * motion_mult * precision
-- Thresholds: PEAK>3100, VERY HIGH>2800, HIGH>2400 (cached in ephe/thresholds.json)
+- Scoring: base weight * planet_weight * natal_weight * house_weight * motion_mult * precision * retro_wt(1.5) * natal_resonance(Sun 1.4 / Moon 1.2) * profection_mult(1.5 in time-lord house)
+- Thresholds: PEAK>11675, VERY HIGH>10806, HIGH>9480 (cached in ephe/thresholds.json)
+- Personal blueprint: `mazzaroth_personal.py` derives wiring (money/partnerships/work/network), the profection year theme + 3-year arc, and daily helps/avoids deterministically from natal + profection + today's top transit; served in daily.js `blueprint` and the "My Blueprint" tab.
 - Constellation-based house system: 13 houses including Ophiuchus
 
 ### CLI (`mazz.py`)
