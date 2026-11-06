@@ -16,7 +16,9 @@ jobs:
       - name: Install dependencies
         run: |
           pip install skyfield pandas jplephem
-          python -c "from skyfield.api import load; load('ephe/de421.bsp')"
+          # Pre-download the ephemeris into ephe/ (Loader takes a directory and a
+          # bare filename; skyfield's load() would mangle a path into the JPL URL).
+          python -c "from skyfield.api import Loader; Loader('ephe').load('de421.bsp')"
       - name: Generate all data
         run: python generate_daily_data.py
       - name: Commit and push

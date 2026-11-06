@@ -17,10 +17,14 @@ EPHE_PATH = BASE_DIR / "ephe" / "de421.bsp"
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 if not EPHE_PATH.exists():
-    logging.error("Ephemeris file not found at %s", EPHE_PATH)
-    logging.info("Downloading...")
-    from skyfield.api import load
-    load(str(EPHE_PATH))
+    logging.info("Ephemeris file not found at %s - downloading", EPHE_PATH)
+    # skyfield's load() expects a bare filename and builds the JPL download URL
+    # from it; passing a full path produces a malformed URL like
+    # .../bsp//home/runner/.../ephe/de421.bsp. Loader(dir) downloads the named
+    # file into that directory instead.
+    from skyfield.api import Loader
+    EPHE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    Loader(str(EPHE_PATH.parent)).load(EPHE_PATH.name)
     logging.info("Downloaded.")
 
 # === Natal chart data for all pages ===
