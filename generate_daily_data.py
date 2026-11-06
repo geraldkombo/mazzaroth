@@ -24,7 +24,7 @@ if not EPHE_PATH.exists():
     # file into that directory instead.
     from skyfield.api import Loader
     EPHE_PATH.parent.mkdir(parents=True, exist_ok=True)
-    Loader(str(EPHE_PATH.parent)).load(EPHE_PATH.name)
+    Loader(str(EPHE_PATH.parent))(EPHE_PATH.name)
     logging.info("Downloaded.")
 
 # === Natal chart data for all pages ===
