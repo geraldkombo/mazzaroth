@@ -1,556 +1,556 @@
 {
-  "date": "2026-10-07",
+  "date": "2026-11-06",
   "hourly": [
     {
       "hour": 0,
       "time": "00:00",
-      "score": 10339.7,
+      "score": 9701.6,
       "level": "HIGH",
-      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
-      "top_score": 1080.0,
-      "hit_count": 71,
+      "top_transit": "Sun Conj natal Pluto (0.050deg)",
+      "top_score": 900.0,
+      "hit_count": 79,
       "retrograde_planets": [
+        "Mercury",
         "Venus",
         "Saturn",
         "Uranus",
         "Neptune",
-        "Pluto",
         "N.Node"
       ],
       "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
+        "axis": "Communication",
+        "tag": "comms",
         "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
+        "text": "Outline the argument, gather the evidence, plan the message."
       }
     },
     {
       "hour": 1,
       "time": "01:00",
-      "score": 10231.7,
+      "score": 9701.6,
       "level": "HIGH",
-      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
-      "top_score": 1080.0,
-      "hit_count": 71,
+      "top_transit": "Sun Conj natal Pluto (0.008deg)",
+      "top_score": 900.0,
+      "hit_count": 79,
       "retrograde_planets": [
+        "Mercury",
         "Venus",
         "Saturn",
         "Uranus",
         "Neptune",
-        "Pluto",
         "N.Node"
       ],
       "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
+        "axis": "Communication",
+        "tag": "comms",
         "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
+        "text": "Outline the argument, gather the evidence, plan the message."
       }
     },
     {
       "hour": 2,
       "time": "02:00",
-      "score": 10294.7,
+      "score": 9569.6,
       "level": "HIGH",
-      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
-      "top_score": 1080.0,
-      "hit_count": 72,
+      "top_transit": "Sun Conj natal Pluto (0.034deg)",
+      "top_score": 900.0,
+      "hit_count": 77,
       "retrograde_planets": [
+        "Mercury",
         "Venus",
         "Saturn",
         "Uranus",
         "Neptune",
-        "Pluto",
         "N.Node"
       ],
       "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
+        "axis": "Communication",
+        "tag": "comms",
         "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
+        "text": "Outline the argument, gather the evidence, plan the message."
       }
     },
     {
       "hour": 3,
       "time": "03:00",
-      "score": 10274.7,
+      "score": 9740.6,
       "level": "HIGH",
-      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
-      "top_score": 1080.0,
-      "hit_count": 73,
+      "top_transit": "Sun Conj natal Pluto (0.075deg)",
+      "top_score": 900.0,
+      "hit_count": 78,
       "retrograde_planets": [
+        "Mercury",
         "Venus",
         "Saturn",
         "Uranus",
         "Neptune",
-        "Pluto",
         "N.Node"
       ],
       "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
+        "axis": "Communication",
+        "tag": "comms",
         "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
+        "text": "Outline the argument, gather the evidence, plan the message."
       }
     },
     {
       "hour": 4,
       "time": "04:00",
-      "score": 10274.7,
-      "level": "HIGH",
-      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
-      "top_score": 1080.0,
-      "hit_count": 73,
+      "score": 9440.6,
+      "level": "NORMAL",
+      "top_transit": "Sun Conj natal Pluto (0.117deg)",
+      "top_score": 600.0,
+      "hit_count": 78,
       "retrograde_planets": [
+        "Mercury",
         "Venus",
         "Saturn",
         "Uranus",
         "Neptune",
-        "Pluto",
         "N.Node"
       ],
       "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
-        "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
+        "axis": "Communication",
+        "tag": "comms",
+        "cat": "REST",
+        "text": "Journal it out \u2014 Pluto words land best after reflection."
       }
     },
     {
       "hour": 5,
       "time": "05:00",
-      "score": 10461.7,
+      "score": 9817.8,
       "level": "HIGH",
-      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
-      "top_score": 1080.0,
-      "hit_count": 74,
+      "top_transit": "Sun Conj natal Pluto (0.159deg)",
+      "top_score": 600.0,
+      "hit_count": 78,
       "retrograde_planets": [
+        "Mercury",
         "Venus",
         "Saturn",
         "Uranus",
         "Neptune",
-        "Pluto",
         "N.Node"
       ],
       "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
+        "axis": "Communication",
+        "tag": "comms",
         "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
+        "text": "Outline the argument, gather the evidence, plan the message."
       }
     },
     {
       "hour": 6,
       "time": "06:00",
-      "score": 10677.7,
+      "score": 9678.8,
       "level": "HIGH",
-      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
-      "top_score": 1080.0,
-      "hit_count": 74,
+      "top_transit": "Sun Conj natal Pluto (0.201deg)",
+      "top_score": 600.0,
+      "hit_count": 79,
       "retrograde_planets": [
+        "Mercury",
         "Venus",
         "Saturn",
         "Uranus",
         "Neptune",
-        "Pluto",
         "N.Node"
       ],
       "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
+        "axis": "Communication",
+        "tag": "comms",
         "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
+        "text": "Outline the argument, gather the evidence, plan the message."
       }
     },
     {
       "hour": 7,
       "time": "07:00",
-      "score": 10547.7,
-      "level": "HIGH",
-      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
-      "top_score": 1080.0,
-      "hit_count": 74,
+      "score": 9342.8,
+      "level": "NORMAL",
+      "top_transit": "Sun Conj natal Pluto (0.243deg)",
+      "top_score": 600.0,
+      "hit_count": 78,
       "retrograde_planets": [
+        "Mercury",
         "Venus",
         "Saturn",
         "Uranus",
         "Neptune",
-        "Pluto",
         "N.Node"
       ],
       "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
-        "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
+        "axis": "Communication",
+        "tag": "comms",
+        "cat": "REST",
+        "text": "Journal it out \u2014 Pluto words land best after reflection."
       }
     },
     {
       "hour": 8,
       "time": "08:00",
-      "score": 10313.7,
-      "level": "HIGH",
-      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
-      "top_score": 1080.0,
-      "hit_count": 73,
+      "score": 9378.8,
+      "level": "NORMAL",
+      "top_transit": "Sun Conj natal Pluto (0.284deg)",
+      "top_score": 600.0,
+      "hit_count": 78,
       "retrograde_planets": [
+        "Mercury",
         "Venus",
         "Saturn",
         "Uranus",
         "Neptune",
-        "Pluto",
         "N.Node"
       ],
       "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
-        "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
+        "axis": "Communication",
+        "tag": "comms",
+        "cat": "REST",
+        "text": "Journal it out \u2014 Pluto words land best after reflection."
       }
     },
     {
       "hour": 9,
       "time": "09:00",
-      "score": 10541.7,
+      "score": 9528.3,
       "level": "HIGH",
-      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
-      "top_score": 1080.0,
-      "hit_count": 75,
+      "top_transit": "Sun Conj natal Pluto (0.326deg)",
+      "top_score": 600.0,
+      "hit_count": 78,
       "retrograde_planets": [
+        "Mercury",
         "Venus",
         "Saturn",
         "Uranus",
         "Neptune",
-        "Pluto",
         "N.Node"
       ],
       "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
+        "axis": "Communication",
+        "tag": "comms",
         "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
+        "text": "Outline the argument, gather the evidence, plan the message."
       }
     },
     {
       "hour": 10,
       "time": "10:00",
-      "score": 10393.7,
+      "score": 9492.3,
       "level": "HIGH",
-      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
-      "top_score": 1080.0,
-      "hit_count": 74,
+      "top_transit": "Sun Conj natal Pluto (0.368deg)",
+      "top_score": 600.0,
+      "hit_count": 78,
       "retrograde_planets": [
+        "Mercury",
         "Venus",
         "Saturn",
         "Uranus",
         "Neptune",
-        "Pluto",
         "N.Node"
       ],
       "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
+        "axis": "Communication",
+        "tag": "comms",
         "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
+        "text": "Outline the argument, gather the evidence, plan the message."
       }
     },
     {
       "hour": 11,
       "time": "11:00",
-      "score": 10393.7,
+      "score": 9572.3,
       "level": "HIGH",
-      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
-      "top_score": 1080.0,
-      "hit_count": 74,
+      "top_transit": "Sun Conj natal Pluto (0.410deg)",
+      "top_score": 600.0,
+      "hit_count": 79,
       "retrograde_planets": [
+        "Mercury",
         "Venus",
         "Saturn",
         "Uranus",
         "Neptune",
-        "Pluto",
         "N.Node"
       ],
       "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
+        "axis": "Communication",
+        "tag": "comms",
         "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
+        "text": "Outline the argument, gather the evidence, plan the message."
       }
     },
     {
       "hour": 12,
       "time": "12:00",
-      "score": 10314.9,
-      "level": "HIGH",
-      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
-      "top_score": 1080.0,
-      "hit_count": 73,
+      "score": 9392.3,
+      "level": "NORMAL",
+      "top_transit": "Sun Conj natal Pluto (0.452deg)",
+      "top_score": 600.0,
+      "hit_count": 79,
       "retrograde_planets": [
+        "Mercury",
         "Venus",
         "Saturn",
         "Uranus",
         "Neptune",
-        "Pluto",
         "N.Node"
       ],
       "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
-        "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
+        "axis": "Communication",
+        "tag": "comms",
+        "cat": "REST",
+        "text": "Journal it out \u2014 Pluto words land best after reflection."
       }
     },
     {
       "hour": 13,
       "time": "13:00",
-      "score": 10314.9,
+      "score": 9482.3,
       "level": "HIGH",
-      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
-      "top_score": 1080.0,
-      "hit_count": 73,
+      "top_transit": "Sun Conj natal Pluto (0.493deg)",
+      "top_score": 600.0,
+      "hit_count": 79,
       "retrograde_planets": [
+        "Mercury",
         "Venus",
         "Saturn",
         "Uranus",
         "Neptune",
-        "Pluto",
         "N.Node"
       ],
       "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
+        "axis": "Communication",
+        "tag": "comms",
         "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
+        "text": "Outline the argument, gather the evidence, plan the message."
       }
     },
     {
       "hour": 14,
       "time": "14:00",
-      "score": 10278.9,
-      "level": "HIGH",
-      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
-      "top_score": 1080.0,
-      "hit_count": 72,
+      "score": 9173.3,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.113deg)",
+      "top_score": 441.0,
+      "hit_count": 79,
       "retrograde_planets": [
+        "Mercury",
         "Venus",
         "Saturn",
         "Uranus",
         "Neptune",
-        "Pluto",
         "N.Node"
       ],
       "personal": {
         "axis": "Work: Breakthrough",
         "tag": "work",
-        "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
       }
     },
     {
       "hour": 15,
       "time": "15:00",
-      "score": 10278.9,
-      "level": "HIGH",
-      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
-      "top_score": 1080.0,
-      "hit_count": 72,
+      "score": 8894.3,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.112deg)",
+      "top_score": 441.0,
+      "hit_count": 79,
       "retrograde_planets": [
+        "Mercury",
         "Venus",
         "Saturn",
         "Uranus",
         "Neptune",
-        "Pluto",
         "N.Node"
       ],
       "personal": {
         "axis": "Work: Breakthrough",
         "tag": "work",
-        "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
       }
     },
     {
       "hour": 16,
       "time": "16:00",
-      "score": 10353.9,
-      "level": "HIGH",
-      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
-      "top_score": 1080.0,
-      "hit_count": 72,
+      "score": 8894.3,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.111deg)",
+      "top_score": 441.0,
+      "hit_count": 79,
       "retrograde_planets": [
+        "Mercury",
         "Venus",
         "Saturn",
         "Uranus",
         "Neptune",
-        "Pluto",
         "N.Node"
       ],
       "personal": {
         "axis": "Work: Breakthrough",
         "tag": "work",
-        "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
       }
     },
     {
       "hour": 17,
       "time": "17:00",
-      "score": 10413.9,
-      "level": "HIGH",
-      "top_transit": "Pluto // natal Uranus decl (0.021deg)",
-      "top_score": 1080.0,
-      "hit_count": 72,
+      "score": 8894.3,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.110deg)",
+      "top_score": 441.0,
+      "hit_count": 79,
       "retrograde_planets": [
+        "Mercury",
         "Venus",
         "Saturn",
         "Uranus",
         "Neptune",
-        "Pluto",
         "N.Node"
       ],
       "personal": {
         "axis": "Work: Breakthrough",
         "tag": "work",
-        "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
       }
     },
     {
       "hour": 18,
       "time": "18:00",
-      "score": 10338.9,
-      "level": "HIGH",
-      "top_transit": "Pluto // natal Uranus decl (0.022deg)",
-      "top_score": 1080.0,
-      "hit_count": 72,
+      "score": 8720.6,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.110deg)",
+      "top_score": 441.0,
+      "hit_count": 77,
       "retrograde_planets": [
+        "Mercury",
         "Venus",
         "Saturn",
         "Uranus",
         "Neptune",
-        "Pluto",
         "N.Node"
       ],
       "personal": {
         "axis": "Work: Breakthrough",
         "tag": "work",
-        "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
       }
     },
     {
       "hour": 19,
       "time": "19:00",
-      "score": 10268.9,
-      "level": "HIGH",
-      "top_transit": "Pluto // natal Uranus decl (0.022deg)",
-      "top_score": 1080.0,
-      "hit_count": 72,
+      "score": 8528.1,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.109deg)",
+      "top_score": 441.0,
+      "hit_count": 75,
       "retrograde_planets": [
+        "Mercury",
         "Venus",
         "Saturn",
         "Uranus",
         "Neptune",
-        "Pluto",
         "N.Node"
       ],
       "personal": {
         "axis": "Work: Breakthrough",
         "tag": "work",
-        "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
       }
     },
     {
       "hour": 20,
       "time": "20:00",
-      "score": 10373.9,
-      "level": "HIGH",
-      "top_transit": "Pluto // natal Uranus decl (0.022deg)",
-      "top_score": 1080.0,
-      "hit_count": 72,
+      "score": 8528.1,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.108deg)",
+      "top_score": 441.0,
+      "hit_count": 75,
       "retrograde_planets": [
+        "Mercury",
         "Venus",
         "Saturn",
         "Uranus",
         "Neptune",
-        "Pluto",
         "N.Node"
       ],
       "personal": {
         "axis": "Work: Breakthrough",
         "tag": "work",
-        "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
       }
     },
     {
       "hour": 21,
       "time": "21:00",
-      "score": 10373.9,
-      "level": "HIGH",
-      "top_transit": "Pluto // natal Uranus decl (0.022deg)",
-      "top_score": 1080.0,
-      "hit_count": 72,
+      "score": 8487.6,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.107deg)",
+      "top_score": 441.0,
+      "hit_count": 74,
       "retrograde_planets": [
+        "Mercury",
         "Venus",
         "Saturn",
         "Uranus",
         "Neptune",
-        "Pluto",
         "N.Node"
       ],
       "personal": {
         "axis": "Work: Breakthrough",
         "tag": "work",
-        "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
       }
     },
     {
       "hour": 22,
       "time": "22:00",
-      "score": 10127.2,
-      "level": "HIGH",
-      "top_transit": "Pluto // natal Uranus decl (0.022deg)",
-      "top_score": 1080.0,
-      "hit_count": 70,
+      "score": 8487.6,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.107deg)",
+      "top_score": 441.0,
+      "hit_count": 74,
       "retrograde_planets": [
+        "Mercury",
         "Venus",
         "Saturn",
         "Uranus",
         "Neptune",
-        "Pluto",
         "N.Node"
       ],
       "personal": {
         "axis": "Work: Breakthrough",
         "tag": "work",
-        "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
       }
     },
     {
       "hour": 23,
       "time": "23:00",
-      "score": 10127.2,
-      "level": "HIGH",
-      "top_transit": "Pluto // natal Uranus decl (0.022deg)",
-      "top_score": 1080.0,
-      "hit_count": 70,
+      "score": 8527.1,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.106deg)",
+      "top_score": 441.0,
+      "hit_count": 74,
       "retrograde_planets": [
+        "Mercury",
         "Venus",
         "Saturn",
         "Uranus",
         "Neptune",
-        "Pluto",
         "N.Node"
       ],
       "personal": {
         "axis": "Work: Breakthrough",
         "tag": "work",
-        "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
       }
     }
   ]

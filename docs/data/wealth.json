@@ -1,63 +1,30 @@
 {
-  "score": 1437.3,
-  "patterns": 8,
+  "score": 850.2,
+  "patterns": 7,
   "pattern_names": [
     "Jupiter-Saturn Bridge",
     "Pluto Wealth Transformer",
     "Venus-Jupiter Amplifier",
-    "Saturn H10 Career Emperor",
     "Uranus H11 Network Disruptor",
     "Mars-H2 Money Warrior",
     "Neptune Brand Visionary",
     "Mercury-H3 Deal Maker"
   ],
-  "verdict": "Neutral financial day. Build systems and execute.",
+  "verdict": "Mercury retrograde - defer major financial decisions, signings, launches",
   "verdicts": [
     {
-      "tag": "NEUTRAL",
-      "note": "No strong financial signals today. Focus on execution and systems."
+      "tag": "AVOID",
+      "note": "Mercury retrograde - defer major financial decisions, signings, launches"
     }
   ],
   "factors": [
-    {
-      "transit": "Pluto",
-      "natal": "Mars",
-      "aspect": "Tri",
-      "house": 2,
-      "contrib": 168.8,
-      "delta": 6.73
-    },
-    {
-      "transit": "Pluto",
-      "natal": "Chiron",
-      "aspect": "Tri",
-      "house": 11,
-      "contrib": 168.8,
-      "delta": 5.436
-    },
-    {
-      "transit": "Pluto",
-      "natal": "Venus",
-      "aspect": "Sq",
-      "house": 2,
-      "contrib": 157.5,
-      "delta": 1.818
-    },
     {
       "transit": "Venus",
       "natal": "Venus",
       "aspect": "Conj",
       "house": 2,
       "contrib": 135.0,
-      "delta": 6.893
-    },
-    {
-      "transit": "Saturn",
-      "natal": "Mercury",
-      "aspect": "Opp",
-      "house": 2,
-      "contrib": 129.6,
-      "delta": 0.085
+      "delta": 7.206
     },
     {
       "transit": "Uranus",
@@ -65,7 +32,39 @@
       "aspect": "Conj",
       "house": 11,
       "contrib": 90.0,
-      "delta": 7.753
+      "delta": 6.824
+    },
+    {
+      "transit": "Mars",
+      "natal": "Chiron",
+      "aspect": "Sq",
+      "house": 11,
+      "contrib": 63.0,
+      "delta": 6.385
+    },
+    {
+      "transit": "Moon",
+      "natal": "Mercury",
+      "aspect": "Conj",
+      "house": 2,
+      "contrib": 60.0,
+      "delta": 1.398
+    },
+    {
+      "transit": "Neptune",
+      "natal": "Mars",
+      "aspect": "Opp",
+      "house": 2,
+      "contrib": 54.0,
+      "delta": 5.619
+    },
+    {
+      "transit": "Pluto",
+      "natal": "Mars",
+      "aspect": "Tri",
+      "house": 2,
+      "contrib": 45.0,
+      "delta": 6.818
     }
   ],
   "natal": [
