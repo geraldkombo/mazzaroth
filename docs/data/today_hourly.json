@@ -1,14 +1,14 @@
 {
-  "date": "2026-11-06",
+  "date": "2026-11-07",
   "hourly": [
     {
       "hour": 0,
       "time": "00:00",
-      "score": 9701.6,
-      "level": "HIGH",
-      "top_transit": "Sun Conj natal Pluto (0.050deg)",
-      "top_score": 900.0,
-      "hit_count": 79,
+      "score": 8665.1,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.105deg)",
+      "top_score": 441.0,
+      "hit_count": 76,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -18,20 +18,20 @@
         "N.Node"
       ],
       "personal": {
-        "axis": "Communication",
-        "tag": "comms",
-        "cat": "PLAN",
-        "text": "Outline the argument, gather the evidence, plan the message."
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
       }
     },
     {
       "hour": 1,
       "time": "01:00",
-      "score": 9701.6,
-      "level": "HIGH",
-      "top_transit": "Sun Conj natal Pluto (0.008deg)",
-      "top_score": 900.0,
-      "hit_count": 79,
+      "score": 8737.1,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.104deg)",
+      "top_score": 441.0,
+      "hit_count": 76,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -41,20 +41,20 @@
         "N.Node"
       ],
       "personal": {
-        "axis": "Communication",
-        "tag": "comms",
-        "cat": "PLAN",
-        "text": "Outline the argument, gather the evidence, plan the message."
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
       }
     },
     {
       "hour": 2,
       "time": "02:00",
-      "score": 9569.6,
-      "level": "HIGH",
-      "top_transit": "Sun Conj natal Pluto (0.034deg)",
-      "top_score": 900.0,
-      "hit_count": 77,
+      "score": 8719.1,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.103deg)",
+      "top_score": 441.0,
+      "hit_count": 75,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -64,20 +64,20 @@
         "N.Node"
       ],
       "personal": {
-        "axis": "Communication",
-        "tag": "comms",
-        "cat": "PLAN",
-        "text": "Outline the argument, gather the evidence, plan the message."
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
       }
     },
     {
       "hour": 3,
       "time": "03:00",
-      "score": 9740.6,
-      "level": "HIGH",
-      "top_transit": "Sun Conj natal Pluto (0.075deg)",
-      "top_score": 900.0,
-      "hit_count": 78,
+      "score": 8554.7,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.103deg)",
+      "top_score": 441.0,
+      "hit_count": 74,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -87,20 +87,20 @@
         "N.Node"
       ],
       "personal": {
-        "axis": "Communication",
-        "tag": "comms",
-        "cat": "PLAN",
-        "text": "Outline the argument, gather the evidence, plan the message."
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
       }
     },
     {
       "hour": 4,
       "time": "04:00",
-      "score": 9440.6,
+      "score": 8586.2,
       "level": "NORMAL",
-      "top_transit": "Sun Conj natal Pluto (0.117deg)",
-      "top_score": 600.0,
-      "hit_count": 78,
+      "top_transit": "Neptune Sq natal Uranus (0.102deg)",
+      "top_score": 441.0,
+      "hit_count": 75,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -110,20 +110,20 @@
         "N.Node"
       ],
       "personal": {
-        "axis": "Communication",
-        "tag": "comms",
+        "axis": "Work: Breakthrough",
+        "tag": "work",
         "cat": "REST",
-        "text": "Journal it out \u2014 Pluto words land best after reflection."
+        "text": "Step back so the flash of insight can arrive; change scenery."
       }
     },
     {
       "hour": 5,
       "time": "05:00",
-      "score": 9817.8,
-      "level": "HIGH",
-      "top_transit": "Sun Conj natal Pluto (0.159deg)",
-      "top_score": 600.0,
-      "hit_count": 78,
+      "score": 8556.2,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.101deg)",
+      "top_score": 441.0,
+      "hit_count": 75,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -133,20 +133,20 @@
         "N.Node"
       ],
       "personal": {
-        "axis": "Communication",
-        "tag": "comms",
-        "cat": "PLAN",
-        "text": "Outline the argument, gather the evidence, plan the message."
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
       }
     },
     {
       "hour": 6,
       "time": "06:00",
-      "score": 9678.8,
-      "level": "HIGH",
-      "top_transit": "Sun Conj natal Pluto (0.201deg)",
-      "top_score": 600.0,
-      "hit_count": 79,
+      "score": 8578.7,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.100deg)",
+      "top_score": 441.0,
+      "hit_count": 75,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -156,20 +156,20 @@
         "N.Node"
       ],
       "personal": {
-        "axis": "Communication",
-        "tag": "comms",
-        "cat": "PLAN",
-        "text": "Outline the argument, gather the evidence, plan the message."
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
       }
     },
     {
       "hour": 7,
       "time": "07:00",
-      "score": 9342.8,
+      "score": 8866.7,
       "level": "NORMAL",
-      "top_transit": "Sun Conj natal Pluto (0.243deg)",
-      "top_score": 600.0,
-      "hit_count": 78,
+      "top_transit": "Neptune Sq natal Uranus (0.100deg)",
+      "top_score": 661.5,
+      "hit_count": 76,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -179,20 +179,20 @@
         "N.Node"
       ],
       "personal": {
-        "axis": "Communication",
-        "tag": "comms",
+        "axis": "Work: Breakthrough",
+        "tag": "work",
         "cat": "REST",
-        "text": "Journal it out \u2014 Pluto words land best after reflection."
+        "text": "Step back so the flash of insight can arrive; change scenery."
       }
     },
     {
       "hour": 8,
       "time": "08:00",
-      "score": 9378.8,
+      "score": 8845.7,
       "level": "NORMAL",
-      "top_transit": "Sun Conj natal Pluto (0.284deg)",
-      "top_score": 600.0,
-      "hit_count": 78,
+      "top_transit": "Neptune Sq natal Uranus (0.099deg)",
+      "top_score": 661.5,
+      "hit_count": 75,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -202,20 +202,20 @@
         "N.Node"
       ],
       "personal": {
-        "axis": "Communication",
-        "tag": "comms",
+        "axis": "Work: Breakthrough",
+        "tag": "work",
         "cat": "REST",
-        "text": "Journal it out \u2014 Pluto words land best after reflection."
+        "text": "Step back so the flash of insight can arrive; change scenery."
       }
     },
     {
       "hour": 9,
       "time": "09:00",
-      "score": 9528.3,
-      "level": "HIGH",
-      "top_transit": "Sun Conj natal Pluto (0.326deg)",
-      "top_score": 600.0,
-      "hit_count": 78,
+      "score": 8819.7,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.098deg)",
+      "top_score": 661.5,
+      "hit_count": 75,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -225,20 +225,20 @@
         "N.Node"
       ],
       "personal": {
-        "axis": "Communication",
-        "tag": "comms",
-        "cat": "PLAN",
-        "text": "Outline the argument, gather the evidence, plan the message."
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
       }
     },
     {
       "hour": 10,
       "time": "10:00",
-      "score": 9492.3,
-      "level": "HIGH",
-      "top_transit": "Sun Conj natal Pluto (0.368deg)",
-      "top_score": 600.0,
-      "hit_count": 78,
+      "score": 8909.7,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.097deg)",
+      "top_score": 661.5,
+      "hit_count": 76,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -248,20 +248,20 @@
         "N.Node"
       ],
       "personal": {
-        "axis": "Communication",
-        "tag": "comms",
-        "cat": "PLAN",
-        "text": "Outline the argument, gather the evidence, plan the message."
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
       }
     },
     {
       "hour": 11,
       "time": "11:00",
-      "score": 9572.3,
-      "level": "HIGH",
-      "top_transit": "Sun Conj natal Pluto (0.410deg)",
-      "top_score": 600.0,
-      "hit_count": 79,
+      "score": 9074.2,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.097deg)",
+      "top_score": 661.5,
+      "hit_count": 76,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -271,20 +271,20 @@
         "N.Node"
       ],
       "personal": {
-        "axis": "Communication",
-        "tag": "comms",
-        "cat": "PLAN",
-        "text": "Outline the argument, gather the evidence, plan the message."
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
       }
     },
     {
       "hour": 12,
       "time": "12:00",
-      "score": 9392.3,
+      "score": 9182.2,
       "level": "NORMAL",
-      "top_transit": "Sun Conj natal Pluto (0.452deg)",
-      "top_score": 600.0,
-      "hit_count": 79,
+      "top_transit": "Neptune Sq natal Uranus (0.096deg)",
+      "top_score": 661.5,
+      "hit_count": 76,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -294,20 +294,20 @@
         "N.Node"
       ],
       "personal": {
-        "axis": "Communication",
-        "tag": "comms",
+        "axis": "Work: Breakthrough",
+        "tag": "work",
         "cat": "REST",
-        "text": "Journal it out \u2014 Pluto words land best after reflection."
+        "text": "Step back so the flash of insight can arrive; change scenery."
       }
     },
     {
       "hour": 13,
       "time": "13:00",
-      "score": 9482.3,
-      "level": "HIGH",
-      "top_transit": "Sun Conj natal Pluto (0.493deg)",
-      "top_score": 600.0,
-      "hit_count": 79,
+      "score": 9270.0,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.095deg)",
+      "top_score": 661.5,
+      "hit_count": 76,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -317,20 +317,20 @@
         "N.Node"
       ],
       "personal": {
-        "axis": "Communication",
-        "tag": "comms",
-        "cat": "PLAN",
-        "text": "Outline the argument, gather the evidence, plan the message."
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
       }
     },
     {
       "hour": 14,
       "time": "14:00",
-      "score": 9173.3,
+      "score": 8839.0,
       "level": "NORMAL",
-      "top_transit": "Neptune Sq natal Uranus (0.113deg)",
-      "top_score": 441.0,
-      "hit_count": 79,
+      "top_transit": "Neptune Sq natal Uranus (0.094deg)",
+      "top_score": 661.5,
+      "hit_count": 74,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -349,11 +349,11 @@
     {
       "hour": 15,
       "time": "15:00",
-      "score": 8894.3,
+      "score": 8839.0,
       "level": "NORMAL",
-      "top_transit": "Neptune Sq natal Uranus (0.112deg)",
-      "top_score": 441.0,
-      "hit_count": 79,
+      "top_transit": "Neptune Sq natal Uranus (0.093deg)",
+      "top_score": 661.5,
+      "hit_count": 74,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -372,11 +372,11 @@
     {
       "hour": 16,
       "time": "16:00",
-      "score": 8894.3,
+      "score": 8777.0,
       "level": "NORMAL",
-      "top_transit": "Neptune Sq natal Uranus (0.111deg)",
-      "top_score": 441.0,
-      "hit_count": 79,
+      "top_transit": "Neptune Sq natal Uranus (0.093deg)",
+      "top_score": 661.5,
+      "hit_count": 74,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -395,11 +395,11 @@
     {
       "hour": 17,
       "time": "17:00",
-      "score": 8894.3,
+      "score": 8837.0,
       "level": "NORMAL",
-      "top_transit": "Neptune Sq natal Uranus (0.110deg)",
-      "top_score": 441.0,
-      "hit_count": 79,
+      "top_transit": "Neptune Sq natal Uranus (0.092deg)",
+      "top_score": 661.5,
+      "hit_count": 75,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -418,11 +418,11 @@
     {
       "hour": 18,
       "time": "18:00",
-      "score": 8720.6,
+      "score": 8870.7,
       "level": "NORMAL",
-      "top_transit": "Neptune Sq natal Uranus (0.110deg)",
-      "top_score": 441.0,
-      "hit_count": 77,
+      "top_transit": "Neptune Sq natal Uranus (0.091deg)",
+      "top_score": 661.5,
+      "hit_count": 75,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -441,11 +441,11 @@
     {
       "hour": 19,
       "time": "19:00",
-      "score": 8528.1,
+      "score": 9005.7,
       "level": "NORMAL",
-      "top_transit": "Neptune Sq natal Uranus (0.109deg)",
-      "top_score": 441.0,
-      "hit_count": 75,
+      "top_transit": "Neptune Sq natal Uranus (0.090deg)",
+      "top_score": 661.5,
+      "hit_count": 74,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -464,11 +464,11 @@
     {
       "hour": 20,
       "time": "20:00",
-      "score": 8528.1,
+      "score": 9211.5,
       "level": "NORMAL",
-      "top_transit": "Neptune Sq natal Uranus (0.108deg)",
-      "top_score": 441.0,
-      "hit_count": 75,
+      "top_transit": "Neptune Sq natal Uranus (0.090deg)",
+      "top_score": 661.5,
+      "hit_count": 76,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -487,11 +487,11 @@
     {
       "hour": 21,
       "time": "21:00",
-      "score": 8487.6,
+      "score": 9273.7,
       "level": "NORMAL",
-      "top_transit": "Neptune Sq natal Uranus (0.107deg)",
-      "top_score": 441.0,
-      "hit_count": 74,
+      "top_transit": "Neptune Sq natal Uranus (0.089deg)",
+      "top_score": 661.5,
+      "hit_count": 77,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -510,11 +510,11 @@
     {
       "hour": 22,
       "time": "22:00",
-      "score": 8487.6,
+      "score": 9273.7,
       "level": "NORMAL",
-      "top_transit": "Neptune Sq natal Uranus (0.107deg)",
-      "top_score": 441.0,
-      "hit_count": 74,
+      "top_transit": "Neptune Sq natal Uranus (0.088deg)",
+      "top_score": 661.5,
+      "hit_count": 77,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -533,11 +533,11 @@
     {
       "hour": 23,
       "time": "23:00",
-      "score": 8527.1,
+      "score": 9238.7,
       "level": "NORMAL",
-      "top_transit": "Neptune Sq natal Uranus (0.106deg)",
-      "top_score": 441.0,
-      "hit_count": 74,
+      "top_transit": "Neptune Sq natal Uranus (0.087deg)",
+      "top_score": 661.5,
+      "hit_count": 76,
       "retrograde_planets": [
         "Mercury",
         "Venus",

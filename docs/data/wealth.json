@@ -1,5 +1,5 @@
 {
-  "score": 850.2,
+  "score": 858.3,
   "patterns": 7,
   "pattern_names": [
     "Jupiter-Saturn Bridge",
@@ -24,7 +24,15 @@
       "aspect": "Conj",
       "house": 2,
       "contrib": 135.0,
-      "delta": 7.206
+      "delta": 7.442
+    },
+    {
+      "transit": "Mercury",
+      "natal": "Venus",
+      "aspect": "Conj",
+      "house": 2,
+      "contrib": 90.0,
+      "delta": 7.739
     },
     {
       "transit": "Uranus",
@@ -32,7 +40,7 @@
       "aspect": "Conj",
       "house": 11,
       "contrib": 90.0,
-      "delta": 6.824
+      "delta": 6.793
     },
     {
       "transit": "Mars",
@@ -40,15 +48,7 @@
       "aspect": "Sq",
       "house": 11,
       "contrib": 63.0,
-      "delta": 6.385
-    },
-    {
-      "transit": "Moon",
-      "natal": "Mercury",
-      "aspect": "Conj",
-      "house": 2,
-      "contrib": 60.0,
-      "delta": 1.398
+      "delta": 5.999
     },
     {
       "transit": "Neptune",
@@ -56,7 +56,7 @@
       "aspect": "Opp",
       "house": 2,
       "contrib": 54.0,
-      "delta": 5.619
+      "delta": 5.605
     },
     {
       "transit": "Pluto",
@@ -64,7 +64,7 @@
       "aspect": "Tri",
       "house": 2,
       "contrib": 45.0,
-      "delta": 6.818
+      "delta": 6.826
     }
   ],
   "natal": [
