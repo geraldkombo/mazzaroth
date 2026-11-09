@@ -1,14 +1,14 @@
 {
-  "date": "2026-11-08",
+  "date": "2026-11-09",
   "hourly": [
     {
       "hour": 0,
       "time": "00:00",
-      "score": 9276.9,
-      "level": "NORMAL",
-      "top_transit": "Neptune Sq natal Uranus (0.087deg)",
+      "score": 9767.0,
+      "level": "HIGH",
+      "top_transit": "Neptune Sq natal Uranus (0.069deg)",
       "top_score": 661.5,
-      "hit_count": 75,
+      "hit_count": 80,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -20,18 +20,18 @@
       "personal": {
         "axis": "Work: Breakthrough",
         "tag": "work",
-        "cat": "REST",
-        "text": "Step back so the flash of insight can arrive; change scenery."
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
       }
     },
     {
       "hour": 1,
       "time": "01:00",
-      "score": 9312.9,
-      "level": "NORMAL",
-      "top_transit": "Neptune Sq natal Uranus (0.086deg)",
+      "score": 9684.5,
+      "level": "HIGH",
+      "top_transit": "Neptune Sq natal Uranus (0.068deg)",
       "top_score": 661.5,
-      "hit_count": 76,
+      "hit_count": 78,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -43,18 +43,18 @@
       "personal": {
         "axis": "Work: Breakthrough",
         "tag": "work",
-        "cat": "REST",
-        "text": "Step back so the flash of insight can arrive; change scenery."
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
       }
     },
     {
       "hour": 2,
       "time": "02:00",
-      "score": 9282.9,
-      "level": "NORMAL",
-      "top_transit": "Neptune Sq natal Uranus (0.085deg)",
+      "score": 9503.4,
+      "level": "HIGH",
+      "top_transit": "Neptune Sq natal Uranus (0.067deg)",
       "top_score": 661.5,
-      "hit_count": 76,
+      "hit_count": 78,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -66,18 +66,18 @@
       "personal": {
         "axis": "Work: Breakthrough",
         "tag": "work",
-        "cat": "REST",
-        "text": "Step back so the flash of insight can arrive; change scenery."
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
       }
     },
     {
       "hour": 3,
       "time": "03:00",
-      "score": 9084.9,
-      "level": "NORMAL",
-      "top_transit": "Neptune Sq natal Uranus (0.084deg)",
+      "score": 9503.4,
+      "level": "HIGH",
+      "top_transit": "Neptune Sq natal Uranus (0.066deg)",
       "top_score": 661.5,
-      "hit_count": 75,
+      "hit_count": 78,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -89,18 +89,18 @@
       "personal": {
         "axis": "Work: Breakthrough",
         "tag": "work",
-        "cat": "REST",
-        "text": "Step back so the flash of insight can arrive; change scenery."
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
       }
     },
     {
       "hour": 4,
       "time": "04:00",
-      "score": 9114.9,
+      "score": 9418.4,
       "level": "NORMAL",
-      "top_transit": "Neptune Sq natal Uranus (0.084deg)",
+      "top_transit": "Neptune Sq natal Uranus (0.066deg)",
       "top_score": 661.5,
-      "hit_count": 75,
+      "hit_count": 77,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -119,11 +119,11 @@
     {
       "hour": 5,
       "time": "05:00",
-      "score": 9164.9,
+      "score": 9418.4,
       "level": "NORMAL",
-      "top_transit": "Neptune Sq natal Uranus (0.083deg)",
+      "top_transit": "Neptune Sq natal Uranus (0.065deg)",
       "top_score": 661.5,
-      "hit_count": 76,
+      "hit_count": 77,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -142,11 +142,11 @@
     {
       "hour": 6,
       "time": "06:00",
-      "score": 9168.5,
-      "level": "NORMAL",
-      "top_transit": "Neptune Sq natal Uranus (0.082deg)",
+      "score": 9652.4,
+      "level": "HIGH",
+      "top_transit": "Neptune Sq natal Uranus (0.064deg)",
       "top_score": 661.5,
-      "hit_count": 76,
+      "hit_count": 79,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -158,16 +158,16 @@
       "personal": {
         "axis": "Work: Breakthrough",
         "tag": "work",
-        "cat": "REST",
-        "text": "Step back so the flash of insight can arrive; change scenery."
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
       }
     },
     {
       "hour": 7,
       "time": "07:00",
-      "score": 9494.0,
+      "score": 9684.4,
       "level": "HIGH",
-      "top_transit": "Neptune Sq natal Uranus (0.081deg)",
+      "top_transit": "Neptune Sq natal Uranus (0.063deg)",
       "top_score": 661.5,
       "hit_count": 79,
       "retrograde_planets": [
@@ -188,9 +188,9 @@
     {
       "hour": 8,
       "time": "08:00",
-      "score": 9584.0,
+      "score": 9732.4,
       "level": "HIGH",
-      "top_transit": "Neptune Sq natal Uranus (0.081deg)",
+      "top_transit": "Neptune Sq natal Uranus (0.063deg)",
       "top_score": 661.5,
       "hit_count": 80,
       "retrograde_planets": [
@@ -211,11 +211,11 @@
     {
       "hour": 9,
       "time": "09:00",
-      "score": 9606.0,
+      "score": 9888.4,
       "level": "HIGH",
-      "top_transit": "Neptune Sq natal Uranus (0.080deg)",
+      "top_transit": "Neptune Sq natal Uranus (0.062deg)",
       "top_score": 661.5,
-      "hit_count": 81,
+      "hit_count": 82,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -234,11 +234,11 @@
     {
       "hour": 10,
       "time": "10:00",
-      "score": 9824.0,
+      "score": 10023.1,
       "level": "HIGH",
-      "top_transit": "Neptune Sq natal Uranus (0.079deg)",
+      "top_transit": "Neptune Sq natal Uranus (0.061deg)",
       "top_score": 661.5,
-      "hit_count": 81,
+      "hit_count": 82,
       "retrograde_planets": [
         "Mercury",
         "Venus",
@@ -257,9 +257,9 @@
     {
       "hour": 11,
       "time": "11:00",
-      "score": 9578.0,
+      "score": 10266.1,
       "level": "HIGH",
-      "top_transit": "Neptune Sq natal Uranus (0.078deg)",
+      "top_transit": "Neptune Sq natal Uranus (0.060deg)",
       "top_score": 661.5,
       "hit_count": 81,
       "retrograde_planets": [
@@ -280,239 +280,9 @@
     {
       "hour": 12,
       "time": "12:00",
-      "score": 9518.0,
+      "score": 10182.1,
       "level": "HIGH",
-      "top_transit": "Neptune Sq natal Uranus (0.078deg)",
-      "top_score": 661.5,
-      "hit_count": 80,
-      "retrograde_planets": [
-        "Mercury",
-        "Venus",
-        "Saturn",
-        "Uranus",
-        "Neptune",
-        "N.Node"
-      ],
-      "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
-        "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
-      }
-    },
-    {
-      "hour": 13,
-      "time": "13:00",
-      "score": 9515.5,
-      "level": "HIGH",
-      "top_transit": "Neptune Sq natal Uranus (0.077deg)",
-      "top_score": 661.5,
-      "hit_count": 79,
-      "retrograde_planets": [
-        "Mercury",
-        "Venus",
-        "Saturn",
-        "Uranus",
-        "Neptune",
-        "N.Node"
-      ],
-      "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
-        "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
-      }
-    },
-    {
-      "hour": 14,
-      "time": "14:00",
-      "score": 9563.5,
-      "level": "HIGH",
-      "top_transit": "Neptune Sq natal Uranus (0.076deg)",
-      "top_score": 661.5,
-      "hit_count": 78,
-      "retrograde_planets": [
-        "Mercury",
-        "Venus",
-        "Saturn",
-        "Uranus",
-        "Neptune",
-        "N.Node"
-      ],
-      "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
-        "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
-      }
-    },
-    {
-      "hour": 15,
-      "time": "15:00",
-      "score": 9675.5,
-      "level": "HIGH",
-      "top_transit": "Neptune Sq natal Uranus (0.075deg)",
-      "top_score": 661.5,
-      "hit_count": 79,
-      "retrograde_planets": [
-        "Mercury",
-        "Venus",
-        "Saturn",
-        "Uranus",
-        "Neptune",
-        "N.Node"
-      ],
-      "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
-        "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
-      }
-    },
-    {
-      "hour": 16,
-      "time": "16:00",
-      "score": 9585.5,
-      "level": "HIGH",
-      "top_transit": "Neptune Sq natal Uranus (0.075deg)",
-      "top_score": 661.5,
-      "hit_count": 79,
-      "retrograde_planets": [
-        "Mercury",
-        "Venus",
-        "Saturn",
-        "Uranus",
-        "Neptune",
-        "N.Node"
-      ],
-      "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
-        "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
-      }
-    },
-    {
-      "hour": 17,
-      "time": "17:00",
-      "score": 9518.0,
-      "level": "HIGH",
-      "top_transit": "Neptune Sq natal Uranus (0.074deg)",
-      "top_score": 661.5,
-      "hit_count": 79,
-      "retrograde_planets": [
-        "Mercury",
-        "Venus",
-        "Saturn",
-        "Uranus",
-        "Neptune",
-        "N.Node"
-      ],
-      "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
-        "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
-      }
-    },
-    {
-      "hour": 18,
-      "time": "18:00",
-      "score": 9658.0,
-      "level": "HIGH",
-      "top_transit": "Neptune Sq natal Uranus (0.073deg)",
-      "top_score": 661.5,
-      "hit_count": 79,
-      "retrograde_planets": [
-        "Mercury",
-        "Venus",
-        "Saturn",
-        "Uranus",
-        "Neptune",
-        "N.Node"
-      ],
-      "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
-        "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
-      }
-    },
-    {
-      "hour": 19,
-      "time": "19:00",
-      "score": 9533.0,
-      "level": "HIGH",
-      "top_transit": "Neptune Sq natal Uranus (0.072deg)",
-      "top_score": 661.5,
-      "hit_count": 80,
-      "retrograde_planets": [
-        "Mercury",
-        "Venus",
-        "Saturn",
-        "Uranus",
-        "Neptune",
-        "N.Node"
-      ],
-      "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
-        "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
-      }
-    },
-    {
-      "hour": 20,
-      "time": "20:00",
-      "score": 9555.5,
-      "level": "HIGH",
-      "top_transit": "Neptune Sq natal Uranus (0.072deg)",
-      "top_score": 661.5,
-      "hit_count": 80,
-      "retrograde_planets": [
-        "Mercury",
-        "Venus",
-        "Saturn",
-        "Uranus",
-        "Neptune",
-        "N.Node"
-      ],
-      "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
-        "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
-      }
-    },
-    {
-      "hour": 21,
-      "time": "21:00",
-      "score": 9555.5,
-      "level": "HIGH",
-      "top_transit": "Neptune Sq natal Uranus (0.071deg)",
-      "top_score": 661.5,
-      "hit_count": 80,
-      "retrograde_planets": [
-        "Mercury",
-        "Venus",
-        "Saturn",
-        "Uranus",
-        "Neptune",
-        "N.Node"
-      ],
-      "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
-        "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
-      }
-    },
-    {
-      "hour": 22,
-      "time": "22:00",
-      "score": 9617.0,
-      "level": "HIGH",
-      "top_transit": "Neptune Sq natal Uranus (0.070deg)",
+      "top_transit": "Neptune Sq natal Uranus (0.060deg)",
       "top_score": 661.5,
       "hit_count": 81,
       "retrograde_planets": [
@@ -531,11 +301,241 @@
       }
     },
     {
+      "hour": 13,
+      "time": "13:00",
+      "score": 9985.9,
+      "level": "HIGH",
+      "top_transit": "Neptune Sq natal Uranus (0.059deg)",
+      "top_score": 661.5,
+      "hit_count": 81,
+      "retrograde_planets": [
+        "Mercury",
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "N.Node"
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
+    },
+    {
+      "hour": 14,
+      "time": "14:00",
+      "score": 9907.9,
+      "level": "HIGH",
+      "top_transit": "Neptune Sq natal Uranus (0.058deg)",
+      "top_score": 661.5,
+      "hit_count": 80,
+      "retrograde_planets": [
+        "Mercury",
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "N.Node"
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
+    },
+    {
+      "hour": 15,
+      "time": "15:00",
+      "score": 10007.9,
+      "level": "HIGH",
+      "top_transit": "Neptune Sq natal Uranus (0.058deg)",
+      "top_score": 661.5,
+      "hit_count": 81,
+      "retrograde_planets": [
+        "Mercury",
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "N.Node"
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
+    },
+    {
+      "hour": 16,
+      "time": "16:00",
+      "score": 10088.9,
+      "level": "HIGH",
+      "top_transit": "Neptune Sq natal Uranus (0.057deg)",
+      "top_score": 661.5,
+      "hit_count": 84,
+      "retrograde_planets": [
+        "Mercury",
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "N.Node"
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
+    },
+    {
+      "hour": 17,
+      "time": "17:00",
+      "score": 9705.9,
+      "level": "HIGH",
+      "top_transit": "Neptune Sq natal Uranus (0.056deg)",
+      "top_score": 661.5,
+      "hit_count": 82,
+      "retrograde_planets": [
+        "Mercury",
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "N.Node"
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
+    },
+    {
+      "hour": 18,
+      "time": "18:00",
+      "score": 9730.9,
+      "level": "HIGH",
+      "top_transit": "Neptune Sq natal Uranus (0.055deg)",
+      "top_score": 661.5,
+      "hit_count": 82,
+      "retrograde_planets": [
+        "Mercury",
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "N.Node"
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
+    },
+    {
+      "hour": 19,
+      "time": "19:00",
+      "score": 9495.7,
+      "level": "HIGH",
+      "top_transit": "Neptune Sq natal Uranus (0.055deg)",
+      "top_score": 661.5,
+      "hit_count": 81,
+      "retrograde_planets": [
+        "Mercury",
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "N.Node"
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
+    },
+    {
+      "hour": 20,
+      "time": "20:00",
+      "score": 9371.0,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.054deg)",
+      "top_score": 661.5,
+      "hit_count": 82,
+      "retrograde_planets": [
+        "Mercury",
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "N.Node"
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
+      }
+    },
+    {
+      "hour": 21,
+      "time": "21:00",
+      "score": 9955.1,
+      "level": "HIGH",
+      "top_transit": "Neptune Sq natal Uranus (0.053deg)",
+      "top_score": 661.5,
+      "hit_count": 83,
+      "retrograde_planets": [
+        "Mercury",
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "N.Node"
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
+    },
+    {
+      "hour": 22,
+      "time": "22:00",
+      "score": 10171.1,
+      "level": "HIGH",
+      "top_transit": "Neptune Sq natal Uranus (0.052deg)",
+      "top_score": 661.5,
+      "hit_count": 83,
+      "retrograde_planets": [
+        "Mercury",
+        "Venus",
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "N.Node"
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
+    },
+    {
       "hour": 23,
       "time": "23:00",
-      "score": 9617.0,
+      "score": 10216.7,
       "level": "HIGH",
-      "top_transit": "Neptune Sq natal Uranus (0.069deg)",
+      "top_transit": "Neptune Sq natal Uranus (0.052deg)",
       "top_score": 661.5,
       "hit_count": 81,
       "retrograde_planets": [
