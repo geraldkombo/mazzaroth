@@ -1,7 +1,6 @@
-import { json, missingSecret } from '../_lib.js';
+import { json } from '../_lib.js';
 import { sanitize, areaShort, explainShort, levelPlain, getQuinary, quinaryHourLabel, primaryName } from '../_plain.js';
-
-const CEREBRAS_URL = 'https://api.cerebras.ai/v1/chat/completions';
+import { runChat } from '../_ai.js';
 
 const STYLE = `Style rules, obey strictly:
 Direct, terse, operator tone. No stories, no filler, no greetings, no closing lines. No markdown headers, no asterisks, no bold. Never the em-dash character; use plain hyphens, commas, colons or periods. No emojis. Short compact bullets over paragraphs. Every line states a fact from the rows, an action, or a warning.
@@ -34,7 +33,6 @@ function plainRow(e) {
 
 export async function onRequestPost(context) {
   const { request, env } = context;
-  if (!env.CEREBRAS_API_KEY) return json({ error: missingSecret('CEREBRAS_API_KEY') }, 500);
 
   let body;
   try { body = await request.json(); } catch { return json({ error: 'Invalid JSON body.' }, 400); }
@@ -70,32 +68,14 @@ export async function onRequestPost(context) {
     ].join('\n');
   }
 
-  const model = env.AI_MODEL || 'gpt-oss-120b';
   try {
-    const res = await fetch(CEREBRAS_URL, {
-      method: 'POST',
-      headers: { 'content-type': 'application/json', authorization: `Bearer ${env.CEREBRAS_API_KEY}` },
-      body: JSON.stringify({
-        model,
-        messages: [
-          { role: 'system', content: SYSTEM_BRIEF },
-          { role: 'user', content: `Date: ${date}\n\nQuinary ruling this hour:\n${quinaryPrompt}\n\nActive transits today:\n${eventsPrompt}\n\nUpcoming windows on the horizon:\n${upcomingPrompt}\n\nWrite the plan.` },
-        ],
-        max_tokens: 1200,
-        temperature: 0.5,
-        reasoning_effort: 'low',
-      }),
-    });
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok) {
-      const msg = data && data.error && data.error.message ? data.error.message : `Cerebras error ${res.status}`;
-      return json({ error: msg }, 502);
-    }
-    const text = data && data.choices && data.choices[0] && data.choices[0].message ? data.choices[0].message.content : '';
-    if (!text) return json({ error: 'Empty AI response.' }, 502);
-    const clean = sanitize(text);
+    const r = await runChat(env, [
+      { role: 'system', content: SYSTEM_BRIEF },
+      { role: 'user', content: `Date: ${date}\n\nQuinary ruling this hour:\n${quinaryPrompt}\n\nActive transits today:\n${eventsPrompt}\n\nUpcoming windows on the horizon:\n${upcomingPrompt}\n\nWrite the plan.` },
+    ], { max_tokens: 1200, temperature: 0.5 });
+    const clean = sanitize(r.text);
     if (cache) { try { await cache.put(cacheKey, new Response(clean, { headers: { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'max-age=86400' } })); } catch {} }
-    return json({ text: clean, cached: false });
+    return json({ text: clean, cached: false, source: r.source });
   } catch (e) {
     return json({ error: 'AI request failed: ' + (e && e.message ? e.message : e) }, 502);
   }

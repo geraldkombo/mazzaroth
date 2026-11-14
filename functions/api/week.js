@@ -1,7 +1,6 @@
-import { json, missingSecret } from '../_lib.js';
+import { json } from '../_lib.js';
 import { sanitize, areaShort } from '../_plain.js';
-
-const CEREBRAS_URL = 'https://api.cerebras.ai/v1/chat/completions';
+import { runChat } from '../_ai.js';
 
 const STYLE = `Style rules: direct, terse operator tone. No greetings, no stories, no markdown headers or asterisks, never the em-dash character, no emojis. Short compact bullets. Banned words: audit, leverage, optimize, synergy, stakeholder, actionable, deliverable, bandwidth, holistic, robust. Use the app's own vocabulary: quinary, window, angel, hour, cultivate, hold, peak.`;
 
@@ -24,7 +23,6 @@ ${STYLE}`;
 
 export async function onRequestPost(context) {
   const { request, env } = context;
-  if (!env.CEREBRAS_API_KEY) return json({ error: missingSecret('CEREBRAS_API_KEY') }, 500);
 
   let body;
   try { body = await request.json(); } catch { return json({ error: 'Invalid JSON body.' }, 400); }
@@ -41,32 +39,14 @@ export async function onRequestPost(context) {
     ? 'No transits above threshold this week. Plan a preparation week.'
     : events.map((e) => `${e.date}: ${e.transit} ${e.aspect}, part of life: ${areaShort(e.house)}${e.meaning ? ', ' + e.meaning : ''}`).join('\n');
 
-  const model = env.AI_MODEL || 'gpt-oss-120b';
   try {
-    const res = await fetch(CEREBRAS_URL, {
-      method: 'POST',
-      headers: { 'content-type': 'application/json', authorization: `Bearer ${env.CEREBRAS_API_KEY}` },
-      body: JSON.stringify({
-        model,
-        messages: [
-          { role: 'system', content: SYSTEM_WEEK },
-          { role: 'user', content: `Week starting ${startDate}. Transits and upcoming horizon:\n${list}\n\nWrite the outlook.` },
-        ],
-        max_tokens: 1400,
-        temperature: 0.5,
-        reasoning_effort: 'low',
-      }),
-    });
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok) {
-      const msg = data && data.error && data.error.message ? data.error.message : `Cerebras error ${res.status}`;
-      return json({ error: msg }, 502);
-    }
-    const text = data && data.choices && data.choices[0] && data.choices[0].message ? data.choices[0].message.content : '';
-    if (!text) return json({ error: 'Empty AI response.' }, 502);
-    const clean = sanitize(text);
+    const r = await runChat(env, [
+      { role: 'system', content: SYSTEM_WEEK },
+      { role: 'user', content: `Week starting ${startDate}. Transits and upcoming horizon:\n${list}\n\nWrite the outlook.` },
+    ], { max_tokens: 1400, temperature: 0.5 });
+    const clean = sanitize(r.text);
     if (cache) { try { await cache.put(cacheKey, new Response(clean, { headers: { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'max-age=86400' } })); } catch {} }
-    return json({ text: clean, cached: false });
+    return json({ text: clean, cached: false, source: r.source });
   } catch (e) {
     return json({ error: 'AI request failed: ' + (e && e.message ? e.message : e) }, 502);
   }
