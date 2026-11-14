@@ -1,9 +1,8 @@
 {
-  "score": 1020.0,
-  "patterns": 8,
+  "score": 990.7,
+  "patterns": 7,
   "pattern_names": [
     "Jupiter-Saturn Bridge",
-    "Pluto Wealth Transformer",
     "Venus-Jupiter Amplifier",
     "Saturn H10 Career Emperor",
     "Uranus H11 Network Disruptor",
@@ -11,11 +10,11 @@
     "Neptune Brand Visionary",
     "Mercury-H3 Deal Maker"
   ],
-  "verdict": "Mercury retrograde - defer major financial decisions, signings, launches",
+  "verdict": "Neutral financial day. Build systems and execute.",
   "verdicts": [
     {
-      "tag": "AVOID",
-      "note": "Mercury retrograde - defer major financial decisions, signings, launches"
+      "tag": "NEUTRAL",
+      "note": "No strong financial signals today. Focus on execution and systems."
     }
   ],
   "factors": [
@@ -25,15 +24,7 @@
       "aspect": "Sq",
       "house": 11,
       "contrib": 105.0,
-      "delta": 2.032
-    },
-    {
-      "transit": "Mercury",
-      "natal": "Venus",
-      "aspect": "Conj",
-      "house": 2,
-      "contrib": 90.0,
-      "delta": 3.787
+      "delta": 1.943
     },
     {
       "transit": "Uranus",
@@ -41,7 +32,7 @@
       "aspect": "Conj",
       "house": 11,
       "contrib": 90.0,
-      "delta": 6.554
+      "delta": 6.513
     },
     {
       "transit": "Sun",
@@ -49,7 +40,7 @@
       "aspect": "Opp",
       "house": 11,
       "contrib": 78.0,
-      "delta": 6.874
+      "delta": 5.868
     },
     {
       "transit": "Mars",
@@ -57,7 +48,15 @@
       "aspect": "Sq",
       "house": 11,
       "contrib": 63.0,
-      "delta": 3.168
+      "delta": 2.712
+    },
+    {
+      "transit": "Mercury",
+      "natal": "Venus",
+      "aspect": "Conj",
+      "house": 2,
+      "contrib": 60.0,
+      "delta": 3.787
     },
     {
       "transit": "Neptune",
@@ -65,7 +64,7 @@
       "aspect": "Opp",
       "house": 2,
       "contrib": 54.0,
-      "delta": 5.5
+      "delta": 5.485
     }
   ],
   "natal": [
