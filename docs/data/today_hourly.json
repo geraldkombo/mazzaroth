@@ -1,16 +1,15 @@
 {
-  "date": "2026-11-14",
+  "date": "2026-11-15",
   "hourly": [
     {
       "hour": 0,
       "time": "00:00",
-      "score": 10431.6,
-      "level": "HIGH",
-      "top_transit": "Neptune Sq natal Uranus (0.015deg)",
+      "score": 9442.1,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.030deg)",
       "top_score": 661.5,
-      "hit_count": 83,
+      "hit_count": 82,
       "retrograde_planets": [
-        "Venus",
         "Saturn",
         "Uranus",
         "Neptune",
@@ -19,18 +18,18 @@
       "personal": {
         "axis": "Work: Breakthrough",
         "tag": "work",
-        "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
       }
     },
     {
       "hour": 1,
       "time": "01:00",
-      "score": 10038.1,
+      "score": 9554.6,
       "level": "HIGH",
-      "top_transit": "Neptune Sq natal Uranus (0.016deg)",
+      "top_transit": "Neptune Sq natal Uranus (0.031deg)",
       "top_score": 661.5,
-      "hit_count": 83,
+      "hit_count": 82,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -47,11 +46,11 @@
     {
       "hour": 2,
       "time": "02:00",
-      "score": 9742.1,
+      "score": 9582.1,
       "level": "HIGH",
-      "top_transit": "Neptune Sq natal Uranus (0.016deg)",
+      "top_transit": "Neptune Sq natal Uranus (0.032deg)",
       "top_score": 661.5,
-      "hit_count": 83,
+      "hit_count": 82,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -68,9 +67,9 @@
     {
       "hour": 3,
       "time": "03:00",
-      "score": 9719.6,
+      "score": 9552.1,
       "level": "HIGH",
-      "top_transit": "Neptune Sq natal Uranus (0.017deg)",
+      "top_transit": "Neptune Sq natal Uranus (0.032deg)",
       "top_score": 661.5,
       "hit_count": 82,
       "retrograde_planets": [
@@ -89,11 +88,11 @@
     {
       "hour": 4,
       "time": "04:00",
-      "score": 9701.6,
+      "score": 9657.1,
       "level": "HIGH",
-      "top_transit": "Neptune Sq natal Uranus (0.018deg)",
+      "top_transit": "Neptune Sq natal Uranus (0.033deg)",
       "top_score": 661.5,
-      "hit_count": 81,
+      "hit_count": 83,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -110,11 +109,11 @@
     {
       "hour": 5,
       "time": "05:00",
-      "score": 9576.6,
+      "score": 9617.1,
       "level": "HIGH",
-      "top_transit": "Neptune Sq natal Uranus (0.018deg)",
+      "top_transit": "Neptune Sq natal Uranus (0.033deg)",
       "top_score": 661.5,
-      "hit_count": 80,
+      "hit_count": 82,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -131,345 +130,9 @@
     {
       "hour": 6,
       "time": "06:00",
-      "score": 9456.6,
-      "level": "NORMAL",
-      "top_transit": "Neptune Sq natal Uranus (0.019deg)",
-      "top_score": 661.5,
-      "hit_count": 79,
-      "retrograde_planets": [
-        "Saturn",
-        "Uranus",
-        "Neptune",
-        "N.Node"
-      ],
-      "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
-        "cat": "REST",
-        "text": "Step back so the flash of insight can arrive; change scenery."
-      }
-    },
-    {
-      "hour": 7,
-      "time": "07:00",
-      "score": 9456.6,
-      "level": "NORMAL",
-      "top_transit": "Neptune Sq natal Uranus (0.019deg)",
-      "top_score": 661.5,
-      "hit_count": 79,
-      "retrograde_planets": [
-        "Saturn",
-        "Uranus",
-        "Neptune",
-        "N.Node"
-      ],
-      "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
-        "cat": "REST",
-        "text": "Step back so the flash of insight can arrive; change scenery."
-      }
-    },
-    {
-      "hour": 8,
-      "time": "08:00",
-      "score": 9456.6,
-      "level": "NORMAL",
-      "top_transit": "Neptune Sq natal Uranus (0.020deg)",
-      "top_score": 661.5,
-      "hit_count": 79,
-      "retrograde_planets": [
-        "Saturn",
-        "Uranus",
-        "Neptune",
-        "N.Node"
-      ],
-      "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
-        "cat": "REST",
-        "text": "Step back so the flash of insight can arrive; change scenery."
-      }
-    },
-    {
-      "hour": 9,
-      "time": "09:00",
-      "score": 9393.6,
-      "level": "NORMAL",
-      "top_transit": "Neptune Sq natal Uranus (0.021deg)",
-      "top_score": 661.5,
-      "hit_count": 78,
-      "retrograde_planets": [
-        "Saturn",
-        "Uranus",
-        "Neptune",
-        "N.Node"
-      ],
-      "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
-        "cat": "REST",
-        "text": "Step back so the flash of insight can arrive; change scenery."
-      }
-    },
-    {
-      "hour": 10,
-      "time": "10:00",
-      "score": 9271.1,
-      "level": "NORMAL",
-      "top_transit": "Neptune Sq natal Uranus (0.021deg)",
-      "top_score": 661.5,
-      "hit_count": 77,
-      "retrograde_planets": [
-        "Saturn",
-        "Uranus",
-        "Neptune",
-        "N.Node"
-      ],
-      "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
-        "cat": "REST",
-        "text": "Step back so the flash of insight can arrive; change scenery."
-      }
-    },
-    {
-      "hour": 11,
-      "time": "11:00",
-      "score": 9191.1,
-      "level": "NORMAL",
-      "top_transit": "Neptune Sq natal Uranus (0.022deg)",
-      "top_score": 661.5,
-      "hit_count": 76,
-      "retrograde_planets": [
-        "Saturn",
-        "Uranus",
-        "Neptune",
-        "N.Node"
-      ],
-      "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
-        "cat": "REST",
-        "text": "Step back so the flash of insight can arrive; change scenery."
-      }
-    },
-    {
-      "hour": 12,
-      "time": "12:00",
-      "score": 9258.6,
-      "level": "NORMAL",
-      "top_transit": "Neptune Sq natal Uranus (0.023deg)",
-      "top_score": 661.5,
-      "hit_count": 77,
-      "retrograde_planets": [
-        "Saturn",
-        "Uranus",
-        "Neptune",
-        "N.Node"
-      ],
-      "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
-        "cat": "REST",
-        "text": "Step back so the flash of insight can arrive; change scenery."
-      }
-    },
-    {
-      "hour": 13,
-      "time": "13:00",
-      "score": 9258.6,
-      "level": "NORMAL",
-      "top_transit": "Neptune Sq natal Uranus (0.023deg)",
-      "top_score": 661.5,
-      "hit_count": 77,
-      "retrograde_planets": [
-        "Saturn",
-        "Uranus",
-        "Neptune",
-        "N.Node"
-      ],
-      "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
-        "cat": "REST",
-        "text": "Step back so the flash of insight can arrive; change scenery."
-      }
-    },
-    {
-      "hour": 14,
-      "time": "14:00",
-      "score": 9384.6,
-      "level": "NORMAL",
-      "top_transit": "Neptune Sq natal Uranus (0.024deg)",
-      "top_score": 661.5,
-      "hit_count": 77,
-      "retrograde_planets": [
-        "Saturn",
-        "Uranus",
-        "Neptune",
-        "N.Node"
-      ],
-      "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
-        "cat": "REST",
-        "text": "Step back so the flash of insight can arrive; change scenery."
-      }
-    },
-    {
-      "hour": 15,
-      "time": "15:00",
-      "score": 9668.1,
+      "score": 9498.6,
       "level": "HIGH",
-      "top_transit": "Neptune Sq natal Uranus (0.025deg)",
-      "top_score": 661.5,
-      "hit_count": 79,
-      "retrograde_planets": [
-        "Saturn",
-        "Uranus",
-        "Neptune",
-        "N.Node"
-      ],
-      "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
-        "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
-      }
-    },
-    {
-      "hour": 16,
-      "time": "16:00",
-      "score": 9371.1,
-      "level": "NORMAL",
-      "top_transit": "Neptune Sq natal Uranus (0.025deg)",
-      "top_score": 661.5,
-      "hit_count": 78,
-      "retrograde_planets": [
-        "Saturn",
-        "Uranus",
-        "Neptune",
-        "N.Node"
-      ],
-      "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
-        "cat": "REST",
-        "text": "Step back so the flash of insight can arrive; change scenery."
-      }
-    },
-    {
-      "hour": 17,
-      "time": "17:00",
-      "score": 9408.6,
-      "level": "NORMAL",
-      "top_transit": "Neptune Sq natal Uranus (0.026deg)",
-      "top_score": 661.5,
-      "hit_count": 78,
-      "retrograde_planets": [
-        "Saturn",
-        "Uranus",
-        "Neptune",
-        "N.Node"
-      ],
-      "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
-        "cat": "REST",
-        "text": "Step back so the flash of insight can arrive; change scenery."
-      }
-    },
-    {
-      "hour": 18,
-      "time": "18:00",
-      "score": 9408.6,
-      "level": "NORMAL",
-      "top_transit": "Neptune Sq natal Uranus (0.026deg)",
-      "top_score": 661.5,
-      "hit_count": 78,
-      "retrograde_planets": [
-        "Saturn",
-        "Uranus",
-        "Neptune",
-        "N.Node"
-      ],
-      "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
-        "cat": "REST",
-        "text": "Step back so the flash of insight can arrive; change scenery."
-      }
-    },
-    {
-      "hour": 19,
-      "time": "19:00",
-      "score": 9492.6,
-      "level": "HIGH",
-      "top_transit": "Neptune Sq natal Uranus (0.027deg)",
-      "top_score": 661.5,
-      "hit_count": 79,
-      "retrograde_planets": [
-        "Saturn",
-        "Uranus",
-        "Neptune",
-        "N.Node"
-      ],
-      "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
-        "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
-      }
-    },
-    {
-      "hour": 20,
-      "time": "20:00",
-      "score": 9440.1,
-      "level": "NORMAL",
-      "top_transit": "Neptune Sq natal Uranus (0.028deg)",
-      "top_score": 661.5,
-      "hit_count": 79,
-      "retrograde_planets": [
-        "Saturn",
-        "Uranus",
-        "Neptune",
-        "N.Node"
-      ],
-      "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
-        "cat": "REST",
-        "text": "Step back so the flash of insight can arrive; change scenery."
-      }
-    },
-    {
-      "hour": 21,
-      "time": "21:00",
-      "score": 9480.1,
-      "level": "HIGH",
-      "top_transit": "Neptune Sq natal Uranus (0.028deg)",
-      "top_score": 661.5,
-      "hit_count": 80,
-      "retrograde_planets": [
-        "Saturn",
-        "Uranus",
-        "Neptune",
-        "N.Node"
-      ],
-      "personal": {
-        "axis": "Work: Breakthrough",
-        "tag": "work",
-        "cat": "PLAN",
-        "text": "Prototype the new approach; expect the sudden insight."
-      }
-    },
-    {
-      "hour": 22,
-      "time": "22:00",
-      "score": 9543.1,
-      "level": "HIGH",
-      "top_transit": "Neptune Sq natal Uranus (0.029deg)",
+      "top_transit": "Neptune Sq natal Uranus (0.034deg)",
       "top_score": 661.5,
       "hit_count": 81,
       "retrograde_planets": [
@@ -486,13 +149,97 @@
       }
     },
     {
-      "hour": 23,
-      "time": "23:00",
-      "score": 9492.1,
-      "level": "HIGH",
-      "top_transit": "Neptune Sq natal Uranus (0.030deg)",
+      "hour": 7,
+      "time": "07:00",
+      "score": 9371.1,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.035deg)",
       "top_score": 661.5,
-      "hit_count": 82,
+      "hit_count": 80,
+      "retrograde_planets": [
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "N.Node"
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
+      }
+    },
+    {
+      "hour": 8,
+      "time": "08:00",
+      "score": 9296.1,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.035deg)",
+      "top_score": 661.5,
+      "hit_count": 80,
+      "retrograde_planets": [
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "N.Node"
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
+      }
+    },
+    {
+      "hour": 9,
+      "time": "09:00",
+      "score": 9296.1,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.036deg)",
+      "top_score": 661.5,
+      "hit_count": 80,
+      "retrograde_planets": [
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "N.Node"
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
+      }
+    },
+    {
+      "hour": 10,
+      "time": "10:00",
+      "score": 9428.1,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.037deg)",
+      "top_score": 661.5,
+      "hit_count": 80,
+      "retrograde_planets": [
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "N.Node"
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
+      }
+    },
+    {
+      "hour": 11,
+      "time": "11:00",
+      "score": 9536.1,
+      "level": "HIGH",
+      "top_transit": "Neptune Sq natal Uranus (0.037deg)",
+      "top_score": 661.5,
+      "hit_count": 80,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -504,6 +251,258 @@
         "tag": "work",
         "cat": "PLAN",
         "text": "Prototype the new approach; expect the sudden insight."
+      }
+    },
+    {
+      "hour": 12,
+      "time": "12:00",
+      "score": 9494.1,
+      "level": "HIGH",
+      "top_transit": "Neptune Sq natal Uranus (0.038deg)",
+      "top_score": 661.5,
+      "hit_count": 80,
+      "retrograde_planets": [
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "N.Node"
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "PLAN",
+        "text": "Prototype the new approach; expect the sudden insight."
+      }
+    },
+    {
+      "hour": 13,
+      "time": "13:00",
+      "score": 9420.6,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.038deg)",
+      "top_score": 661.5,
+      "hit_count": 81,
+      "retrograde_planets": [
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "N.Node"
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
+      }
+    },
+    {
+      "hour": 14,
+      "time": "14:00",
+      "score": 9396.0,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.039deg)",
+      "top_score": 661.5,
+      "hit_count": 80,
+      "retrograde_planets": [
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "N.Node"
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
+      }
+    },
+    {
+      "hour": 15,
+      "time": "15:00",
+      "score": 9351.0,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.040deg)",
+      "top_score": 661.5,
+      "hit_count": 80,
+      "retrograde_planets": [
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "N.Node"
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
+      }
+    },
+    {
+      "hour": 16,
+      "time": "16:00",
+      "score": 9448.2,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.040deg)",
+      "top_score": 661.5,
+      "hit_count": 80,
+      "retrograde_planets": [
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "N.Node"
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
+      }
+    },
+    {
+      "hour": 17,
+      "time": "17:00",
+      "score": 9343.2,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.041deg)",
+      "top_score": 661.5,
+      "hit_count": 79,
+      "retrograde_planets": [
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "N.Node"
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
+      }
+    },
+    {
+      "hour": 18,
+      "time": "18:00",
+      "score": 9281.7,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.041deg)",
+      "top_score": 661.5,
+      "hit_count": 80,
+      "retrograde_planets": [
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "N.Node"
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
+      }
+    },
+    {
+      "hour": 19,
+      "time": "19:00",
+      "score": 9214.2,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.042deg)",
+      "top_score": 661.5,
+      "hit_count": 79,
+      "retrograde_planets": [
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "N.Node"
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
+      }
+    },
+    {
+      "hour": 20,
+      "time": "20:00",
+      "score": 9259.2,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.043deg)",
+      "top_score": 661.5,
+      "hit_count": 80,
+      "retrograde_planets": [
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "N.Node"
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
+      }
+    },
+    {
+      "hour": 21,
+      "time": "21:00",
+      "score": 9301.2,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.043deg)",
+      "top_score": 661.5,
+      "hit_count": 80,
+      "retrograde_planets": [
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "N.Node"
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
+      }
+    },
+    {
+      "hour": 22,
+      "time": "22:00",
+      "score": 9301.2,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.044deg)",
+      "top_score": 661.5,
+      "hit_count": 80,
+      "retrograde_planets": [
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "N.Node"
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
+      }
+    },
+    {
+      "hour": 23,
+      "time": "23:00",
+      "score": 9399.2,
+      "level": "NORMAL",
+      "top_transit": "Neptune Sq natal Uranus (0.045deg)",
+      "top_score": 661.5,
+      "hit_count": 81,
+      "retrograde_planets": [
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "N.Node"
+      ],
+      "personal": {
+        "axis": "Work: Breakthrough",
+        "tag": "work",
+        "cat": "REST",
+        "text": "Step back so the flash of insight can arrive; change scenery."
       }
     }
   ]
