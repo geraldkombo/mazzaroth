@@ -1,5 +1,5 @@
 {
-  "score": 1240.6,
+  "score": 1210.3,
   "patterns": 7,
   "pattern_names": [
     "Jupiter-Saturn Bridge",
@@ -19,12 +19,20 @@
   ],
   "factors": [
     {
+      "transit": "Mars",
+      "natal": "Chiron",
+      "aspect": "Sq",
+      "house": 11,
+      "contrib": 126.0,
+      "delta": 0.476
+    },
+    {
       "transit": "Saturn",
       "natal": "Mercury",
       "aspect": "Opp",
       "house": 2,
       "contrib": 108.0,
-      "delta": 2.599
+      "delta": 2.638
     },
     {
       "transit": "Jupiter",
@@ -32,7 +40,15 @@
       "aspect": "Sq",
       "house": 11,
       "contrib": 105.0,
-      "delta": 1.609
+      "delta": 1.534
+    },
+    {
+      "transit": "Venus",
+      "natal": "Venus",
+      "aspect": "Conj",
+      "house": 2,
+      "contrib": 90.0,
+      "delta": 7.882
     },
     {
       "transit": "Uranus",
@@ -40,15 +56,7 @@
       "aspect": "Conj",
       "house": 11,
       "contrib": 90.0,
-      "delta": 6.347
-    },
-    {
-      "transit": "Sun",
-      "natal": "Mars",
-      "aspect": "Sxt",
-      "house": 2,
-      "contrib": 78.0,
-      "delta": 0.499
+      "delta": 6.306
     },
     {
       "transit": "Sun",
@@ -56,15 +64,7 @@
       "aspect": "Opp",
       "house": 11,
       "contrib": 78.0,
-      "delta": 1.793
-    },
-    {
-      "transit": "Jupiter",
-      "natal": "Mercury",
-      "aspect": "SSq",
-      "house": 2,
-      "contrib": 72.0,
-      "delta": 0.051
+      "delta": 0.79
     }
   ],
   "natal": [
