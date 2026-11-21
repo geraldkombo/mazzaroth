@@ -1,14 +1,14 @@
 {
-  "date": "2026-11-20",
+  "date": "2026-11-21",
   "hourly": [
     {
       "hour": 0,
       "time": "00:00",
-      "score": 11668.1,
+      "score": 11126.4,
       "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.168deg)",
+      "top_transit": "Saturn Sq natal Jupiter (0.132deg)",
       "top_score": 787.5,
-      "hit_count": 78,
+      "hit_count": 73,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -25,9 +25,9 @@
     {
       "hour": 1,
       "time": "01:00",
-      "score": 11429.3,
+      "score": 10999.9,
       "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.167deg)",
+      "top_transit": "Saturn Sq natal Jupiter (0.131deg)",
       "top_score": 787.5,
       "hit_count": 75,
       "retrograde_planets": [
@@ -46,11 +46,11 @@
     {
       "hour": 2,
       "time": "02:00",
-      "score": 11479.9,
+      "score": 10921.9,
       "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.165deg)",
+      "top_transit": "Saturn Sq natal Jupiter (0.129deg)",
       "top_score": 787.5,
-      "hit_count": 76,
+      "hit_count": 75,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -67,11 +67,11 @@
     {
       "hour": 3,
       "time": "03:00",
-      "score": 11441.9,
-      "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.164deg)",
+      "score": 10681.9,
+      "level": "HIGH",
+      "top_transit": "Saturn Sq natal Jupiter (0.128deg)",
       "top_score": 787.5,
-      "hit_count": 77,
+      "hit_count": 72,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -81,18 +81,18 @@
       "personal": {
         "axis": "Year Priority",
         "tag": "year",
-        "cat": "ACT",
-        "text": "Do the protected deep-work block; study, finish, archive one old project."
+        "cat": "PLAN",
+        "text": "Plan the quiet arc: research list, mentor call, finishing tasks."
       }
     },
     {
       "hour": 4,
       "time": "04:00",
-      "score": 11273.9,
-      "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.162deg)",
+      "score": 10731.4,
+      "level": "HIGH",
+      "top_transit": "Saturn Sq natal Jupiter (0.126deg)",
       "top_score": 787.5,
-      "hit_count": 76,
+      "hit_count": 73,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -102,18 +102,18 @@
       "personal": {
         "axis": "Year Priority",
         "tag": "year",
-        "cat": "ACT",
-        "text": "Do the protected deep-work block; study, finish, archive one old project."
+        "cat": "PLAN",
+        "text": "Plan the quiet arc: research list, mentor call, finishing tasks."
       }
     },
     {
       "hour": 5,
       "time": "05:00",
-      "score": 11125.9,
-      "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.161deg)",
+      "score": 10731.4,
+      "level": "HIGH",
+      "top_transit": "Saturn Sq natal Jupiter (0.125deg)",
       "top_score": 787.5,
-      "hit_count": 75,
+      "hit_count": 73,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -123,18 +123,18 @@
       "personal": {
         "axis": "Year Priority",
         "tag": "year",
-        "cat": "ACT",
-        "text": "Do the protected deep-work block; study, finish, archive one old project."
+        "cat": "PLAN",
+        "text": "Plan the quiet arc: research list, mentor call, finishing tasks."
       }
     },
     {
       "hour": 6,
       "time": "06:00",
-      "score": 11125.9,
+      "score": 10828.9,
       "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.159deg)",
+      "top_transit": "Saturn Sq natal Jupiter (0.124deg)",
       "top_score": 787.5,
-      "hit_count": 75,
+      "hit_count": 73,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -151,11 +151,11 @@
     {
       "hour": 7,
       "time": "07:00",
-      "score": 11251.9,
+      "score": 10816.9,
       "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.157deg)",
+      "top_transit": "Saturn Sq natal Jupiter (0.122deg)",
       "top_score": 787.5,
-      "hit_count": 76,
+      "hit_count": 74,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -172,11 +172,11 @@
     {
       "hour": 8,
       "time": "08:00",
-      "score": 11431.4,
+      "score": 10806.4,
       "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.156deg)",
+      "top_transit": "Saturn Sq natal Jupiter (0.121deg)",
       "top_score": 787.5,
-      "hit_count": 76,
+      "hit_count": 74,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -193,11 +193,11 @@
     {
       "hour": 9,
       "time": "09:00",
-      "score": 11509.4,
-      "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.154deg)",
+      "score": 10613.9,
+      "level": "HIGH",
+      "top_transit": "Saturn Sq natal Jupiter (0.119deg)",
       "top_score": 787.5,
-      "hit_count": 76,
+      "hit_count": 72,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -207,18 +207,18 @@
       "personal": {
         "axis": "Year Priority",
         "tag": "year",
-        "cat": "ACT",
-        "text": "Do the protected deep-work block; study, finish, archive one old project."
+        "cat": "PLAN",
+        "text": "Plan the quiet arc: research list, mentor call, finishing tasks."
       }
     },
     {
       "hour": 10,
       "time": "10:00",
-      "score": 11393.0,
-      "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.153deg)",
+      "score": 10678.7,
+      "level": "HIGH",
+      "top_transit": "Saturn Sq natal Jupiter (0.118deg)",
       "top_score": 787.5,
-      "hit_count": 75,
+      "hit_count": 72,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -228,18 +228,18 @@
       "personal": {
         "axis": "Year Priority",
         "tag": "year",
-        "cat": "ACT",
-        "text": "Do the protected deep-work block; study, finish, archive one old project."
+        "cat": "PLAN",
+        "text": "Plan the quiet arc: research list, mentor call, finishing tasks."
       }
     },
     {
       "hour": 11,
       "time": "11:00",
-      "score": 11261.0,
-      "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.151deg)",
+      "score": 10762.7,
+      "level": "HIGH",
+      "top_transit": "Saturn Sq natal Jupiter (0.116deg)",
       "top_score": 787.5,
-      "hit_count": 74,
+      "hit_count": 72,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -249,18 +249,18 @@
       "personal": {
         "axis": "Year Priority",
         "tag": "year",
-        "cat": "ACT",
-        "text": "Do the protected deep-work block; study, finish, archive one old project."
+        "cat": "PLAN",
+        "text": "Plan the quiet arc: research list, mentor call, finishing tasks."
       }
     },
     {
       "hour": 12,
       "time": "12:00",
-      "score": 11250.7,
-      "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.150deg)",
+      "score": 10584.5,
+      "level": "HIGH",
+      "top_transit": "Saturn Sq natal Jupiter (0.115deg)",
       "top_score": 787.5,
-      "hit_count": 77,
+      "hit_count": 71,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -270,18 +270,18 @@
       "personal": {
         "axis": "Year Priority",
         "tag": "year",
-        "cat": "ACT",
-        "text": "Do the protected deep-work block; study, finish, archive one old project."
+        "cat": "PLAN",
+        "text": "Plan the quiet arc: research list, mentor call, finishing tasks."
       }
     },
     {
       "hour": 13,
       "time": "13:00",
-      "score": 11180.6,
-      "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.148deg)",
+      "score": 10462.0,
+      "level": "HIGH",
+      "top_transit": "Saturn Sq natal Jupiter (0.113deg)",
       "top_score": 787.5,
-      "hit_count": 77,
+      "hit_count": 70,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -291,18 +291,18 @@
       "personal": {
         "axis": "Year Priority",
         "tag": "year",
-        "cat": "ACT",
-        "text": "Do the protected deep-work block; study, finish, archive one old project."
+        "cat": "PLAN",
+        "text": "Plan the quiet arc: research list, mentor call, finishing tasks."
       }
     },
     {
       "hour": 14,
       "time": "14:00",
-      "score": 11015.6,
-      "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.147deg)",
+      "score": 10525.0,
+      "level": "HIGH",
+      "top_transit": "Saturn Sq natal Jupiter (0.112deg)",
       "top_score": 787.5,
-      "hit_count": 75,
+      "hit_count": 71,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -312,18 +312,18 @@
       "personal": {
         "axis": "Year Priority",
         "tag": "year",
-        "cat": "ACT",
-        "text": "Do the protected deep-work block; study, finish, archive one old project."
+        "cat": "PLAN",
+        "text": "Plan the quiet arc: research list, mentor call, finishing tasks."
       }
     },
     {
       "hour": 15,
       "time": "15:00",
-      "score": 10889.6,
-      "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.145deg)",
+      "score": 10573.0,
+      "level": "HIGH",
+      "top_transit": "Saturn Sq natal Jupiter (0.111deg)",
       "top_score": 787.5,
-      "hit_count": 74,
+      "hit_count": 71,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -333,18 +333,18 @@
       "personal": {
         "axis": "Year Priority",
         "tag": "year",
-        "cat": "ACT",
-        "text": "Do the protected deep-work block; study, finish, archive one old project."
+        "cat": "PLAN",
+        "text": "Plan the quiet arc: research list, mentor call, finishing tasks."
       }
     },
     {
       "hour": 16,
       "time": "16:00",
-      "score": 10889.6,
-      "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.144deg)",
+      "score": 10501.0,
+      "level": "HIGH",
+      "top_transit": "Saturn Sq natal Jupiter (0.109deg)",
       "top_score": 787.5,
-      "hit_count": 74,
+      "hit_count": 70,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -354,18 +354,18 @@
       "personal": {
         "axis": "Year Priority",
         "tag": "year",
-        "cat": "ACT",
-        "text": "Do the protected deep-work block; study, finish, archive one old project."
+        "cat": "PLAN",
+        "text": "Plan the quiet arc: research list, mentor call, finishing tasks."
       }
     },
     {
       "hour": 17,
       "time": "17:00",
-      "score": 10849.4,
-      "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.143deg)",
+      "score": 10525.0,
+      "level": "HIGH",
+      "top_transit": "Saturn Sq natal Jupiter (0.108deg)",
       "top_score": 787.5,
-      "hit_count": 73,
+      "hit_count": 71,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -375,18 +375,18 @@
       "personal": {
         "axis": "Year Priority",
         "tag": "year",
-        "cat": "ACT",
-        "text": "Do the protected deep-work block; study, finish, archive one old project."
+        "cat": "PLAN",
+        "text": "Plan the quiet arc: research list, mentor call, finishing tasks."
       }
     },
     {
       "hour": 18,
       "time": "18:00",
-      "score": 10849.4,
-      "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.141deg)",
+      "score": 10588.0,
+      "level": "HIGH",
+      "top_transit": "Saturn Sq natal Jupiter (0.106deg)",
       "top_score": 787.5,
-      "hit_count": 73,
+      "hit_count": 71,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -396,18 +396,18 @@
       "personal": {
         "axis": "Year Priority",
         "tag": "year",
-        "cat": "ACT",
-        "text": "Do the protected deep-work block; study, finish, archive one old project."
+        "cat": "PLAN",
+        "text": "Plan the quiet arc: research list, mentor call, finishing tasks."
       }
     },
     {
       "hour": 19,
       "time": "19:00",
-      "score": 10889.4,
-      "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.140deg)",
+      "score": 10588.0,
+      "level": "HIGH",
+      "top_transit": "Saturn Sq natal Jupiter (0.105deg)",
       "top_score": 787.5,
-      "hit_count": 73,
+      "hit_count": 71,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -417,18 +417,18 @@
       "personal": {
         "axis": "Year Priority",
         "tag": "year",
-        "cat": "ACT",
-        "text": "Do the protected deep-work block; study, finish, archive one old project."
+        "cat": "PLAN",
+        "text": "Plan the quiet arc: research list, mentor call, finishing tasks."
       }
     },
     {
       "hour": 20,
       "time": "20:00",
-      "score": 11205.4,
-      "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.138deg)",
+      "score": 10609.0,
+      "level": "HIGH",
+      "top_transit": "Saturn Sq natal Jupiter (0.104deg)",
       "top_score": 787.5,
-      "hit_count": 74,
+      "hit_count": 71,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -438,18 +438,18 @@
       "personal": {
         "axis": "Year Priority",
         "tag": "year",
-        "cat": "ACT",
-        "text": "Do the protected deep-work block; study, finish, archive one old project."
+        "cat": "PLAN",
+        "text": "Plan the quiet arc: research list, mentor call, finishing tasks."
       }
     },
     {
       "hour": 21,
       "time": "21:00",
-      "score": 11095.4,
-      "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.137deg)",
+      "score": 10609.0,
+      "level": "HIGH",
+      "top_transit": "Saturn Sq natal Jupiter (0.102deg)",
       "top_score": 787.5,
-      "hit_count": 75,
+      "hit_count": 71,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -459,18 +459,18 @@
       "personal": {
         "axis": "Year Priority",
         "tag": "year",
-        "cat": "ACT",
-        "text": "Do the protected deep-work block; study, finish, archive one old project."
+        "cat": "PLAN",
+        "text": "Plan the quiet arc: research list, mentor call, finishing tasks."
       }
     },
     {
       "hour": 22,
       "time": "22:00",
-      "score": 10885.4,
-      "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.135deg)",
+      "score": 10609.0,
+      "level": "HIGH",
+      "top_transit": "Saturn Sq natal Jupiter (0.101deg)",
       "top_score": 787.5,
-      "hit_count": 74,
+      "hit_count": 71,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -480,18 +480,18 @@
       "personal": {
         "axis": "Year Priority",
         "tag": "year",
-        "cat": "ACT",
-        "text": "Do the protected deep-work block; study, finish, archive one old project."
+        "cat": "PLAN",
+        "text": "Plan the quiet arc: research list, mentor call, finishing tasks."
       }
     },
     {
       "hour": 23,
       "time": "23:00",
-      "score": 10921.4,
+      "score": 11043.7,
       "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.134deg)",
-      "top_score": 787.5,
-      "hit_count": 74,
+      "top_transit": "Saturn Sq natal Jupiter (0.099deg)",
+      "top_score": 1181.2,
+      "hit_count": 73,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
