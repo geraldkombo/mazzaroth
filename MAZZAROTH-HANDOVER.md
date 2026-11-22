@@ -37,7 +37,7 @@ Skyfield + ephe/de421.bsp (JPL, 16MB)     _plain.js        plain-language layer
                                           api/ask|brief|week        AI endpoints
 ```
 
-- AI backend: Cloudflare Workers AI, free allowance, keyless (env.AI binding in wrangler.jsonc). Model chain: `@cf/meta/llama-3.3-70b-instruct-fp8-fast` -> `@cf/meta/llama-3.1-8b-instruct-fp8`. Responses carry `source:"workers-ai"`.
+- AI backend: Cloudflare Workers AI, free allowance, keyless (env.AI binding in wrangler.jsonc). Model chain: `@cf/meta/llama-3.3-70b-instruct-fp8-fast` -> `@cf/openai/gpt-oss-120b`. Responses carry `source:"workers-ai"`.
 - Auth: single-user gate. HMAC-signed cookie `mazz_auth`, 30-day TTL, SESSION_SECRET signs.
 
 ## 4. Data pipeline & automation

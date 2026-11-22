@@ -7,10 +7,10 @@
 const CEREBRAS_URL = 'https://api.cerebras.ai/v1/chat/completions';
 
 // Tried in order. llama-3.3-70b fp8-fast is the quality pick on the free tier;
-// the 8b fp8 model is the congestion fallback.
+// gpt-oss-120b is the fallback (llama-3.1-8b-instruct-fp8 was retired from the catalog).
 const WORKERS_AI_MODELS = [
   '@cf/meta/llama-3.3-70b-instruct-fp8-fast',
-  '@cf/meta/llama-3.1-8b-instruct-fp8',
+  '@cf/openai/gpt-oss-120b',
 ];
 
 async function runWorkersAI(env, messages, opts) {
