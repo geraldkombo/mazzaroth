@@ -1,5 +1,5 @@
 {
-  "score": 1138.0,
+  "score": 1123.0,
   "patterns": 7,
   "pattern_names": [
     "Jupiter-Saturn Bridge",
@@ -10,29 +10,21 @@
     "Neptune Brand Visionary",
     "Mercury-H3 Deal Maker"
   ],
-  "verdict": "Neutral financial day. Build systems and execute.",
+  "verdict": "Jupiter sextile natal Venus H2 - opportunity window, act",
   "verdicts": [
     {
-      "tag": "NEUTRAL",
-      "note": "No strong financial signals today. Focus on execution and systems."
+      "tag": "FAVORABLE",
+      "note": "Jupiter sextile natal Venus H2 - opportunity window, act"
     }
   ],
   "factors": [
-    {
-      "transit": "Mars",
-      "natal": "Chiron",
-      "aspect": "Sq",
-      "house": 11,
-      "contrib": 126.0,
-      "delta": 0.375
-    },
     {
       "transit": "Saturn",
       "natal": "Mercury",
       "aspect": "Opp",
       "house": 2,
       "contrib": 108.0,
-      "delta": 2.71
+      "delta": 2.743
     },
     {
       "transit": "Jupiter",
@@ -40,7 +32,7 @@
       "aspect": "Sq",
       "house": 11,
       "contrib": 105.0,
-      "delta": 1.392
+      "delta": 1.327
     },
     {
       "transit": "Venus",
@@ -48,7 +40,7 @@
       "aspect": "Conj",
       "house": 2,
       "contrib": 90.0,
-      "delta": 7.416
+      "delta": 7.139
     },
     {
       "transit": "Uranus",
@@ -56,7 +48,7 @@
       "aspect": "Conj",
       "house": 11,
       "contrib": 90.0,
-      "delta": 6.222
+      "delta": 6.182
     },
     {
       "transit": "Sun",
@@ -64,7 +56,15 @@
       "aspect": "Opp",
       "house": 11,
       "contrib": 78.0,
-      "delta": 1.217
+      "delta": 2.195
+    },
+    {
+      "transit": "Mars",
+      "natal": "Chiron",
+      "aspect": "Sq",
+      "house": 11,
+      "contrib": 63.0,
+      "delta": 0.782
     }
   ],
   "natal": [
