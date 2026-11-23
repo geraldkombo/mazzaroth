@@ -1,10 +1,11 @@
 {
-  "score": 1123.0,
-  "patterns": 7,
+  "score": 1129.0,
+  "patterns": 8,
   "pattern_names": [
     "Jupiter-Saturn Bridge",
     "Pluto Wealth Transformer",
     "Venus-Jupiter Amplifier",
+    "Saturn H10 Career Emperor",
     "Uranus H11 Network Disruptor",
     "Mars-H2 Money Warrior",
     "Neptune Brand Visionary",
@@ -24,7 +25,7 @@
       "aspect": "Opp",
       "house": 2,
       "contrib": 108.0,
-      "delta": 2.743
+      "delta": 2.777
     },
     {
       "transit": "Jupiter",
@@ -32,7 +33,7 @@
       "aspect": "Sq",
       "house": 11,
       "contrib": 105.0,
-      "delta": 1.327
+      "delta": 1.261
     },
     {
       "transit": "Venus",
@@ -40,7 +41,7 @@
       "aspect": "Conj",
       "house": 2,
       "contrib": 90.0,
-      "delta": 7.139
+      "delta": 6.811
     },
     {
       "transit": "Uranus",
@@ -48,7 +49,7 @@
       "aspect": "Conj",
       "house": 11,
       "contrib": 90.0,
-      "delta": 6.182
+      "delta": 6.139
     },
     {
       "transit": "Sun",
@@ -56,7 +57,7 @@
       "aspect": "Opp",
       "house": 11,
       "contrib": 78.0,
-      "delta": 2.195
+      "delta": 3.231
     },
     {
       "transit": "Mars",
@@ -64,7 +65,7 @@
       "aspect": "Sq",
       "house": 11,
       "contrib": 63.0,
-      "delta": 0.782
+      "delta": 1.209
     }
   ],
   "natal": [
