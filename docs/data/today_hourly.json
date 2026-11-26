@@ -1,14 +1,14 @@
 {
-  "date": "2026-11-25",
+  "date": "2026-11-26",
   "hourly": [
     {
       "hour": 0,
       "time": "00:00",
-      "score": 11179.8,
+      "score": 11304.4,
       "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.005deg)",
+      "top_transit": "Saturn Sq natal Jupiter (0.023deg)",
       "top_score": 1181.2,
-      "hit_count": 73,
+      "hit_count": 76,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -25,11 +25,11 @@
     {
       "hour": 1,
       "time": "01:00",
-      "score": 11142.3,
+      "score": 11304.4,
       "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.004deg)",
+      "top_transit": "Saturn Sq natal Jupiter (0.024deg)",
       "top_score": 1181.2,
-      "hit_count": 73,
+      "hit_count": 76,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -46,11 +46,11 @@
     {
       "hour": 2,
       "time": "02:00",
-      "score": 11247.3,
+      "score": 11319.4,
       "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.003deg)",
+      "top_transit": "Saturn Sq natal Jupiter (0.025deg)",
       "top_score": 1181.2,
-      "hit_count": 73,
+      "hit_count": 75,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -67,11 +67,11 @@
     {
       "hour": 3,
       "time": "03:00",
-      "score": 11299.8,
+      "score": 11319.4,
       "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.002deg)",
+      "top_transit": "Saturn Sq natal Jupiter (0.026deg)",
       "top_score": 1181.2,
-      "hit_count": 73,
+      "hit_count": 75,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -88,11 +88,11 @@
     {
       "hour": 4,
       "time": "04:00",
-      "score": 11353.8,
+      "score": 11211.4,
       "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.000deg)",
+      "top_transit": "Saturn Sq natal Jupiter (0.027deg)",
       "top_score": 1181.2,
-      "hit_count": 73,
+      "hit_count": 75,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -109,51 +109,9 @@
     {
       "hour": 5,
       "time": "05:00",
-      "score": 11323.8,
+      "score": 11296.9,
       "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.001deg)",
-      "top_score": 1181.2,
-      "hit_count": 73,
-      "retrograde_planets": [
-        "Saturn",
-        "Uranus",
-        "Neptune",
-        "N.Node"
-      ],
-      "personal": {
-        "axis": "Year Priority",
-        "tag": "year",
-        "cat": "ACT",
-        "text": "Do the protected deep-work block; study, finish, archive one old project."
-      }
-    },
-    {
-      "hour": 6,
-      "time": "06:00",
-      "score": 11206.8,
-      "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.002deg)",
-      "top_score": 1181.2,
-      "hit_count": 73,
-      "retrograde_planets": [
-        "Saturn",
-        "Uranus",
-        "Neptune",
-        "N.Node"
-      ],
-      "personal": {
-        "axis": "Year Priority",
-        "tag": "year",
-        "cat": "ACT",
-        "text": "Do the protected deep-work block; study, finish, archive one old project."
-      }
-    },
-    {
-      "hour": 7,
-      "time": "07:00",
-      "score": 11038.8,
-      "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.003deg)",
+      "top_transit": "Saturn Sq natal Jupiter (0.028deg)",
       "top_score": 1181.2,
       "hit_count": 74,
       "retrograde_planets": [
@@ -170,11 +128,53 @@
       }
     },
     {
+      "hour": 6,
+      "time": "06:00",
+      "score": 11179.4,
+      "level": "VERY HIGH",
+      "top_transit": "Saturn Sq natal Jupiter (0.029deg)",
+      "top_score": 1181.2,
+      "hit_count": 75,
+      "retrograde_planets": [
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "N.Node"
+      ],
+      "personal": {
+        "axis": "Year Priority",
+        "tag": "year",
+        "cat": "ACT",
+        "text": "Do the protected deep-work block; study, finish, archive one old project."
+      }
+    },
+    {
+      "hour": 7,
+      "time": "07:00",
+      "score": 11179.4,
+      "level": "VERY HIGH",
+      "top_transit": "Saturn Sq natal Jupiter (0.030deg)",
+      "top_score": 1181.2,
+      "hit_count": 75,
+      "retrograde_planets": [
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "N.Node"
+      ],
+      "personal": {
+        "axis": "Year Priority",
+        "tag": "year",
+        "cat": "ACT",
+        "text": "Do the protected deep-work block; study, finish, archive one old project."
+      }
+    },
+    {
       "hour": 8,
       "time": "08:00",
-      "score": 11038.8,
+      "score": 11072.4,
       "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.004deg)",
+      "top_transit": "Saturn Sq natal Jupiter (0.031deg)",
       "top_score": 1181.2,
       "hit_count": 74,
       "retrograde_planets": [
@@ -193,11 +193,11 @@
     {
       "hour": 9,
       "time": "09:00",
-      "score": 11106.3,
+      "score": 11072.4,
       "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.005deg)",
+      "top_transit": "Saturn Sq natal Jupiter (0.032deg)",
       "top_score": 1181.2,
-      "hit_count": 73,
+      "hit_count": 74,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -214,11 +214,11 @@
     {
       "hour": 10,
       "time": "10:00",
-      "score": 11151.3,
+      "score": 11032.4,
       "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.007deg)",
+      "top_transit": "Saturn Sq natal Jupiter (0.034deg)",
       "top_score": 1181.2,
-      "hit_count": 75,
+      "hit_count": 74,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -235,11 +235,11 @@
     {
       "hour": 11,
       "time": "11:00",
-      "score": 11021.7,
+      "score": 11117.4,
       "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.008deg)",
+      "top_transit": "Saturn Sq natal Jupiter (0.035deg)",
       "top_score": 1181.2,
-      "hit_count": 75,
+      "hit_count": 74,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -256,11 +256,11 @@
     {
       "hour": 12,
       "time": "12:00",
-      "score": 11021.7,
+      "score": 11227.4,
       "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.009deg)",
+      "top_transit": "Saturn Sq natal Jupiter (0.036deg)",
       "top_score": 1181.2,
-      "hit_count": 75,
+      "hit_count": 74,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -277,11 +277,11 @@
     {
       "hour": 13,
       "time": "13:00",
-      "score": 11087.7,
+      "score": 11335.4,
       "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.010deg)",
+      "top_transit": "Saturn Sq natal Jupiter (0.037deg)",
       "top_score": 1181.2,
-      "hit_count": 75,
+      "hit_count": 74,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -298,11 +298,11 @@
     {
       "hour": 14,
       "time": "14:00",
-      "score": 10991.7,
+      "score": 11364.2,
       "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.011deg)",
+      "top_transit": "Saturn Sq natal Jupiter (0.038deg)",
       "top_score": 1181.2,
-      "hit_count": 74,
+      "hit_count": 75,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -319,11 +319,11 @@
     {
       "hour": 15,
       "time": "15:00",
-      "score": 10991.7,
+      "score": 11384.2,
       "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.012deg)",
+      "top_transit": "Saturn Sq natal Jupiter (0.039deg)",
       "top_score": 1181.2,
-      "hit_count": 74,
+      "hit_count": 76,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -340,11 +340,11 @@
     {
       "hour": 16,
       "time": "16:00",
-      "score": 11022.7,
+      "score": 11177.2,
       "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.014deg)",
+      "top_transit": "Saturn Sq natal Jupiter (0.040deg)",
       "top_score": 1181.2,
-      "hit_count": 75,
+      "hit_count": 76,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -361,11 +361,11 @@
     {
       "hour": 17,
       "time": "17:00",
-      "score": 11076.7,
+      "score": 11122.5,
       "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.015deg)",
+      "top_transit": "Saturn Sq natal Jupiter (0.041deg)",
       "top_score": 1181.2,
-      "hit_count": 74,
+      "hit_count": 75,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -382,11 +382,11 @@
     {
       "hour": 18,
       "time": "18:00",
-      "score": 11195.4,
+      "score": 11161.5,
       "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.016deg)",
+      "top_transit": "Saturn Sq natal Jupiter (0.042deg)",
       "top_score": 1181.2,
-      "hit_count": 75,
+      "hit_count": 76,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -403,11 +403,11 @@
     {
       "hour": 19,
       "time": "19:00",
-      "score": 11123.4,
+      "score": 11161.5,
       "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.017deg)",
+      "top_transit": "Saturn Sq natal Jupiter (0.043deg)",
       "top_score": 1181.2,
-      "hit_count": 75,
+      "hit_count": 76,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -424,9 +424,9 @@
     {
       "hour": 20,
       "time": "20:00",
-      "score": 11266.4,
+      "score": 11161.5,
       "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.018deg)",
+      "top_transit": "Saturn Sq natal Jupiter (0.044deg)",
       "top_score": 1181.2,
       "hit_count": 76,
       "retrograde_planets": [
@@ -445,11 +445,11 @@
     {
       "hour": 21,
       "time": "21:00",
-      "score": 11341.4,
+      "score": 11137.5,
       "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.019deg)",
+      "top_transit": "Saturn Sq natal Jupiter (0.045deg)",
       "top_score": 1181.2,
-      "hit_count": 77,
+      "hit_count": 75,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -466,11 +466,11 @@
     {
       "hour": 22,
       "time": "22:00",
-      "score": 11154.4,
+      "score": 11269.5,
       "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.020deg)",
+      "top_transit": "Saturn Sq natal Jupiter (0.046deg)",
       "top_score": 1181.2,
-      "hit_count": 76,
+      "hit_count": 77,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
@@ -487,11 +487,11 @@
     {
       "hour": 23,
       "time": "23:00",
-      "score": 11304.4,
+      "score": 11405.5,
       "level": "VERY HIGH",
-      "top_transit": "Saturn Sq natal Jupiter (0.021deg)",
+      "top_transit": "Saturn Sq natal Jupiter (0.047deg)",
       "top_score": 1181.2,
-      "hit_count": 76,
+      "hit_count": 77,
       "retrograde_planets": [
         "Saturn",
         "Uranus",
