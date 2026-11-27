@@ -1,11 +1,14 @@
 {
-  "score": 1126.8,
-  "patterns": 4,
+  "score": 1042.8,
+  "patterns": 7,
   "pattern_names": [
+    "Jupiter-Saturn Bridge",
     "Pluto Wealth Transformer",
     "Venus-Jupiter Amplifier",
     "Uranus H11 Network Disruptor",
-    "Mars-H2 Money Warrior"
+    "Mars-H2 Money Warrior",
+    "Neptune Brand Visionary",
+    "Mercury-H3 Deal Maker"
   ],
   "verdict": "Jupiter sextile natal Venus H2 - opportunity window, act",
   "verdicts": [
@@ -21,15 +24,7 @@
       "aspect": "Opp",
       "house": 2,
       "contrib": 108.0,
-      "delta": 2.865
-    },
-    {
-      "transit": "Moon",
-      "natal": "Mars",
-      "aspect": "Sq",
-      "house": 2,
-      "contrib": 105.0,
-      "delta": 0.408
+      "delta": 2.89
     },
     {
       "transit": "Jupiter",
@@ -37,7 +32,7 @@
       "aspect": "Sq",
       "house": 11,
       "contrib": 105.0,
-      "delta": 1.084
+      "delta": 1.032
     },
     {
       "transit": "Venus",
@@ -45,7 +40,7 @@
       "aspect": "Conj",
       "house": 2,
       "contrib": 90.0,
-      "delta": 5.638
+      "delta": 5.194
     },
     {
       "transit": "Uranus",
@@ -53,7 +48,7 @@
       "aspect": "Conj",
       "house": 11,
       "contrib": 90.0,
-      "delta": 6.01
+      "delta": 5.969
     },
     {
       "transit": "Sun",
@@ -61,7 +56,15 @@
       "aspect": "Opp",
       "house": 11,
       "contrib": 78.0,
-      "delta": 6.319
+      "delta": 7.326
+    },
+    {
+      "transit": "Mars",
+      "natal": "Chiron",
+      "aspect": "Sq",
+      "house": 11,
+      "contrib": 63.0,
+      "delta": 2.842
     }
   ],
   "natal": [

@@ -2,66 +2,66 @@
   {
     "house": 6,
     "name": "Health, Daily Work, Routines, Service",
-    "score": 3460.0,
+    "score": 3473.0,
     "level": "NORMAL",
     "aspects": [
-      "Moon Opp Uranus (5.09deg)",
-      "Mercury SSq Uranus (1.46deg)",
-      "Venus Qnt Saturn (0.19deg)",
-      "Mars Tri Uranus (1.76deg)",
-      "Jupiter Tri Uranus (5.29deg)"
+      "Moon Opp Saturn (3.91deg)",
+      "Moon Opp Neptune (1.59deg)",
+      "Mercury SSq Uranus (0.12deg)",
+      "Venus Qnt Saturn (0.25deg)",
+      "Mars Tri Uranus (1.37deg)"
     ]
   },
   {
     "house": 7,
     "name": "Partnerships, Marriage, Contracts, Open Enemies",
-    "score": 2210.2,
+    "score": 2038.6,
     "level": "NORMAL",
     "aspects": [
-      "Moon Tri N.Node (1.97deg)",
-      "Mercury Sq Moon (3.56deg)",
-      "Venus Tri Moon (6.67deg)",
-      "Venus Tri N.Node (0.84deg)",
-      "Mars Opp N.Node (5.30deg)"
+      "Sun Qnt Moon (1.98deg)",
+      "Moon BQnt Moon (1.23deg)",
+      "Moon SqSq N.Node (1.94deg)",
+      "Mercury Sq Moon (2.22deg)",
+      "Venus Tri N.Node (1.28deg)"
     ]
   },
   {
     "house": 12,
     "name": "Solitude, Spirituality, Retreat, Subconscious",
-    "score": 1966.5,
+    "score": 2023.5,
     "level": "NORMAL",
     "aspects": [
-      "Sun BQnt Jupiter (1.81deg)",
-      "Saturn Sq Jupiter (0.03deg)",
-      "Neptune Sq Jupiter (6.46deg)",
-      "N.Node SqSq Jupiter (1.58deg)",
-      "Chiron Sq Jupiter (6.96deg)"
+      "Moon Conj Jupiter (3.58deg)",
+      "Saturn Sq Jupiter (0.05deg)",
+      "Neptune Sq Jupiter (6.47deg)",
+      "N.Node SqSq Jupiter (1.53deg)",
+      "Chiron Sq Jupiter (6.97deg)"
     ]
   },
   {
     "house": 2,
     "name": "Finances, Values, Self-Worth",
-    "score": 1532.5,
+    "score": 1369.0,
     "level": "NORMAL",
     "aspects": [
-      "Moon Tri Venus (4.50deg)",
-      "Moon Sq Mars (0.41deg)",
-      "Venus Conj Venus (5.64deg)",
-      "Mars Sxt Venus (1.17deg)",
-      "Jupiter SSq Mercury (0.58deg)"
+      "Moon Sq Mercury (0.74deg)",
+      "Venus Conj Venus (5.19deg)",
+      "Mars Sxt Venus (0.78deg)",
+      "Jupiter SSq Mercury (0.63deg)",
+      "Jupiter Sxt Venus (4.65deg)"
     ]
   },
   {
     "house": 11,
     "name": "Friends, Networks, Community, Hopes, Wishes",
-    "score": 1207.5,
+    "score": 1302.0,
     "level": "NORMAL",
     "aspects": [
-      "Sun Opp Chiron (6.32deg)",
-      "Venus Qnx Chiron (2.02deg)",
-      "Mars Sq Chiron (2.45deg)",
-      "Jupiter Sq Chiron (1.08deg)",
-      "Uranus Conj Chiron (6.01deg)"
+      "Sun Opp Chiron (7.33deg)",
+      "Moon SSq Chiron (0.92deg)",
+      "Venus Qnx Chiron (1.58deg)",
+      "Mars Sq Chiron (2.84deg)",
+      "Jupiter Sq Chiron (1.03deg)"
     ]
   },
   {
@@ -70,24 +70,24 @@
     "score": 1153.8,
     "level": "NORMAL",
     "aspects": [
-      "Sun Conj H4 cusp (2.59deg)",
-      "Mars Sq H4 cusp (1.28deg)",
-      "Jupiter Sq H4 cusp (4.81deg)",
-      "Saturn Tri H4 cusp (6.75deg)",
-      "Uranus Opp H4 cusp (2.28deg)"
+      "Sun Conj H4 cusp (3.60deg)",
+      "Mars Sq H4 cusp (0.88deg)",
+      "Jupiter Sq H4 cusp (4.76deg)",
+      "Saturn Tri H4 cusp (6.72deg)",
+      "Uranus Opp H4 cusp (2.24deg)"
     ]
   },
   {
     "house": 3,
     "name": "Communication, Siblings, Short Trips, Writing",
-    "score": 932.5,
+    "score": 982.5,
     "level": "NORMAL",
     "aspects": [
-      "Moon SqSq Pluto (1.87deg)",
-      "Mercury Conj Pluto (1.77deg)",
-      "Mars Qnt Pluto (1.53deg)",
-      "Saturn BQnt Pluto (0.49deg)",
-      "Mercury Conj H3 cusp (7.03deg)"
+      "Moon Tri Pluto (1.90deg)",
+      "Mercury Conj Pluto (3.10deg)",
+      "Mars Qnt Pluto (1.14deg)",
+      "Saturn BQnt Pluto (0.47deg)",
+      "Moon Tri H3 cusp (3.35deg)"
     ]
   },
   {
@@ -96,63 +96,62 @@
     "score": 700.5,
     "level": "NORMAL",
     "aspects": [
-      "Sun Conj H5 cusp (4.41deg)",
-      "Saturn Tri H5 cusp (0.25deg)",
-      "Uranus Opp H5 cusp (4.72deg)",
-      "Neptune Tri H5 cusp (6.69deg)",
-      "Pluto Sxt H5 cusp (4.91deg)"
-    ]
-  },
-  {
-    "house": 1,
-    "name": "Identity, Self-Image, Personal Brand",
-    "score": 579.2,
-    "level": "NORMAL",
-    "aspects": [
-      "Sun Qnt Sun (1.11deg)",
-      "Moon Sq Sun (5.90deg)",
-      "Mercury Sq H1 cusp (3.17deg)",
-      "Jupiter Conj H1 cusp (7.99deg)",
-      "Neptune SqSq H1 cusp (1.89deg)"
+      "Sun Conj H5 cusp (3.40deg)",
+      "Saturn Tri H5 cusp (0.28deg)",
+      "Uranus Opp H5 cusp (4.76deg)",
+      "Neptune Tri H5 cusp (6.70deg)",
+      "Pluto Sxt H5 cusp (4.90deg)"
     ]
   },
   {
     "house": 9,
     "name": "Philosophy, Travel, Higher Education, Publishing",
-    "score": 536.5,
+    "score": 477.5,
     "level": "NORMAL",
     "aspects": [
-      "Sun Tri H9 cusp (3.59deg)",
-      "Moon Sq H9 cusp (3.61deg)",
-      "Mercury SqSq H9 cusp (0.03deg)",
-      "Mars Qnx H9 cusp (0.28deg)",
-      "Saturn Conj H9 cusp (7.75deg)"
-    ]
-  },
-  {
-    "house": 8,
-    "name": "Sex, Intimacy, Shared Resources, Inheritance, Transformation",
-    "score": 522.8,
-    "level": "NORMAL",
-    "aspects": [
-      "Sun Sq H8 cusp (6.09deg)",
-      "Moon Tri H8 cusp (1.11deg)",
-      "Venus Tri H8 cusp (2.25deg)",
-      "Mars Opp H8 cusp (2.22deg)",
-      "Jupiter Opp H8 cusp (1.31deg)"
+      "Sun Tri H9 cusp (4.60deg)",
+      "Mercury SqSq H9 cusp (1.36deg)",
+      "Mars Qnx H9 cusp (0.12deg)",
+      "Saturn Conj H9 cusp (7.72deg)",
+      "Uranus Sxt H9 cusp (3.24deg)"
     ]
   },
   {
     "house": 10,
     "name": "Career, Reputation, Public Life, Legacy",
-    "score": 509.6,
+    "score": 469.6,
     "level": "NORMAL",
     "aspects": [
-      "Sun BQnt H10 cusp (0.59deg)",
-      "Moon Sxt H10 cusp (0.61deg)",
-      "Venus Opp H10 cusp (1.75deg)",
-      "Mars Tri H10 cusp (2.72deg)",
-      "Jupiter Tri H10 cusp (0.81deg)"
+      "Sun BQnt H10 cusp (1.60deg)",
+      "Venus Opp H10 cusp (1.30deg)",
+      "Mars Tri H10 cusp (3.12deg)",
+      "Jupiter Tri H10 cusp (0.76deg)",
+      "Pluto Sq H10 cusp (6.10deg)"
+    ]
+  },
+  {
+    "house": 8,
+    "name": "Sex, Intimacy, Shared Resources, Inheritance, Transformation",
+    "score": 414.0,
+    "level": "NORMAL",
+    "aspects": [
+      "Moon SqSq H8 cusp (1.15deg)",
+      "Venus Tri H8 cusp (1.80deg)",
+      "Mars Opp H8 cusp (2.62deg)",
+      "Jupiter Opp H8 cusp (1.26deg)",
+      "Uranus Sq H8 cusp (5.74deg)"
+    ]
+  },
+  {
+    "house": 1,
+    "name": "Identity, Self-Image, Personal Brand",
+    "score": 270.0,
+    "level": "NORMAL",
+    "aspects": [
+      "Mercury Sxt Sun (4.12deg)",
+      "Mercury Sq H1 cusp (1.84deg)",
+      "Neptune SqSq H1 cusp (1.90deg)",
+      "N.Node Opp H1 cusp (6.11deg)"
     ]
   },
   {
@@ -161,11 +160,11 @@
     "score": 223.0,
     "level": "NORMAL",
     "aspects": [
-      "Sun Tri H13 cusp (5.49deg)",
-      "Venus Sq H13 cusp (2.85deg)",
-      "Neptune Tri H13 cusp (3.21deg)",
-      "Pluto Opp H13 cusp (4.99deg)",
-      "Chiron Tri H13 cusp (2.72deg)"
+      "Sun Tri H13 cusp (6.50deg)",
+      "Venus Sq H13 cusp (2.40deg)",
+      "Neptune Tri H13 cusp (3.20deg)",
+      "Pluto Opp H13 cusp (5.00deg)",
+      "Chiron Tri H13 cusp (2.71deg)"
     ]
   }
 ]
